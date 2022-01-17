@@ -1,0 +1,10 @@
+[
+    {
+        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.exec,db.sql.status=OK}",
+        "Sum": 1
+    },
+    {
+        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.exec,db.sql.status=OK}",
+        "Sum": "<ignore-diff>"
+    }
+]

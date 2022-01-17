@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.begin,db.sql.status=OK}",
+        "Sum": 1
+    },
+    {
+        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.rollback,db.sql.status=OK}",
+        "Sum": 1
+    },
+    {
+        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.begin,db.sql.status=OK}",
+        "Sum": "<ignore-diff>"
+    },
+    {
+        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.rollback,db.sql.status=OK}",
+        "Sum": "<ignore-diff>"
+    }
+]

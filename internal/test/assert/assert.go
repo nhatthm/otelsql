@@ -1,0 +1,35 @@
+package assert
+
+import (
+	"github.com/stretchr/testify/assert"
+	"github.com/swaggest/assertjson"
+)
+
+// Func asserts actual input.
+type Func func(t assert.TestingT, actual string, msgAndArgs ...interface{}) bool
+
+// Equal creates a new Func to check whether the two values are equal.
+func Equal(expect string) Func {
+	return func(t assert.TestingT, actual string, msgAndArgs ...interface{}) bool {
+		return assert.Equal(t, expect, actual, msgAndArgs...)
+	}
+}
+
+// EqualJSON creates a new Func to check whether the two JSON values are equal.
+func EqualJSON(expect string) Func {
+	return func(t assert.TestingT, actual string, msgAndArgs ...interface{}) bool {
+		return assertjson.Equal(t, []byte(expect), []byte(actual), msgAndArgs...)
+	}
+}
+
+// NoOp creates a new Func that does not assert anything.
+func NoOp() Func {
+	return func(_ assert.TestingT, _ string, _ ...interface{}) bool {
+		return true
+	}
+}
+
+// Empty creates a new Func to check whether the actual data is empty.
+func Empty() Func {
+	return Equal("")
+}

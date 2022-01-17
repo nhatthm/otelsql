@@ -1,0 +1,30 @@
+[
+    {
+        "Name": "db.sql.connections.active{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 0
+    },
+    {
+        "Name": "db.sql.connections.idle_closed{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 0
+    },
+    {
+        "Name": "db.sql.connections.idle{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 1
+    },
+    {
+        "Name": "db.sql.connections.lifetime_closed{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 0
+    },
+    {
+        "Name": "db.sql.connections.open{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 1
+    },
+    {
+        "Name": "db.sql.connections.wait_count{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 0
+    },
+    {
+        "Name": "db.sql.connections.wait_duration{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Last": 0
+    }
+]

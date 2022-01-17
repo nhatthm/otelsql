@@ -1,0 +1,214 @@
+[
+    {
+        "Name": "sql:prepare",
+        "SpanContext": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "01",
+            "TraceState": "",
+            "Remote": false
+        },
+        "Parent": {
+            "TraceID": "%s",
+            "SpanID": "%s",
+            "TraceFlags": "00",
+            "TraceState": "",
+            "Remote": false
+        },
+        "SpanKind": 3,
+        "StartTime": "<ignore-diff>",
+        "EndTime": "<ignore-diff>",
+        "Attributes": [
+            {
+                "Key": "db.operation",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "prepare"
+                }
+            }
+        ],
+        "Events": null,
+        "Links": null,
+        "Status": {
+            "Code": "Ok",
+            "Description": ""
+        },
+        "DroppedAttributes": 0,
+        "DroppedEvents": 0,
+        "DroppedLinks": 0,
+        "ChildSpanCount": 0,
+        "Resource": [
+            {
+                "Key": "service.name",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "oteltest"
+                }
+            }
+        ],
+        "InstrumentationLibrary": {
+            "Name": "github.com/nhatthm/otelsql",
+            "Version": "<ignore-diff>",
+            "SchemaURL": "<ignore-diff>"
+        }
+    },
+    {
+        "Name": "sql:query",
+        "SpanContext": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "01",
+            "TraceState": "",
+            "Remote": false
+        },
+        "Parent": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "<ignore-diff>",
+            "TraceState": "",
+            "Remote": false
+        },
+        "SpanKind": 3,
+        "StartTime": "<ignore-diff>",
+        "EndTime": "<ignore-diff>",
+        "Attributes": [
+            {
+                "Key": "db.operation",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "query"
+                }
+            }
+        ],
+        "Events": null,
+        "Links": null,
+        "Status": {
+            "Code": "Ok",
+            "Description": ""
+        },
+        "DroppedAttributes": 0,
+        "DroppedEvents": 0,
+        "DroppedLinks": 0,
+        "ChildSpanCount": 0,
+        "Resource": [
+            {
+                "Key": "service.name",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "oteltest"
+                }
+            }
+        ],
+        "InstrumentationLibrary": {
+            "Name": "github.com/nhatthm/otelsql",
+            "Version": "<ignore-diff>",
+            "SchemaURL": "<ignore-diff>"
+        }
+    },
+    {
+        "Name": "sql:rows_next",
+        "SpanContext": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "01",
+            "TraceState": "",
+            "Remote": false
+        },
+        "Parent": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "<ignore-diff>",
+            "TraceState": "",
+            "Remote": false
+        },
+        "SpanKind": 3,
+        "StartTime": "<ignore-diff>",
+        "EndTime": "<ignore-diff>",
+        "Attributes": [
+            {
+                "Key": "db.operation",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "rows_next"
+                }
+            }
+        ],
+        "Events": null,
+        "Links": null,
+        "Status": {
+            "Code": "Ok",
+            "Description": ""
+        },
+        "DroppedAttributes": 0,
+        "DroppedEvents": 0,
+        "DroppedLinks": 0,
+        "ChildSpanCount": 0,
+        "Resource": [
+            {
+                "Key": "service.name",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "oteltest"
+                }
+            }
+        ],
+        "InstrumentationLibrary": {
+            "Name": "github.com/nhatthm/otelsql",
+            "Version": "<ignore-diff>",
+            "SchemaURL": "<ignore-diff>"
+        }
+    },
+    {
+        "Name": "sql:rows_next",
+        "SpanContext": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "01",
+            "TraceState": "",
+            "Remote": false
+        },
+        "Parent": {
+            "TraceID": "<ignore-diff>",
+            "SpanID": "<ignore-diff>",
+            "TraceFlags": "<ignore-diff>",
+            "TraceState": "",
+            "Remote": false
+        },
+        "SpanKind": 3,
+        "StartTime": "<ignore-diff>",
+        "EndTime": "<ignore-diff>",
+        "Attributes": [
+            {
+                "Key": "db.operation",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "rows_next"
+                }
+            }
+        ],
+        "Events": null,
+        "Links": null,
+        "Status": {
+            "Code": "Ok",
+            "Description": ""
+        },
+        "DroppedAttributes": 0,
+        "DroppedEvents": 0,
+        "DroppedLinks": 0,
+        "ChildSpanCount": 0,
+        "Resource": [
+            {
+                "Key": "service.name",
+                "Value": {
+                    "Type": "STRING",
+                    "Value": "oteltest"
+                }
+            }
+        ],
+        "InstrumentationLibrary": {
+            "Name": "github.com/nhatthm/otelsql",
+            "Version": "<ignore-diff>",
+            "SchemaURL": "<ignore-diff>"
+        }
+    }
+]

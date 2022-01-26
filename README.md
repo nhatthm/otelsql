@@ -1,7 +1,7 @@
 # OpenTelemetry SQL database driver wrapper for Go
 
 [![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/otelsql)](https://github.com/nhatthm/otelsql/releases/latest)
-[![Build Status](https://github.com/nhatthm/otelsql/actions/workflows/unit-test.yaml/badge.svg)](https://github.com/nhatthm/otelsql/actions/workflows/unit-test.yaml)
+[![Build Status](https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml/badge.svg)](https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml)
 [![codecov](https://codecov.io/gh/nhatthm/otelsql/branch/master/graph/badge.svg?token=eTdAgDE2vR)](https://codecov.io/gh/nhatthm/otelsql)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nhatthm/otelsql)](https://goreportcard.com/report/github.com/nhatthm/otelsql)
 [![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/github.com/nhatthm/otelsql)
@@ -555,9 +555,9 @@ The traces are almost identical with some minor changes:
                 <code>DATA-DOG/go-sqlmock</code>
             </td>
             <td colspan="6" align="center">
-                <a href="https://github.com/nhatthm/otelsql/actions/workflows/unit-test.yaml">
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml">
                     <img
-                        src="https://github.com/nhatthm/otelsql/actions/workflows/unit-test.yaml/badge.svg" alt="Build Status"
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml/badge.svg" alt="Build Status"
                         style="max-width: 100%;">
                 </a>
             </td>
@@ -567,7 +567,7 @@ The traces are almost identical with some minor changes:
                 <code>jmoiron/sqlx</code>
             </td>
             <td colspan="6" align="center">
-                ✅ Manually tested
+                <img src="https://img.shields.io/badge/manual%20test-passing-brightgreen?labelColor=3F4750&logo=target&logoWidth=10&logoColor=959DA5&color=31C754" alt="Manually Tested">
             </td>
         </tr>
         <tr>
@@ -575,10 +575,29 @@ The traces are almost identical with some minor changes:
                 <code>jackc/pgx/stdlib</code>
             </td>
             <td>
-                Postgres 12
+                Postgres 12, 13, 14
             </td>
             <td colspan="6" align="center">
-                ✅ Manually tested
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
+                    <img
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml/badge.svg" alt="Build Status"
+                        style="max-width: 100%;">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>lib/pq</code>
+            </td>
+            <td>
+                Postgres 12, 13, 14
+            </td>
+            <td colspan="6" align="center">
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml">
+                    <img
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml/badge.svg" alt="Build Status"
+                        style="max-width: 100%;">
+                </a>
             </td>
         </tr>
     <tbody>

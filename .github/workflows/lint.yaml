@@ -8,8 +8,8 @@ on:
       - main
   pull_request:
 jobs:
-  golangci:
-    name: golangci-lint
+  lint:
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,3 +36,9 @@ jobs:
 
           # Optional: if set to true then the action don't cache or restore ~/.cache/go-build.
           # skip-build-cache: true
+
+      - name: gherkin-lint
+        uses: nhatthm/gherkin-lint-action@v1.0.0
+        with:
+          feature_files: tests/features/*
+          config_file: tests/.gherkin-lintrc

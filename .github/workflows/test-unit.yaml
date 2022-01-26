@@ -49,7 +49,7 @@ jobs:
         env:
           GOARCH: ${{ matrix.arch }}
         run: |
-          make test
+          make test-unit
 
       - name: Upload code coverage (unit)
         if: matrix.go-version == env.GO_LATEST_VERSION

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -127,6 +128,35 @@ func TestWrap_DriverContext_ConnectError(t *testing.T) {
 
 	assert.Nil(t, conn)
 	assert.Equal(t, expectedError, err)
+}
+
+func TestWrap_DriverContext_CloseBeforeOpenConnector(t *testing.T) {
+	t.Parallel()
+
+	parent := struct {
+		driver.Driver
+		driver.DriverContext
+	}{
+		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+			return struct {
+				driverDriverFunc
+				driverConnectFunc
+				driverCloseFunc
+			}{}, nil
+		}),
+	}
+
+	drv, ok := otelsql.Wrap(parent).(struct {
+		driver.Driver
+		driver.DriverContext
+	})
+	require.True(t, ok, "unexpected driver implementation")
+
+	c, ok := drv.Driver.(io.Closer)
+	require.True(t, ok, "driver must implement io.Closer")
+
+	err := c.Close()
+	assert.NoError(t, err)
 }
 
 func TestWrap_DriverContext_CloseError(t *testing.T) {
@@ -2346,7 +2376,7 @@ func assertSpansHaveSameRoot(t assert.TestingT, actual []oteltest.Span) bool {
 }
 
 func getFixture(file string, args ...interface{}) string {
-	data, err := os.ReadFile(file) // nolint: gosec
+	data, err := os.ReadFile(filepath.Clean(file))
 	mustNotFail(err)
 
 	return fmt.Sprintf(string(data), args...)

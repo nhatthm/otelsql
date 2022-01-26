@@ -102,6 +102,7 @@ func wrapDriver(d driver.Driver, o driverOptions) driver.Driver {
 	drv := otDriver{
 		parent:     d,
 		connConfig: newConnConfig(o),
+		close:      func() error { return nil },
 	}
 
 	if _, ok := d.(driver.DriverContext); ok {
@@ -160,7 +161,7 @@ var _ driver.Driver = (*otDriver)(nil)
 type otDriver struct {
 	parent    driver.Driver
 	connector driver.Connector
-	closer    io.Closer
+	close     func() error
 
 	connConfig connConfig
 }
@@ -175,7 +176,7 @@ func (d otDriver) Open(name string) (driver.Conn, error) {
 }
 
 func (d otDriver) Close() error {
-	return d.closer.Close()
+	return d.close()
 }
 
 func (d otDriver) OpenConnector(name string) (driver.Connector, error) {
@@ -187,7 +188,7 @@ func (d otDriver) OpenConnector(name string) (driver.Connector, error) {
 	}
 
 	if c, ok := d.connector.(io.Closer); ok {
-		d.closer = c
+		d.close = c.Close
 	}
 
 	return d, err

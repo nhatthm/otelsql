@@ -552,7 +552,7 @@ The traces are almost identical with some minor changes:
     <tbody>
         <tr>
             <td colspan="2">
-                <code>DATA-DOG/go-sqlmock</code>
+                <code style="white-space: nowrap">DATA-DOG/go-sqlmock</code>
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml">
@@ -564,7 +564,7 @@ The traces are almost identical with some minor changes:
         </tr>
         <tr>
             <td colspan="2">
-                <code>jmoiron/sqlx</code>
+                <code style="white-space: nowrap">jmoiron/sqlx</code>
             </td>
             <td colspan="6" align="center">
                 <img src="https://img.shields.io/badge/manual%20test-passing-brightgreen?labelColor=3F4750&logo=target&logoWidth=10&logoColor=959DA5&color=31C754" alt="Manually Tested">
@@ -572,9 +572,9 @@ The traces are almost identical with some minor changes:
         </tr>
         <tr>
             <td>
-                <code>jackc/pgx/stdlib</code>
+                <code style="white-space: nowrap">jackc/pgx/stdlib</code>
             </td>
-            <td>
+            <td style="white-space: nowrap">
                 Postgres 12, 13, 14
             </td>
             <td colspan="6" align="center">
@@ -587,9 +587,9 @@ The traces are almost identical with some minor changes:
         </tr>
         <tr>
             <td>
-                <code>lib/pq</code>
+                <code style="white-space: nowrap">lib/pq</code>
             </td>
-            <td>
+            <td style="white-space: nowrap">
                 Postgres 12, 13, 14
             </td>
             <td colspan="6" align="center">
@@ -602,9 +602,9 @@ The traces are almost identical with some minor changes:
         </tr>
         <tr>
             <td>
-                <code>go-sql-driver/mysql</code>
+                <code style="white-space: nowrap">go-sql-driver/mysql</code>
             </td>
-            <td>
+            <td style="white-space: nowrap">
                 MySQL 8
             </td>
             <td colspan="6" align="center">

@@ -16,7 +16,7 @@ type repository struct {
 
 func (r *repository) Find(ctx context.Context, id int) (*customer.Customer, error) {
 	row, err := r.db.QueryRow(ctx,
-		"SELECT * FROM customer WHERE id = $1 LIMIT 1",
+		"SELECT * FROM customer WHERE id = ? LIMIT 1",
 		id,
 	)
 	if err != nil {
@@ -55,7 +55,7 @@ func (r *repository) FindAll(ctx context.Context) ([]customer.Customer, error) {
 
 func (r *repository) Create(ctx context.Context, user customer.Customer) error {
 	_, err := r.db.Exec(ctx,
-		"INSERT INTO customer VALUES ($1, $2, $3, $4, $5, $6, $7)",
+		"INSERT INTO customer VALUES (?, ?, ?, ?, ?, ?, ?)",
 		user.ID,
 		user.Country,
 		user.FirstName,
@@ -70,7 +70,7 @@ func (r *repository) Create(ctx context.Context, user customer.Customer) error {
 
 func (r *repository) Update(ctx context.Context, user customer.Customer) error {
 	_, err := r.db.Exec(ctx,
-		"UPDATE customer SET country = $1, first_name = $2, last_name = $3, email = $4, created_at = $5, updated_at = $6 WHERE id = $7",
+		"UPDATE customer SET country = ?, first_name = ?, last_name = ?, email = ?, created_at = ?, updated_at = ? WHERE id = ?",
 		user.Country,
 		user.FirstName,
 		user.LastName,
@@ -85,7 +85,7 @@ func (r *repository) Update(ctx context.Context, user customer.Customer) error {
 
 func (r *repository) Delete(ctx context.Context, id int) error {
 	_, err := r.db.Exec(ctx,
-		"DELETE FROM customer WHERE id = $1",
+		"DELETE FROM customer WHERE id = ?",
 		id,
 	)
 

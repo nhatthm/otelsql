@@ -8,6 +8,7 @@ import (
 type suiteContext struct {
 	containers                []testcontainers.Container
 	featureFiles              []string
+	migrationDSN              string
 	databaseDriver            string
 	databaseDSN               string
 	databasePlaceholderFormat squirrel.PlaceholderFormat

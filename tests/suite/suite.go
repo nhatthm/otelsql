@@ -30,7 +30,9 @@ type Suite interface {
 
 type suite struct {
 	containerRequests []testcontainers.ContainerRequest
-	migrationSource   string
+
+	migrationSource string
+	migrationDSN    string
 
 	featureFilesLocation string
 
@@ -236,18 +238,23 @@ func (s suite) start(tb testing.TB) (suiteContext, error) {
 	)
 
 	// Start containers.
-	sc.containers, err = s.startContainers(randomString(4), tb.Logf, s.containerRequests...)
+	sc.containers, err = s.startContainers(randomString(8), tb.Logf, s.containerRequests...)
 	if err != nil {
 		return sc, err
 	}
 
 	// Setup.
+	sc.migrationDSN = os.ExpandEnv(s.migrationDSN)
 	sc.databaseDriver = s.databaseDriver
 	sc.databaseDSN = os.ExpandEnv(s.databaseDSN)
 	sc.databasePlaceholderFormat = s.databasePlaceholderFormat
 	sc.customerRepositoryConstructor = s.customerRepositoryConstructor
 
-	if err := s.runMigrations(s.migrationSource, sc.databaseDSN, tb.Logf); err != nil {
+	if sc.migrationDSN == "" {
+		sc.migrationDSN = sc.databaseDSN
+	}
+
+	if err := s.runMigrations(s.migrationSource, sc.migrationDSN, tb.Logf); err != nil {
 		return sc, err
 	}
 

@@ -7,11 +7,12 @@ import (
 	"time"
 
 	"github.com/Masterminds/squirrel"
-	_ "github.com/golang-migrate/migrate/v4/database/postgres"
-	_ "github.com/jackc/pgx/v4/stdlib" // Database driver
-	_ "github.com/lib/pq"              // Database driver
-	"github.com/nhatthm/otelsql/tests/suite"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres" // Database driver
+	_ "github.com/jackc/pgx/v4/stdlib"                         // Database driver
+	_ "github.com/lib/pq"                                      // Database driver
 	"github.com/testcontainers/testcontainers-go"
+
+	"github.com/nhatthm/otelsql/tests/suite"
 )
 
 const (

@@ -26,7 +26,7 @@ const (
 	codeNotRunning       = 10006
 )
 
-// Implement interface
+// Implement interface.
 var _ wait.Strategy = (*CmdStrategy)(nil)
 
 // CmdStrategy is a strategy to check if a container is healthy.
@@ -144,4 +144,27 @@ func isContainerUnhealthy(status string) bool {
 	return status != containerStatusCreated &&
 		status != containerStatusRunning &&
 		status != containerStatusRestarting
+}
+
+var _ wait.Strategy = (*TimeStrategy)(nil)
+
+// TimeStrategy is a strategy to check if a container is healthy.
+type TimeStrategy struct {
+	duration time.Duration
+}
+
+// WaitUntilReady checks whether a container is healthy.
+func (t *TimeStrategy) WaitUntilReady(ctx context.Context, target wait.StrategyTarget) error {
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+
+	case <-time.After(t.duration):
+		return nil
+	}
+}
+
+// WaitForDuration constructs a strategy waiting for a given time.
+func WaitForDuration(d time.Duration) *TimeStrategy {
+	return &TimeStrategy{duration: d}
 }

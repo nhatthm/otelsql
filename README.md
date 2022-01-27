@@ -600,6 +600,21 @@ The traces are almost identical with some minor changes:
                 </a>
             </td>
         </tr>
+        <tr>
+            <td>
+                <code>go-sql-driver/mysql</code>
+            </td>
+            <td>
+                MySQL 8
+            </td>
+            <td colspan="6" align="center">
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml">
+                    <img
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml/badge.svg?branch=master" alt="Build Status"
+                        style="max-width: 100%;">
+                </a>
+            </td>
+        </tr>
     <tbody>
 </table>
 

@@ -21,6 +21,13 @@ func WithMigrationSource(source string) Option {
 	}
 }
 
+// WithMigrationDSN sets the database dsn.
+func WithMigrationDSN(dsn string) Option {
+	return func(s *suite) {
+		s.migrationDSN = dsn
+	}
+}
+
 // WithDatabaseDriver sets the database driver.
 func WithDatabaseDriver(driver string) Option {
 	return func(s *suite) {

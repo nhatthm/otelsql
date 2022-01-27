@@ -1,4 +1,4 @@
-name: test
+name: compatibility-test-pgx
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   GO111MODULE: "on"
 
 jobs:
-  compatibility-test-pgx:
+  test:
     strategy:
       fail-fast: false
       matrix:

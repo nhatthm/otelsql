@@ -1,4 +1,4 @@
-name: test
+name: unit-test
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   GO_LATEST_VERSION: "1.17.x"
 
 jobs:
-  unit-test:
+  test:
     strategy:
       fail-fast: false
       matrix:

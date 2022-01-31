@@ -38,6 +38,11 @@ func (r *repository) FindAll(ctx context.Context) ([]customer.Customer, error) {
 		return nil, err
 	}
 
+	defer func() {
+		_ = rows.Close() // nolint: errcheck
+		_ = rows.Err()   // nolint: errcheck
+	}()
+
 	customers := make([]customer.Customer, 0)
 
 	for rows.Next() {

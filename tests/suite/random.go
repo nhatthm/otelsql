@@ -10,12 +10,12 @@ import (
 func randomString(length int) string {
 	var rngSeed int64
 
-	_ = binary.Read(crand.Reader, binary.LittleEndian, &rngSeed)
-	r := rand.New(rand.NewSource(rngSeed))
+	_ = binary.Read(crand.Reader, binary.LittleEndian, &rngSeed) // nolint: errcheck
+	r := rand.New(rand.NewSource(rngSeed))                       // nolint: gosec
 
 	result := make([]byte, length/2)
 
-	r.Read(result[:])
+	_, _ = r.Read(result)
 
-	return hex.EncodeToString(result[:])
+	return hex.EncodeToString(result)
 }

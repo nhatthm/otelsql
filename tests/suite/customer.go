@@ -144,7 +144,7 @@ func (t *customerTests) haveCustomer(expected *godog.DocString) error {
 	c, ok := t.lastResult.(*customer.Customer)
 	if !ok {
 		if t.lastError != nil {
-			return fmt.Errorf("could not get customer: %s", t.lastError.Error())
+			return fmt.Errorf("could not get customer: %w", t.lastError)
 		}
 
 		return fmt.Errorf("got no customer")
@@ -162,7 +162,7 @@ func (t *customerTests) haveCustomers(expected *godog.DocString) error {
 	customers, ok := t.lastResult.([]customer.Customer)
 	if !ok {
 		if t.lastError != nil {
-			return fmt.Errorf("could not get customers: %s", t.lastError.Error())
+			return fmt.Errorf("could not get customers: %w", t.lastError)
 		}
 
 		return fmt.Errorf("got no customer")
@@ -202,7 +202,7 @@ func (t *customerTests) haveAnErrorWithMessage(err string) error {
 	}
 
 	if err != t.lastError.Error() {
-		return fmt.Errorf("got error: %s, expected: %s", t.lastError.Error(), err)
+		return fmt.Errorf("got error: %s, expected: %s", t.lastError.Error(), err) // nolint: errorlint
 	}
 
 	return nil
@@ -214,7 +214,7 @@ func (t *customerTests) startTransaction() error {
 		return fmt.Errorf("could not start a new transaction: %w", err)
 	}
 
-	t.runner = tx
+	t.runner = &txContext{Tx: tx}
 
 	t.constructRepository()
 
@@ -222,7 +222,7 @@ func (t *customerTests) startTransaction() error {
 }
 
 func (t *customerTests) commitTransaction() error {
-	tx, ok := t.runner.(*sql.Tx)
+	tx, ok := t.runner.(*txContext)
 	if !ok {
 		return fmt.Errorf("no transaction to commit")
 	}
@@ -239,7 +239,7 @@ func (t *customerTests) commitTransaction() error {
 }
 
 func (t *customerTests) rollbackTransaction() error {
-	tx, ok := t.runner.(*sql.Tx)
+	tx, ok := t.runner.(*txContext)
 	if !ok {
 		return fmt.Errorf("no transaction to rollback")
 	}

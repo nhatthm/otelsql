@@ -44,7 +44,6 @@ jobs:
         id: test
         env:
           GOARCH: ${{ matrix.arch }}
-          COMPATIBILITY_TEST: mysql
           MYSQL_VERSION: ${{ matrix.mysql-version }}
         run: |
-          make test-compatibility
+          make test-compatibility-mysql

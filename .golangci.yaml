@@ -27,6 +27,7 @@ linters:
     - gci
     - gochecknoglobals
     - golint
+    - gomoddirectives
     - gomnd
     - goerr113
     - ifshort

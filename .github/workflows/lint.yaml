@@ -10,6 +10,10 @@ on:
 jobs:
   lint:
     name: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        module: [ ".", "tests/suite", "tests/mysql", "tests/postgres" ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,7 +24,7 @@ jobs:
           version: v1.43.0
 
           # Optional: working directory, useful for monorepos
-          # working-directory: somedir
+          working-directory: ${{ matrix.module }}
 
           # Optional: golangci-lint command line arguments.
           # args: --issues-exit-code=0

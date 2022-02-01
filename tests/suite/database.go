@@ -15,7 +15,7 @@ import (
 	"github.com/nhatthm/otelsql/tests/suite/customer"
 )
 
-// DatabaseContext is a set of PreparerContext, ExecerContext, QueryerContext
+// DatabaseContext is a set of PreparerContext, ExecerContext, QueryerContext.
 type DatabaseContext interface {
 	PreparerContext
 	ExecerContext
@@ -86,7 +86,7 @@ func makeDBManager(db *sqlx.DB, placeholderFormat squirrel.PlaceholderFormat) *d
 	return dbm
 }
 
-// DatabaseExecer executes query depends on what it has
+// DatabaseExecer executes query depends on what it has.
 type DatabaseExecer interface {
 	Exec(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
 	Query(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error)
@@ -99,16 +99,28 @@ type databaseExecer struct {
 	usePreparer bool
 }
 
+func (e *databaseExecer) closeStmt(stmt *sql.Stmt) {
+	if tx, ok := e.db.(*txContext); ok {
+		tx.statements = append(tx.statements, stmt)
+
+		return
+	}
+
+	_ = stmt.Close() // nolint: errcheck
+}
+
 // Exec executes a query.
 func (e *databaseExecer) Exec(ctx context.Context, query string, args ...interface{}) (sql.Result, error) {
 	if !e.usePreparer {
 		return e.db.ExecContext(ctx, query, args...)
 	}
 
-	p, err := e.db.PrepareContext(ctx, query)
+	p, err := e.db.PrepareContext(ctx, query) // nolint: sqlclosecheck
 	if err != nil {
 		return nil, err
 	}
+
+	defer e.closeStmt(p)
 
 	return p.ExecContext(ctx, args...)
 }
@@ -119,10 +131,12 @@ func (e *databaseExecer) Query(ctx context.Context, query string, args ...interf
 		return e.db.QueryContext(ctx, query, args...)
 	}
 
-	p, err := e.db.PrepareContext(ctx, query)
+	p, err := e.db.PrepareContext(ctx, query) // nolint: sqlclosecheck
 	if err != nil {
 		return nil, err
 	}
+
+	defer e.closeStmt(p)
 
 	return p.QueryContext(ctx, args...)
 }
@@ -133,10 +147,12 @@ func (e *databaseExecer) QueryRow(ctx context.Context, query string, args ...int
 		return e.db.QueryRowContext(ctx, query, args...), nil
 	}
 
-	p, err := e.db.PrepareContext(ctx, query)
+	p, err := e.db.PrepareContext(ctx, query) // nolint: sqlclosecheck
 	if err != nil {
 		return nil, err
 	}
+
+	defer e.closeStmt(p)
 
 	return p.QueryRowContext(ctx, args...), nil
 }
@@ -146,4 +162,32 @@ func newDatabaseExecer(db DatabaseContext, usePreparer bool) DatabaseExecer {
 		db:          db,
 		usePreparer: usePreparer,
 	}
+}
+
+type txContext struct {
+	*sql.Tx
+
+	statements []*sql.Stmt
+}
+
+func (t *txContext) closeStmts() {
+	for _, s := range t.statements {
+		_ = s.Close() // nolint: errcheck
+	}
+}
+
+func (t *txContext) Commit() (err error) {
+	err = t.Tx.Commit()
+
+	defer t.closeStmts()
+
+	return
+}
+
+func (t *txContext) Rollback() (err error) {
+	err = t.Tx.Rollback()
+
+	defer t.closeStmts()
+
+	return
 }

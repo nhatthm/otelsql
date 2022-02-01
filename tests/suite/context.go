@@ -2,13 +2,14 @@ package suite
 
 import (
 	"github.com/Masterminds/squirrel"
-	"github.com/testcontainers/testcontainers-go"
+	"github.com/nhatthm/testcontainers-go-extra"
 )
 
 type suiteContext struct {
-	containers                []testcontainers.Container
-	featureFiles              []string
-	migrationDSN              string
+	containers []testcontainers.Container
+
+	featureFiles []string
+
 	databaseDriver            string
 	databaseDSN               string
 	databasePlaceholderFormat squirrel.PlaceholderFormat

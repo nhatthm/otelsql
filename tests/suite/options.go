@@ -2,29 +2,16 @@ package suite
 
 import (
 	"github.com/Masterminds/squirrel"
-	"github.com/testcontainers/testcontainers-go"
+	"github.com/nhatthm/testcontainers-go-extra"
 )
 
+// Option sets up the test suite.
 type Option func(*suite)
 
 // WithTestContainerRequests appends container requests.
-func WithTestContainerRequests(requests ...testcontainers.ContainerRequest) Option {
+func WithTestContainerRequests(requests ...testcontainers.StartGenericContainerRequest) Option {
 	return func(s *suite) {
 		s.containerRequests = requests
-	}
-}
-
-// WithMigrationSource sets migration source.
-func WithMigrationSource(source string) Option {
-	return func(s *suite) {
-		s.migrationSource = source
-	}
-}
-
-// WithMigrationDSN sets the database dsn.
-func WithMigrationDSN(dsn string) Option {
-	return func(s *suite) {
-		s.migrationDSN = dsn
 	}
 }
 

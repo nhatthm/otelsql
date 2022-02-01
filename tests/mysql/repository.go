@@ -1,4 +1,4 @@
-package postgres
+package mysql
 
 import (
 	"context"
@@ -37,6 +37,11 @@ func (r *repository) FindAll(ctx context.Context) ([]customer.Customer, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer func() {
+		_ = rows.Close() // nolint: errcheck
+		_ = rows.Err()   // nolint: errcheck
+	}()
 
 	customers := make([]customer.Customer, 0)
 

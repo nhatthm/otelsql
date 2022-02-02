@@ -42,7 +42,7 @@ func wrapTx(ctx context.Context, parent driver.Tx, r methodRecorder, t methodTra
 	}
 }
 
-func noOpTxFunc() error {
+func nopTxFunc() error {
 	return nil
 }
 

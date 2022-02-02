@@ -14,8 +14,8 @@ type execContextFuncMiddleware func(next execContextFunc) execContextFunc
 
 type execContextFunc func(ctx context.Context, query string, args []driver.NamedValue) (driver.Result, error)
 
-// noOpExecContext executes nothing.
-func noOpExecContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Result, error) {
+// nopExecContext executes nothing.
+func nopExecContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Result, error) {
 	return nil, nil
 }
 

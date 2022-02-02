@@ -102,7 +102,7 @@ func wrapConn(parent driver.Conn, opt connConfig) driver.Conn {
 
 func makeConn(parent driver.Conn, cfg connConfig) conn {
 	c := conn{
-		ping:  noOpPing,
+		ping:  nopPing,
 		exec:  skippedExecContext,
 		query: skippedQueryContext,
 		close: parent.Close,

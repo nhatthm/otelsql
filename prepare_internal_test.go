@@ -30,17 +30,17 @@ func BenchmarkPrepareStats(b *testing.B) {
 
 	prepare := chainPrepareContextFuncMiddlewares([]prepareContextFuncMiddleware{
 		prepareStats(r),
-	}, noOpPrepareContext)
+	}, nopPrepareContext)
 
 	for i := 0; i < b.N; i++ {
 		_, _ = prepare(context.Background(), "") // nolint: errcheck
 	}
 }
 
-func TestNoOpPrepareContext(t *testing.T) {
+func TestNopPrepareContext(t *testing.T) {
 	t.Parallel()
 
-	result, err := noOpPrepareContext(context.Background(), "")
+	result, err := nopPrepareContext(context.Background(), "")
 
 	assert.Nil(t, result)
 	assert.NoError(t, err)
@@ -84,7 +84,7 @@ func TestEnsurePrepareContext(t *testing.T) {
 func TestChainPrepareContextFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	prepare := chainPrepareContextFuncMiddlewares(nil, noOpPrepareContext)
+	prepare := chainPrepareContextFuncMiddlewares(nil, nopPrepareContext)
 
 	result, err := prepare(context.Background(), "")
 
@@ -158,7 +158,7 @@ func TestPrepareStats(t *testing.T) {
 		},
 		{
 			scenario: "no error",
-			prepare:  noOpPrepareContext,
+			prepare:  nopPrepareContext,
 			expected: `[
 				{
 					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=prepare_test,db.instance=test,db.operation=go.sql.prepare,db.sql.status=OK,db.system=other_sql}",

@@ -15,8 +15,8 @@ type pingFuncMiddleware func(next pingFunc) pingFunc
 // pingFunc is a callback for pingFunc.
 type pingFunc func(ctx context.Context) error
 
-// noOpPing pings nothing.
-func noOpPing(_ context.Context) error {
+// nopPing pings nothing.
+func nopPing(_ context.Context) error {
 	return nil
 }
 

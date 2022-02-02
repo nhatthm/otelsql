@@ -22,8 +22,8 @@ func EqualJSON(expect string) Func {
 	}
 }
 
-// NoOp creates a new Func that does not assert anything.
-func NoOp() Func {
+// Nop creates a new Func that does not assert anything.
+func Nop() Func {
 	return func(_ assert.TestingT, _ string, _ ...interface{}) bool {
 		return true
 	}

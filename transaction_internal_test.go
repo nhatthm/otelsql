@@ -15,7 +15,7 @@ import (
 func TestChainTxFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	f := chainTxFuncMiddlewares(nil, noOpTxFunc)
+	f := chainTxFuncMiddlewares(nil, nopTxFunc)
 
 	err := f()
 
@@ -87,7 +87,7 @@ func TestTxStats(t *testing.T) {
 		},
 		{
 			scenario: "no error",
-			beginner: noOpTxFunc,
+			beginner: nopTxFunc,
 			expected: `[
 				{
 					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=tx_test,db.instance=test,db.operation=go.sql.commit,db.sql.status=OK,db.system=other_sql}",

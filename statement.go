@@ -211,7 +211,7 @@ func makeStmtExecFunc(parent driver.Stmt, execContextFuncMiddlewares []execConte
 func makeStmtExecContextFunc(parent driver.Stmt, execContextFuncMiddlewares []execContextFuncMiddleware) execContextFunc {
 	execer, ok := parent.(driver.StmtExecContext)
 	if !ok {
-		return noOpExecContext
+		return nopExecContext
 	}
 
 	return chainExecContextFuncMiddlewares(execContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
@@ -228,7 +228,7 @@ func makeStmtQueryFunc(parent driver.Stmt, queryContextFuncMiddlewares []queryCo
 func makeStmtQueryContextFunc(parent driver.Stmt, queryContextFuncMiddlewares []queryContextFuncMiddleware) queryContextFunc {
 	queryer, ok := parent.(driver.StmtQueryContext)
 	if !ok {
-		return noOpQueryContext
+		return nopQueryContext
 	}
 
 	return chainQueryContextFuncMiddlewares(queryContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {

@@ -30,17 +30,17 @@ func BenchmarkQueryStats(b *testing.B) {
 
 	query := chainQueryContextFuncMiddlewares([]queryContextFuncMiddleware{
 		queryStats(r, metricMethodQuery),
-	}, noOpQueryContext)
+	}, nopQueryContext)
 
 	for i := 0; i < b.N; i++ {
 		_, _ = query(context.Background(), "", nil) // nolint: errcheck
 	}
 }
 
-func TestNoOpQueryContext(t *testing.T) {
+func TestNopQueryContext(t *testing.T) {
 	t.Parallel()
 
-	result, err := noOpQueryContext(context.Background(), "", nil)
+	result, err := nopQueryContext(context.Background(), "", nil)
 
 	assert.Nil(t, result)
 	assert.NoError(t, err)
@@ -58,7 +58,7 @@ func TestSkippedQueryContext(t *testing.T) {
 func TestChainQueryContextFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	query := chainQueryContextFuncMiddlewares(nil, noOpQueryContext)
+	query := chainQueryContextFuncMiddlewares(nil, nopQueryContext)
 
 	result, err := query(context.Background(), "", nil)
 
@@ -132,7 +132,7 @@ func TestQueryStats(t *testing.T) {
 		},
 		{
 			scenario: "no error",
-			query:    noOpQueryContext,
+			query:    nopQueryContext,
 			expected: `[
 				{
 					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=query_test,db.instance=test,db.operation=go.sql.query,db.sql.status=OK,db.system=other_sql}",

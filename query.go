@@ -14,8 +14,8 @@ type queryContextFuncMiddleware func(next queryContextFunc) queryContextFunc
 
 type queryContextFunc func(ctx context.Context, query string, args []driver.NamedValue) (driver.Rows, error)
 
-// noOpQueryContext queries nothing.
-func noOpQueryContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Rows, error) {
+// nopQueryContext queries nothing.
+func nopQueryContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Rows, error) {
 	return nil, nil
 }
 

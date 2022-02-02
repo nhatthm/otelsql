@@ -29,17 +29,17 @@ func BenchmarkPingStats(b *testing.B) {
 
 	ping := chainPingFuncMiddlewares([]pingFuncMiddleware{
 		pingStats(r),
-	}, noOpPing)
+	}, nopPing)
 
 	for i := 0; i < b.N; i++ {
 		_ = ping(context.Background()) // nolint: errcheck
 	}
 }
 
-func TestNoOpPing(t *testing.T) {
+func TestNopPing(t *testing.T) {
 	t.Parallel()
 
-	err := noOpPing(context.Background())
+	err := nopPing(context.Background())
 
 	assert.NoError(t, err)
 }
@@ -47,7 +47,7 @@ func TestNoOpPing(t *testing.T) {
 func TestChainPingFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	f := chainPingFuncMiddlewares(nil, noOpPing)
+	f := chainPingFuncMiddlewares(nil, nopPing)
 
 	err := f(context.Background())
 
@@ -119,7 +119,7 @@ func TestPingStats(t *testing.T) {
 		},
 		{
 			scenario: "no error",
-			ping:     noOpPing,
+			ping:     nopPing,
 			expected: `[
 				{
 					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=ping_test,db.instance=test,db.operation=go.sql.ping,db.sql.status=OK,db.system=other_sql}",

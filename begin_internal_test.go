@@ -30,17 +30,17 @@ func BenchmarkBeginStats(b *testing.B) {
 
 	begin := chainBeginFuncMiddlewares([]beginFuncMiddleware{
 		beginStats(r),
-	}, noOpBegin)
+	}, nopBegin)
 
 	for i := 0; i < b.N; i++ {
 		_, _ = begin(context.Background(), driver.TxOptions{}) // nolint: errcheck
 	}
 }
 
-func TestNoOpBegin(t *testing.T) {
+func TestNopBegin(t *testing.T) {
 	t.Parallel()
 
-	result, err := noOpBegin(context.Background(), driver.TxOptions{})
+	result, err := nopBegin(context.Background(), driver.TxOptions{})
 
 	assert.Nil(t, result)
 	assert.NoError(t, err)
@@ -84,7 +84,7 @@ func TestEnsureBegin(t *testing.T) {
 func TestChainBeginFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	begin := chainBeginFuncMiddlewares(nil, noOpBegin)
+	begin := chainBeginFuncMiddlewares(nil, nopBegin)
 
 	result, err := begin(context.Background(), driver.TxOptions{})
 
@@ -158,7 +158,7 @@ func TestBeginStats(t *testing.T) {
 		},
 		{
 			scenario: "no error",
-			begin:    noOpBegin,
+			begin:    nopBegin,
 			expected: `[
 				{
 					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=begin_test,db.instance=test,db.operation=go.sql.begin,db.sql.status=OK,db.system=other_sql}",

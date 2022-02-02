@@ -16,8 +16,8 @@ type beginFuncMiddleware func(next beginFunc) beginFunc
 // beginFunc is a callback for beginFunc.
 type beginFunc func(ctx context.Context, opts driver.TxOptions) (driver.Tx, error)
 
-// noOpBegin pings nothing.
-func noOpBegin(_ context.Context, _ driver.TxOptions) (driver.Tx, error) {
+// nopBegin pings nothing.
+func nopBegin(_ context.Context, _ driver.TxOptions) (driver.Tx, error) {
 	return nil, nil
 }
 

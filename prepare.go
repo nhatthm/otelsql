@@ -14,8 +14,8 @@ type prepareContextFuncMiddleware func(next prepareContextFunc) prepareContextFu
 
 type prepareContextFunc func(ctx context.Context, query string) (driver.Stmt, error)
 
-// noOpPrepareContext prepares nothing.
-func noOpPrepareContext(_ context.Context, _ string) (driver.Stmt, error) {
+// nopPrepareContext prepares nothing.
+func nopPrepareContext(_ context.Context, _ string) (driver.Stmt, error) {
 	return nil, nil
 }
 

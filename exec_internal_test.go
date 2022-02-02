@@ -30,17 +30,17 @@ func BenchmarkExecStats(b *testing.B) {
 
 	exec := chainExecContextFuncMiddlewares([]execContextFuncMiddleware{
 		execStats(r, metricMethodExec),
-	}, noOpExecContext)
+	}, nopExecContext)
 
 	for i := 0; i < b.N; i++ {
 		_, _ = exec(context.Background(), "", nil) // nolint: errcheck
 	}
 }
 
-func TestNoOpExecContext(t *testing.T) {
+func TestNopExecContext(t *testing.T) {
 	t.Parallel()
 
-	result, err := noOpExecContext(context.Background(), "", nil)
+	result, err := nopExecContext(context.Background(), "", nil)
 
 	assert.Nil(t, result)
 	assert.NoError(t, err)
@@ -58,7 +58,7 @@ func TestSkippedExecContext(t *testing.T) {
 func TestChainExecContextFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	exec := chainExecContextFuncMiddlewares(nil, noOpExecContext)
+	exec := chainExecContextFuncMiddlewares(nil, nopExecContext)
 
 	result, err := exec(context.Background(), "", nil)
 
@@ -132,7 +132,7 @@ func TestExecStats(t *testing.T) {
 		},
 		{
 			scenario: "no error",
-			execer:   noOpExecContext,
+			execer:   nopExecContext,
 			expected: `[
 				{
 					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=exec_test,db.instance=test,db.operation=go.sql.exec,db.sql.status=OK,db.system=other_sql}",

@@ -74,6 +74,7 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 
 	return ctx, func(err error, labels ...attribute.KeyValue) {
 		code, desc := t.errorToStatus(err)
+
 		attrs = append(attrs, labels...)
 
 		span.SetAttributes(attrs...)

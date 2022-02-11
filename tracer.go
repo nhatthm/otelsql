@@ -73,10 +73,16 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 	attrs = append(attrs, semconv.DBOperationKey.String(method))
 
 	return ctx, func(err error, labels ...attribute.KeyValue) {
+		code, desc := t.errorToStatus(err)
 		attrs = append(attrs, labels...)
 
 		span.SetAttributes(attrs...)
-		span.SetStatus(t.errorToStatus(err))
+		span.SetStatus(code, desc)
+
+		if code == codes.Error {
+			span.RecordError(err)
+		}
+
 		span.End(
 			trace.WithTimestamp(time.Now()),
 		)

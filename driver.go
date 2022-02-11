@@ -17,7 +17,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-const _maxDriver = 100
+const _maxDriver = 150
 
 const instrumentationName = "github.com/nhatthm/otelsql"
 

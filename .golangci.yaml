@@ -46,11 +46,13 @@ issues:
   exclude-use-default: false
   exclude-rules:
     - linters:
+        - containedctx
         - dupl
         - funlen
         - goconst
         - goerr113
         - gomnd
+        - maintidx
         - noctx
         - rowserrcheck
       path: "_test.go"

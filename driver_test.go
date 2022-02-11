@@ -36,7 +36,7 @@ func TestRegister_UnknownDriver(t *testing.T) {
 func TestRegister_MaxSlots(t *testing.T) {
 	t.Parallel()
 
-	numSlots := 100
+	numSlots := 150
 
 	sql.Register("max-slots", struct {
 		driver.Driver
@@ -323,9 +323,14 @@ func Test_Ping_Error(t *testing.T) {
 			m.ExpectPing().
 				WillReturnError(pingErr)
 		}),
+		oteltest.TracesEqualJSON(expectedPingTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.TracePing(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.TracePing(),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -631,9 +636,14 @@ func Test_ExecContext_Error(t *testing.T) {
 				WithArgs("US").
 				WillReturnError(execErr)
 		}),
+		oteltest.TracesEqualJSON(expectedExecTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot(), otelsql.TraceLastInsertID())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+				otelsql.TraceRowsAffected(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -992,9 +1002,14 @@ func Test_QueryContext_Error(t *testing.T) {
 				WithArgs("US").
 				WillReturnError(queryErr)
 		}),
+		oteltest.TracesEqualJSON(expectedQueryTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot(), otelsql.TraceRowsClose())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+				otelsql.TraceRowsClose(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1016,9 +1031,13 @@ func Test_Begin_Error(t *testing.T) {
 			m.ExpectBegin().
 				WillReturnError(beginErr)
 		}),
+		oteltest.TracesEqualJSON(expectedBeginTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1108,9 +1127,13 @@ func Test_Begin_Commit_Error(t *testing.T) {
 			m.ExpectCommit().
 				WillReturnError(commitErr)
 		}),
+		oteltest.TracesEqualJSON(expectedBeginCommitTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1204,9 +1227,13 @@ func Test_Begin_Rollback_Error(t *testing.T) {
 			m.ExpectRollback().
 				WillReturnError(rollbackErr)
 		}),
+		oteltest.TracesEqualJSON(expectedBeginRollbackTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1219,6 +1246,34 @@ func Test_Begin_Rollback_Error(t *testing.T) {
 			err = tx.Rollback()
 
 			require.Equal(t, rollbackErr, err)
+		})
+}
+
+func Test_BeginTx_Error(t *testing.T) {
+	t.Parallel()
+
+	const beginErr testError = "begin error"
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectBegin().
+				WillReturnError(beginErr)
+		}),
+		oteltest.TracesEqualJSON(expectedBeginTraceWithError(noParentSpanIDs())),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			tx, err := db.BeginTx(context.Background(), &sql.TxOptions{})
+
+			assert.Nil(t, tx)
+			assert.Equal(t, beginErr, err)
 		})
 }
 
@@ -1323,9 +1378,13 @@ func Test_BeginTx_Commit_Error(t *testing.T) {
 			m.ExpectCommit().
 				WillReturnError(commitErr)
 		}),
+		oteltest.TracesEqualJSON(expectedBeginCommitTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1442,9 +1501,13 @@ func Test_BeginTx_Rollback_Error(t *testing.T) {
 			m.ExpectRollback().
 				WillReturnError(rollbackErr)
 		}),
+		oteltest.TracesEqualJSON(expectedBeginRollbackTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1470,9 +1533,13 @@ func Test_PrepareContext_Error(t *testing.T) {
 			m.ExpectPrepare(`DELETE FROM data WHERE country = $1`).
 				WillReturnError(prepareError)
 		}),
+		oteltest.TracesEqualJSON(expectedPrepareContextTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1620,9 +1687,14 @@ func Test_PrepareContext_ExecContext_Error(t *testing.T) {
 				WithArgs("US").
 				WillReturnError(execErr)
 		}),
+		oteltest.TracesEqualJSON(expectedPrepareContextExecContextTraceWithError(noParentSpanIDs())),
 	).
 		Run(t, func(sc oteltest.SuiteContext) {
-			db, err := newDB(sc.DatabaseDSN(), otelsql.AllowRoot(), otelsql.TraceLastInsertID())
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+				otelsql.TraceRowsAffected(),
+			)
 			require.NoError(t, err)
 
 			defer db.Close() // nolint: errcheck
@@ -1954,6 +2026,46 @@ func Test_PrepareContext_QueryContext(t *testing.T) {
 				})
 		})
 	}
+}
+
+func Test_PrepareContext_QueryContext_Error(t *testing.T) {
+	t.Parallel()
+
+	const queryErr testError = "query error"
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			stmt := m.ExpectPrepare(`SELECT * FROM data WHERE country = $1`).
+				WillBeClosed()
+
+			stmt.ExpectQuery().
+				WithArgs("US").
+				WillReturnError(queryErr)
+		}),
+		oteltest.TracesEqualJSON(expectedPrepareContextQueryContextTraceWithError(noParentSpanIDs())),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.AllowRoot(),
+				otelsql.TraceRowsClose(),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			stmt, err := db.PrepareContext(context.Background(), `SELECT * FROM data WHERE country = $1`)
+
+			require.NotNil(t, stmt)
+			require.NoError(t, err)
+
+			defer stmt.Close() // nolint: errcheck
+
+			result, err := stmt.QueryContext(context.Background(), "US")
+
+			assert.Nil(t, result)
+			assert.Equal(t, queryErr, err)
+		})
 }
 
 func Test_PrepareContext_QueryContext_TraceRows(t *testing.T) {
@@ -2426,8 +2538,16 @@ func expectedPingTrace(parentTraceID trace.TraceID, parentSpanID trace.SpanID) s
 	return expectedTracesFromFile("ping.json", parentTraceID, parentSpanID)
 }
 
+func expectedPingTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("ping_with_error.json", parentTraceID, parentSpanID)
+}
+
 func expectedExecTraceNoQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
 	return expectedTracesFromFile("exec_no_query.json", parentTraceID, parentSpanID)
+}
+
+func expectedExecTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("exec_with_error.json", parentTraceID, parentSpanID)
 }
 
 func expectedExecTraceWithQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
@@ -2450,6 +2570,10 @@ func expectedQueryTraceNoQuery(parentTraceID trace.TraceID, parentSpanID trace.S
 	return expectedTracesFromFile("query_no_query.json", parentTraceID, parentSpanID)
 }
 
+func expectedQueryTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("query_with_error.json", parentTraceID, parentSpanID)
+}
+
 func expectedQueryTraceWithQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
 	return expectedTracesFromFile("query_with_query.json", parentTraceID, parentSpanID)
 }
@@ -2470,16 +2594,36 @@ func expectedQueryTraceWithRowsNextAndClose(parentTraceID trace.TraceID, parentS
 	return expectedTracesFromFile("query_with_rows_next_close.json", parentTraceID, parentSpanID)
 }
 
+func expectedBeginTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("begin_with_error.json", parentTraceID, parentSpanID)
+}
+
 func expectedBeginCommitTrace(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
 	return expectedTracesFromFile("begin_commit.json", parentTraceID, parentSpanID)
+}
+
+func expectedBeginCommitTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("begin_commit_with_error.json", parentTraceID, parentSpanID)
 }
 
 func expectedBeginRollbackTrace(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
 	return expectedTracesFromFile("begin_rollback.json", parentTraceID, parentSpanID)
 }
 
+func expectedBeginRollbackTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("begin_rollback_with_error.json", parentTraceID, parentSpanID)
+}
+
+func expectedPrepareContextTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("prepare_context_with_error.json", parentTraceID, parentSpanID)
+}
+
 func expectedPrepareContextExecContextTraceNoQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
 	return expectedTracesFromFile("prepare_context_exec_context_no_query.json", parentTraceID, parentSpanID)
+}
+
+func expectedPrepareContextExecContextTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("prepare_context_exec_context_with_error.json", parentTraceID, parentSpanID)
 }
 
 func expectedPrepareContextExecContextTraceWithQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
@@ -2500,6 +2644,10 @@ func expectedPrepareContextExecContextTraceWithLastInsertID(parentTraceID trace.
 
 func expectedPrepareContextQueryContextTraceNoQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
 	return expectedTracesFromFile("prepare_context_query_context_no_query.json", parentTraceID, parentSpanID)
+}
+
+func expectedPrepareContextQueryContextTraceWithError(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {
+	return expectedTracesFromFile("prepare_context_query_context_with_error.json", parentTraceID, parentSpanID)
 }
 
 func expectedPrepareContextQueryContextTraceWithQuery(parentTraceID trace.TraceID, parentSpanID trace.SpanID) string {

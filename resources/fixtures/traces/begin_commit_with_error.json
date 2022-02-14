@@ -48,8 +48,8 @@
         ],
         "InstrumentationLibrary": {
             "Name": "github.com/nhatthm/otelsql",
-            "Version": "0.1.4",
-            "SchemaURL": "https://opentelemetry.io/schemas/v1.7.0"
+            "Version": "<ignore-diff>",
+            "SchemaURL": "<ignore-diff>"
         }
     },
     {

@@ -62,6 +62,7 @@ func queryStats(r methodRecorder, method string) queryContextFuncMiddleware {
 func queryTrace(t methodTracer, traceQuery queryTracer, method string) queryContextFuncMiddleware {
 	return func(next queryContextFunc) queryContextFunc {
 		return func(ctx context.Context, query string, args []driver.NamedValue) (result driver.Rows, err error) {
+			ctx = ContextWithQuery(ctx, query)
 			ctx, end := t.Trace(ctx, method)
 
 			defer func() {

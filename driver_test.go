@@ -453,6 +453,37 @@ func Test_ExecContext(t *testing.T) {
 	}
 }
 
+func Test_ExecContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `DELETE FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectExec(expected).
+				WithArgs("US").
+				WillReturnResult(sqlmock.NewResult(0, 10))
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			_, err = db.ExecContext(context.Background(), expected, "US")
+			require.NoError(t, err)
+		})
+}
+
 func Test_ExecContext_TraceRowsAffected(t *testing.T) {
 	t.Parallel()
 
@@ -766,6 +797,42 @@ func Test_QueryContext(t *testing.T) {
 				})
 		})
 	}
+}
+
+func Test_QueryContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `SELECT * FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectQuery(expected).
+				WithArgs("US").
+				WillReturnRows(
+					sqlmock.NewRows([]string{"country", "name"}).
+						AddRow("US", "John"),
+				)
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			rows, err := db.QueryContext(context.Background(), expected, "US")
+			require.NoError(t, err)
+
+			defer rows.Close() // nolint: errcheck
+		})
 }
 
 func Test_QueryContext_TraceRows(t *testing.T) {
@@ -1249,6 +1316,95 @@ func Test_Begin_Rollback_Error(t *testing.T) {
 		})
 }
 
+func Test_Begin_ExecContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `DELETE FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectBegin()
+
+			m.ExpectExec(expected).
+				WithArgs("US").
+				WillReturnResult(sqlmock.NewResult(0, 10))
+
+			m.ExpectCommit()
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			tx, err := db.Begin()
+
+			require.NotNil(t, tx)
+			require.NoError(t, err)
+
+			defer tx.Commit() // nolint: errcheck
+
+			_, err = db.ExecContext(context.Background(), expected, "US")
+			require.NoError(t, err)
+		})
+}
+
+func Test_Begin_QueryContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `SELECT * FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectBegin()
+
+			m.ExpectQuery(expected).
+				WithArgs("US").
+				WillReturnRows(
+					sqlmock.NewRows([]string{"country", "name"}).
+						AddRow("US", "John"),
+				)
+
+			m.ExpectCommit()
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			tx, err := db.Begin()
+
+			require.NotNil(t, tx)
+			require.NoError(t, err)
+
+			defer tx.Commit() // nolint: errcheck
+
+			rows, err := db.QueryContext(context.Background(), expected, "US")
+			require.NoError(t, err)
+
+			defer rows.Close() // nolint: errcheck
+		})
+}
+
 func Test_BeginTx_Error(t *testing.T) {
 	t.Parallel()
 
@@ -1523,6 +1679,95 @@ func Test_BeginTx_Rollback_Error(t *testing.T) {
 		})
 }
 
+func Test_BeginTx_ExecContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `DELETE FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectBegin()
+
+			m.ExpectExec(expected).
+				WithArgs("US").
+				WillReturnResult(sqlmock.NewResult(0, 10))
+
+			m.ExpectCommit()
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			tx, err := db.BeginTx(context.Background(), &sql.TxOptions{})
+
+			require.NotNil(t, tx)
+			require.NoError(t, err)
+
+			defer tx.Commit() // nolint: errcheck
+
+			_, err = db.ExecContext(context.Background(), expected, "US")
+			require.NoError(t, err)
+		})
+}
+
+func Test_BeginTx_QueryContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `SELECT * FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectBegin()
+
+			m.ExpectQuery(expected).
+				WithArgs("US").
+				WillReturnRows(
+					sqlmock.NewRows([]string{"country", "name"}).
+						AddRow("US", "John"),
+				)
+
+			m.ExpectCommit()
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			tx, err := db.BeginTx(context.Background(), &sql.TxOptions{})
+
+			require.NotNil(t, tx)
+			require.NoError(t, err)
+
+			defer tx.Commit() // nolint: errcheck
+
+			rows, err := db.QueryContext(context.Background(), expected, "US")
+			require.NoError(t, err)
+
+			defer rows.Close() // nolint: errcheck
+		})
+}
+
 func Test_PrepareContext_Error(t *testing.T) {
 	t.Parallel()
 
@@ -1671,6 +1916,47 @@ func Test_PrepareContext_ExecContext(t *testing.T) {
 				})
 		})
 	}
+}
+
+func Test_PrepareContext_ExecContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `DELETE FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			stmt := m.ExpectPrepare(expected).
+				WillBeClosed()
+
+			stmt.ExpectExec().
+				WithArgs("US").
+				WillReturnResult(sqlmock.NewResult(0, 10))
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			stmt, err := db.PrepareContext(context.Background(), expected)
+
+			require.NotNil(t, stmt)
+			require.NoError(t, err)
+
+			defer stmt.Close() // nolint: errcheck
+
+			_, err = stmt.ExecContext(context.Background(), "US")
+			require.NoError(t, err)
+		})
 }
 
 func Test_PrepareContext_ExecContext_Error(t *testing.T) {
@@ -2026,6 +2312,51 @@ func Test_PrepareContext_QueryContext(t *testing.T) {
 				})
 		})
 	}
+}
+
+func Test_PrepareContext_QueryContext_QueryInContext(t *testing.T) {
+	t.Parallel()
+
+	const expected = `SELECT * FROM data WHERE country = $1`
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			stmt := m.ExpectPrepare(expected)
+
+			stmt.ExpectQuery().
+				WithArgs("US").
+				WillReturnRows(
+					sqlmock.NewRows([]string{"country", "name"}).
+						AddRow("US", "John"),
+				)
+		}),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithSpanNameFormatter(func(ctx context.Context, _ string) string {
+					actual := otelsql.QueryFromContext(ctx)
+
+					assert.Equal(t, expected, actual)
+
+					return ""
+				}),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			stmt, err := db.PrepareContext(context.Background(), expected)
+
+			require.NotNil(t, stmt)
+			require.NoError(t, err)
+
+			defer stmt.Close() // nolint: errcheck
+
+			rows, err := stmt.QueryContext(context.Background(), "US")
+			require.NoError(t, err)
+
+			defer rows.Close() // nolint: errcheck
+		})
 }
 
 func Test_PrepareContext_QueryContext_Error(t *testing.T) {

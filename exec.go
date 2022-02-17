@@ -60,6 +60,7 @@ func execStats(r methodRecorder, method string) execContextFuncMiddleware {
 func execTrace(t methodTracer, traceQuery queryTracer, method string) execContextFuncMiddleware {
 	return func(next execContextFunc) execContextFunc {
 		return func(ctx context.Context, query string, args []driver.NamedValue) (result driver.Result, err error) {
+			ctx = ContextWithQuery(ctx, query)
 			ctx, end := t.Trace(ctx, method)
 
 			defer func() {

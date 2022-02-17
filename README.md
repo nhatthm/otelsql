@@ -197,6 +197,39 @@ func openDB(dsn string) (*sql.DB, error) {
 }
 ```
 
+With traces of `ExecContext()` and `QueryContext()` (either `DB`, `Stmt`, or `Tx`), you could get the SQL query from the context
+using `otelsql.QueryFromContext()`. For example:
+
+```go
+package example
+
+import (
+	"context"
+	"database/sql"
+
+	"github.com/nhatthm/otelsql"
+)
+
+func openDB(dsn string) (*sql.DB, error) {
+	driverName, err := otelsql.Register("my-driver",
+		otelsql.WithSpanNameFormatter(func(ctx context.Context, op string) string {
+			if op != "exec" {
+				return "main-db:" + op
+			}
+
+			query := otelsql.QueryFromContext(ctx)
+
+			// Make span name from the query here and return.
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return sql.Open(driverName, dsn)
+}
+```
+
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
 ### Convert Error to Span Status
@@ -442,7 +475,8 @@ func openDB(dsn string) (*sql.DB, error) {
 | `*Result.LastInsertID`  | Disabled. Use `TraceLastInsertID()` to enable |
 | `*Result.RowsAffected`  | Disabled. Use `TraceRowsAffected()` to enable |
 
-`ExecContext`, `QueryContext`, `QueryRowContext`, `PrepareContext` are always traced without query args unless using `TraceQuery()`, `TraceQueryWithArgs()`, or `TraceQueryWithoutArgs()` option.
+`ExecContext`, `QueryContext`, `QueryRowContext`, `PrepareContext` are always traced without query args unless using `TraceQuery()`, `TraceQueryWithArgs()`,
+or `TraceQueryWithoutArgs()` option.
 
 Using `WithDefaultAttributes(...attribute.KeyValue)` will add extra attributes to the recorded spans.
 

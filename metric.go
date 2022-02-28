@@ -9,6 +9,6 @@ const (
 	dbSQLConnectionsActive         = "db.sql.connections.active"
 	dbSQLConnectionsWaitCount      = "db.sql.connections.wait_count"
 	dbSQLConnectionsWaitDuration   = "db.sql.connections.wait_duration"
-	dbSQLConnectionsIdleClosed     = "db.sql.connections.idle_closed"
+	dbSQLConnectionsIdleClosed     = "db.sql.connections.idle_closed_count"
 	dbSQLConnectionsLifetimeClosed = "db.sql.connections.lifetime_closed"
 )

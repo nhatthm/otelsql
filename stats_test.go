@@ -55,7 +55,7 @@ func TestRecordStats_Error(t *testing.T) {
 		{metric: "db.sql.connections.active"},
 		{metric: "db.sql.connections.wait_count"},
 		{metric: "db.sql.connections.wait_duration"},
-		{metric: "db.sql.connections.idle_closed"},
+		{metric: "db.sql.connections.idle_closed_count"},
 		{metric: "db.sql.connections.lifetime_closed"},
 	}
 

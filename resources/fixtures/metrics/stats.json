@@ -4,7 +4,7 @@
         "Last": 0
     },
     {
-        "Name": "db.sql.connections.idle_closed{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
+        "Name": "db.sql.connections.idle_closed_count{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.system=postgresql}",
         "Last": 0
     },
     {

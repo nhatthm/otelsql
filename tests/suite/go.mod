@@ -12,7 +12,7 @@ require (
 	github.com/nhatthm/otelsql v0.1.0
 	github.com/nhatthm/testcontainers-go-extra v0.1.0
 	github.com/prometheus/client_golang v1.12.1
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/swaggest/assertjson v1.6.8
 	go.opentelemetry.io/otel v1.4.1
 	go.opentelemetry.io/otel/exporters/prometheus v0.27.0

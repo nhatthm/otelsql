@@ -33,7 +33,7 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 
 ## Prerequisites
 
-- `Go >= 1.16`
+- `Go >= 1.17`
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -575,12 +575,12 @@ The traces are almost identical with some minor changes:
             <th colspan="2">Windows</th>
         </tr>
         <tr>
-            <th>go 1.16</th>
             <th>go 1.17</th>
-            <th>go 1.16</th>
+            <th>go 1.18</th>
             <th>go 1.17</th>
-            <th>go 1.16</th>
+            <th>go 1.18</th>
             <th>go 1.17</th>
+            <th>go 1.18</th>
         </tr>
     </thead>
     <tbody>

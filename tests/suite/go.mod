@@ -14,11 +14,11 @@ require (
 	github.com/prometheus/client_golang v1.12.1
 	github.com/stretchr/testify v1.7.1
 	github.com/swaggest/assertjson v1.6.8
-	go.opentelemetry.io/otel v1.5.0
-	go.opentelemetry.io/otel/exporters/prometheus v0.27.0
-	go.opentelemetry.io/otel/metric v0.27.0
-	go.opentelemetry.io/otel/sdk v1.5.0
-	go.opentelemetry.io/otel/sdk/metric v0.27.0
+	go.opentelemetry.io/otel v1.6.0
+	go.opentelemetry.io/otel/exporters/prometheus v0.28.0
+	go.opentelemetry.io/otel/metric v0.28.0
+	go.opentelemetry.io/otel/sdk v1.6.0
+	go.opentelemetry.io/otel/sdk/metric v0.28.0
 )
 
 require (
@@ -29,7 +29,7 @@ require (
 	github.com/cucumber/gherkin-go/v19 v19.0.3 // indirect
 	github.com/cucumber/messages-go/v16 v16.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/go-logr/logr v1.2.2 // indirect
+	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/godogx/resource v0.1.0 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
@@ -51,8 +51,7 @@ require (
 	github.com/swaggest/form/v5 v5.0.1 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
-	go.opentelemetry.io/otel/internal/metric v0.27.0 // indirect
-	go.opentelemetry.io/otel/trace v1.5.0 // indirect
+	go.opentelemetry.io/otel/trace v1.6.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
 

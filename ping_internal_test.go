@@ -7,19 +7,19 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.opentelemetry.io/otel/metric"
+	"go.opentelemetry.io/otel/metric/nonrecording"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 
 	"github.com/nhatthm/otelsql/internal/test/oteltest"
 )
 
 func BenchmarkPingStats(b *testing.B) {
-	meter := metric.NewNoopMeterProvider().Meter("")
+	meter := nonrecording.NewNoopMeter()
 
-	histogram, err := meter.NewFloat64Histogram("latency_ms")
+	histogram, err := meter.SyncFloat64().Histogram("latency_ms")
 	require.NoError(b, err)
 
-	count, err := meter.NewInt64Counter("calls")
+	count, err := meter.SyncInt64().Counter("calls")
 	require.NoError(b, err)
 
 	r := newMethodRecorder(histogram.Record, count.Add,
@@ -142,10 +142,10 @@ func TestPingStats(t *testing.T) {
 				Run(t, func(s oteltest.SuiteContext) {
 					meter := s.MeterProvider().Meter("ping_test")
 
-					histogram, err := meter.NewFloat64Histogram(dbSQLClientLatencyMs)
+					histogram, err := meter.SyncFloat64().Histogram(dbSQLClientLatencyMs)
 					require.NoError(t, err)
 
-					count, err := meter.NewInt64Counter(dbSQLClientCalls)
+					count, err := meter.SyncInt64().Counter(dbSQLClientCalls)
 					require.NoError(t, err)
 
 					r := newMethodRecorder(histogram.Record, count.Add,

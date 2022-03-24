@@ -9,6 +9,9 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
+	"go.opentelemetry.io/otel/metric/instrument"
+	"go.opentelemetry.io/otel/metric/instrument/asyncfloat64"
+	"go.opentelemetry.io/otel/metric/instrument/asyncint64"
 	"go.opentelemetry.io/otel/metric/unit"
 )
 
@@ -18,7 +21,7 @@ const defaultMinimumReadDBStatsInterval = time.Second
 // RecordStats records database statistics for provided sql.DB at the provided interval.
 func RecordStats(db *sql.DB, opts ...StatsOption) error {
 	o := statsOptions{
-		meterProvider:              global.GetMeterProvider(),
+		meterProvider:              global.MeterProvider(),
 		minimumReadDBStatsInterval: defaultMinimumReadDBStatsInterval,
 	}
 
@@ -41,13 +44,13 @@ func recordStats(
 	var (
 		err error
 
-		openConnections   metric.Int64GaugeObserver
-		idleConnections   metric.Int64GaugeObserver
-		activeConnections metric.Int64GaugeObserver
-		waitCount         metric.Int64GaugeObserver
-		waitDuration      metric.Float64GaugeObserver
-		idleClosed        metric.Int64GaugeObserver
-		lifetimeClosed    metric.Int64GaugeObserver
+		openConnections   asyncint64.Gauge
+		idleConnections   asyncint64.Gauge
+		activeConnections asyncint64.Gauge
+		waitCount         asyncint64.Gauge
+		waitDuration      asyncfloat64.Gauge
+		idleClosed        asyncint64.Gauge
+		lifetimeClosed    asyncint64.Gauge
 
 		dbStats     sql.DBStats
 		lastDBStats time.Time
@@ -59,7 +62,71 @@ func recordStats(
 	lock.Lock()
 	defer lock.Unlock()
 
-	batchObserver := meter.NewBatchObserver(func(ctx context.Context, result metric.BatchObserverResult) {
+	if openConnections, err = meter.AsyncInt64().Gauge(
+		dbSQLConnectionsOpen,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription("Count of open connections in the pool"),
+	); err != nil {
+		return err
+	}
+
+	if idleConnections, err = meter.AsyncInt64().Gauge(
+		dbSQLConnectionsIdle,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription("Count of idle connections in the pool"),
+	); err != nil {
+		return err
+	}
+
+	if activeConnections, err = meter.AsyncInt64().Gauge(
+		dbSQLConnectionsActive,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription("Count of active connections in the pool"),
+	); err != nil {
+		return err
+	}
+
+	if waitCount, err = meter.AsyncInt64().Gauge(
+		dbSQLConnectionsWaitCount,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription("The total number of connections waited for"),
+	); err != nil {
+		return err
+	}
+
+	if waitDuration, err = meter.AsyncFloat64().Gauge(
+		dbSQLConnectionsWaitDuration,
+		instrument.WithUnit(unit.Milliseconds),
+		instrument.WithDescription("The total time blocked waiting for a new connection"),
+	); err != nil {
+		return err
+	}
+
+	if idleClosed, err = meter.AsyncInt64().Gauge(
+		dbSQLConnectionsIdleClosed,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
+	); err != nil {
+		return err
+	}
+
+	if lifetimeClosed, err = meter.AsyncInt64().Gauge(
+		dbSQLConnectionsLifetimeClosed,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
+	); err != nil {
+		return err
+	}
+
+	return meter.RegisterCallback([]instrument.Asynchronous{
+		openConnections,
+		idleConnections,
+		activeConnections,
+		waitCount,
+		waitDuration,
+		idleClosed,
+		lifetimeClosed,
+	}, func(ctx context.Context) {
 		lock.Lock()
 		defer lock.Unlock()
 
@@ -69,73 +136,12 @@ func recordStats(
 			lastDBStats = now
 		}
 
-		result.Observe(
-			attrs,
-			openConnections.Observation(int64(dbStats.OpenConnections)),
-			idleConnections.Observation(int64(dbStats.Idle)),
-			activeConnections.Observation(int64(dbStats.InUse)),
-			waitCount.Observation(dbStats.WaitCount),
-			waitDuration.Observation(float64(dbStats.WaitDuration.Nanoseconds())/1e6),
-			idleClosed.Observation(dbStats.MaxIdleClosed),
-			lifetimeClosed.Observation(dbStats.MaxLifetimeClosed),
-		)
+		openConnections.Observe(ctx, int64(dbStats.OpenConnections), attrs...)
+		idleConnections.Observe(ctx, int64(dbStats.Idle), attrs...)
+		activeConnections.Observe(ctx, int64(dbStats.InUse), attrs...)
+		waitCount.Observe(ctx, dbStats.WaitCount, attrs...)
+		waitDuration.Observe(ctx, float64(dbStats.WaitDuration.Nanoseconds())/1e6, attrs...)
+		idleClosed.Observe(ctx, dbStats.MaxIdleClosed, attrs...)
+		lifetimeClosed.Observe(ctx, dbStats.MaxLifetimeClosed, attrs...)
 	})
-
-	if openConnections, err = batchObserver.NewInt64GaugeObserver(
-		dbSQLConnectionsOpen,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription("Count of open connections in the pool"),
-	); err != nil {
-		return err
-	}
-
-	if idleConnections, err = batchObserver.NewInt64GaugeObserver(
-		dbSQLConnectionsIdle,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription("Count of idle connections in the pool"),
-	); err != nil {
-		return err
-	}
-
-	if activeConnections, err = batchObserver.NewInt64GaugeObserver(
-		dbSQLConnectionsActive,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription("Count of active connections in the pool"),
-	); err != nil {
-		return err
-	}
-
-	if waitCount, err = batchObserver.NewInt64GaugeObserver(
-		dbSQLConnectionsWaitCount,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription("The total number of connections waited for"),
-	); err != nil {
-		return err
-	}
-
-	if waitDuration, err = batchObserver.NewFloat64GaugeObserver(
-		dbSQLConnectionsWaitDuration,
-		metric.WithUnit(unit.Milliseconds),
-		metric.WithDescription("The total time blocked waiting for a new connection"),
-	); err != nil {
-		return err
-	}
-
-	if idleClosed, err = batchObserver.NewInt64GaugeObserver(
-		dbSQLConnectionsIdleClosed,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
-	); err != nil {
-		return err
-	}
-
-	if lifetimeClosed, err = batchObserver.NewInt64GaugeObserver(
-		dbSQLConnectionsLifetimeClosed,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
-	); err != nil {
-		return err
-	}
-
-	return nil
 }

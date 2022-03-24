@@ -69,7 +69,7 @@ func TestRecordStats_Error(t *testing.T) {
 					db, err := newDB(sc.DatabaseDSN())
 					require.NoError(t, err)
 
-					_, err = sc.MeterProvider().Meter(instrumentationName).NewInt64Counter(tc.metric)
+					_, err = sc.MeterProvider().Meter(instrumentationName).SyncInt64().Counter(tc.metric)
 					require.NoError(t, err)
 
 					err = otelsql.RecordStats(db,

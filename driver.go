@@ -10,8 +10,8 @@ import (
 	"sync"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
+	"go.opentelemetry.io/otel/metric/instrument"
 	"go.opentelemetry.io/otel/metric/unit"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	"go.opentelemetry.io/otel/trace"
@@ -83,7 +83,7 @@ func RegisterWithSource(driverName string, source string, options ...DriverOptio
 // Wrap takes a SQL driver and wraps it with OpenCensus instrumentation.
 func Wrap(d driver.Driver, opts ...DriverOption) driver.Driver {
 	o := driverOptions{
-		meterProvider:  global.GetMeterProvider(),
+		meterProvider:  global.MeterProvider(),
 		tracerProvider: otel.GetTracerProvider(),
 	}
 
@@ -127,15 +127,15 @@ func newConnConfig(opts driverOptions) connConfig {
 		traceWithSpanNameFormatter(opts.trace.spanNameFormatter),
 	)
 
-	latencyMsHistogram, err := meter.NewFloat64Histogram(dbSQLClientLatencyMs,
-		metric.WithUnit(unit.Milliseconds),
-		metric.WithDescription(`The distribution of latencies of various calls in milliseconds`),
+	latencyMsHistogram, err := meter.SyncFloat64().Histogram(dbSQLClientLatencyMs,
+		instrument.WithUnit(unit.Milliseconds),
+		instrument.WithDescription(`The distribution of latencies of various calls in milliseconds`),
 	)
 	handleErr(err)
 
-	callsCounter, err := meter.NewInt64Counter(dbSQLClientCalls,
-		metric.WithUnit(unit.Dimensionless),
-		metric.WithDescription(`The number of various calls of methods`),
+	callsCounter, err := meter.SyncInt64().Counter(dbSQLClientCalls,
+		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithDescription(`The number of various calls of methods`),
 	)
 	handleErr(err)
 

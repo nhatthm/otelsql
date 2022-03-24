@@ -43,6 +43,13 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 go get github.com/nhatthm/otelsql
 ```
 
+Compatibility
+
+| `otelsql` | `go.opentelemetry.io/otel` |
+|:---------:|:--------------------------:|
+| `v0.1.*`  |    `v1.3.0` ~> `v1.5.0`    |
+| `v0.2.*`  |    `v1.6.0` ~> `latest`    |
+
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
 ## Usage

@@ -80,7 +80,7 @@ func RegisterWithSource(driverName string, source string, options ...DriverOptio
 	return "", errors.New("unable to register driver, all slots have been taken")
 }
 
-// Wrap takes a SQL driver and wraps it with OpenCensus instrumentation.
+// Wrap takes a SQL driver and wraps it with OpenTelemetry instrumentation.
 func Wrap(d driver.Driver, opts ...DriverOption) driver.Driver {
 	o := driverOptions{
 		meterProvider:  global.MeterProvider(),

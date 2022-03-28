@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/Masterminds/squirrel v1.5.2
 	github.com/bool64/sqluct v0.1.9
-	github.com/cucumber/godog v0.12.4
+	github.com/cucumber/godog v0.12.5
 	github.com/godogx/clocksteps v0.1.1
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/nhatthm/go-clock v0.6.0

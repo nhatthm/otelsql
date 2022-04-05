@@ -9,7 +9,7 @@ require (
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql/tests/suite v0.0.0
 	github.com/nhatthm/testcontainers-go-extra v0.1.0
-	github.com/nhatthm/testcontainers-go-registry v0.2.0
+	github.com/nhatthm/testcontainers-go-registry v0.3.0
 )
 
 require (
@@ -20,7 +20,7 @@ require (
 	github.com/bool64/ctxd v1.1.2 // indirect
 	github.com/bool64/shared v0.1.4 // indirect
 	github.com/bool64/sqluct v0.1.9 // indirect
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
+	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/containerd/cgroups v1.0.3 // indirect
 	github.com/containerd/containerd v1.6.2 // indirect
@@ -74,7 +74,7 @@ require (
 	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/swaggest/assertjson v1.6.8 // indirect
 	github.com/swaggest/form/v5 v5.0.1 // indirect
-	github.com/testcontainers/testcontainers-go v0.12.0 // indirect
+	github.com/testcontainers/testcontainers-go v0.12.1-0.20220203161022-95e84a09f45e // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opencensus.io v0.23.0 // indirect
@@ -85,12 +85,11 @@ require (
 	go.opentelemetry.io/otel/sdk/metric v0.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.6.1 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
-	golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886 // indirect
-	google.golang.org/genproto v0.0.0-20220328180837-c47567c462d1 // indirect
+	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
+	golang.org/x/sys v0.0.0-20220405052023-b1e9470b6e64 // indirect
+	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
 	google.golang.org/grpc v1.45.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
 

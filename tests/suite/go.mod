@@ -74,7 +74,7 @@ require (
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.opentelemetry.io/otel/trace v1.6.1 // indirect
-	golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886 // indirect
+	golang.org/x/sys v0.0.0-20220405052023-b1e9470b6e64 // indirect
 	google.golang.org/grpc v1.45.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
@@ -88,8 +88,8 @@ require (
 	github.com/godogx/dbsteps v0.1.2
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/moby/sys/mount v0.3.1 // indirect
-	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
-	google.golang.org/genproto v0.0.0-20220328180837-c47567c462d1 // indirect
+	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
+	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
 

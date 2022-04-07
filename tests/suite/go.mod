@@ -14,10 +14,10 @@ require (
 	github.com/prometheus/client_golang v1.12.1
 	github.com/stretchr/testify v1.7.1
 	github.com/swaggest/assertjson v1.6.8
-	go.opentelemetry.io/otel v1.6.1
+	go.opentelemetry.io/otel v1.6.2
 	go.opentelemetry.io/otel/exporters/prometheus v0.28.0
 	go.opentelemetry.io/otel/metric v0.28.0
-	go.opentelemetry.io/otel/sdk v1.6.1
+	go.opentelemetry.io/otel/sdk v1.6.2
 	go.opentelemetry.io/otel/sdk/metric v0.28.0
 )
 
@@ -27,7 +27,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bool64/ctxd v1.1.2 // indirect
 	github.com/bool64/shared v0.1.4 // indirect
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
+	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/containerd/cgroups v1.0.3 // indirect
 	github.com/cucumber/gherkin-go/v19 v19.0.3 // indirect
@@ -69,14 +69,13 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/swaggest/form/v5 v5.0.1 // indirect
-	github.com/testcontainers/testcontainers-go v0.12.0 // indirect
+	github.com/testcontainers/testcontainers-go v0.13.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	go.opentelemetry.io/otel/trace v1.6.1 // indirect
-	golang.org/x/sys v0.0.0-20220405052023-b1e9470b6e64 // indirect
+	go.opentelemetry.io/otel/trace v1.6.2 // indirect
+	golang.org/x/sys v0.0.0-20220406163625-3f8b81556e12 // indirect
 	google.golang.org/grpc v1.45.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
 
@@ -89,7 +88,7 @@ require (
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/moby/sys/mount v0.3.1 // indirect
 	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
-	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
+	google.golang.org/genproto v0.0.0-20220407144326-9054f6ed7bac // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
 

@@ -945,8 +945,9 @@ github.com/ncw/swift v1.0.47/go.mod h1:23YIA4yWVnGwv2dQlN4bB7egfYX6YLn0Yo/S6zZO/
 github.com/neo4j/neo4j-go-driver v1.8.1-0.20200803113522-b626aa943eba/go.mod h1:ncO5VaFWh0Nrt+4KT4mOZboaczBZcLuHrG+/sUeP8gI=
 github.com/nhatthm/go-clock v0.6.0 h1:R8I8slcnValPDdM4Cd3Tk3JSSDnZk3nPuLzzPFInYtU=
 github.com/nhatthm/go-clock v0.6.0/go.mod h1:KASu97ux5p0fpVsazI4sGJN+HlzeobKsvEtjaFQUXjc=
-github.com/nhatthm/testcontainers-go-extra v0.1.0 h1:biFCEoMM5eqhdjAgnWpHRHwVoiJ+dcbOre78o7ej0Jw=
 github.com/nhatthm/testcontainers-go-extra v0.1.0/go.mod h1:/+GMOFUckWgeH9hnb9JRd9QT20Ha9IctG8it7nGZSps=
+github.com/nhatthm/testcontainers-go-extra v0.2.0 h1:JtOhyloJfWNb7G7snNz53wEF5//5ie1DThV/QzMZY28=
+github.com/nhatthm/testcontainers-go-extra v0.2.0/go.mod h1:7D6TNVfrDSsI/q6LsMqPtUVd8m1U+xR2jydZBKaK4NY=
 github.com/nhatthm/testcontainers-go-registry v0.3.0 h1:DKico3DL+0AiRK2Fr0a/QXXrzqFJ/rumQDl01LTm/PE=
 github.com/nhatthm/testcontainers-go-registry v0.3.0/go.mod h1:IxJy5CO/hUqx+mb7nB+OvpgdkSYcR+zhQoCBLznNvXQ=
 github.com/nhatthm/timeparser v0.2.0 h1:iItJSmsdRUMuEj/sTCcl1V1KT96TbuQ03uRpVDudodo=

@@ -8,7 +8,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.15.1
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql/tests/suite v0.0.0
-	github.com/nhatthm/testcontainers-go-extra v0.1.0
+	github.com/nhatthm/testcontainers-go-extra v0.2.0
 	github.com/nhatthm/testcontainers-go-registry v0.3.0
 )
 

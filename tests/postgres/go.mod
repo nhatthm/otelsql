@@ -8,7 +8,7 @@ require (
 	github.com/lib/pq v1.10.5
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql/tests/suite v0.0.0-20220127125055-5da30ca2778a
-	github.com/nhatthm/testcontainers-go-extra v0.1.0
+	github.com/nhatthm/testcontainers-go-extra v0.2.0
 	github.com/nhatthm/testcontainers-go-registry v0.3.0
 )
 

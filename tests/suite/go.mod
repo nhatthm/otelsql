@@ -10,7 +10,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql v0.1.0
-	github.com/nhatthm/testcontainers-go-extra v0.1.0
+	github.com/nhatthm/testcontainers-go-extra v0.2.0
 	github.com/prometheus/client_golang v1.12.1
 	github.com/stretchr/testify v1.7.1
 	github.com/swaggest/assertjson v1.6.8

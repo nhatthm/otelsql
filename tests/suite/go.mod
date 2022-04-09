@@ -10,14 +10,14 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql v0.1.0
-	github.com/nhatthm/testcontainers-go-extra v0.1.0
+	github.com/nhatthm/testcontainers-go-extra v0.2.0
 	github.com/prometheus/client_golang v1.12.1
 	github.com/stretchr/testify v1.7.1
 	github.com/swaggest/assertjson v1.6.8
-	go.opentelemetry.io/otel v1.6.2
+	go.opentelemetry.io/otel v1.6.3
 	go.opentelemetry.io/otel/exporters/prometheus v0.28.0
 	go.opentelemetry.io/otel/metric v0.28.0
-	go.opentelemetry.io/otel/sdk v1.6.2
+	go.opentelemetry.io/otel/sdk v1.6.3
 	go.opentelemetry.io/otel/sdk/metric v0.28.0
 )
 
@@ -73,7 +73,7 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	go.opentelemetry.io/otel/trace v1.6.2 // indirect
+	go.opentelemetry.io/otel/trace v1.6.3 // indirect
 	golang.org/x/sys v0.0.0-20220406163625-3f8b81556e12 // indirect
 	google.golang.org/grpc v1.45.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect

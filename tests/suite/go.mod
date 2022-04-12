@@ -16,7 +16,7 @@ require (
 	github.com/swaggest/assertjson v1.6.8
 	go.opentelemetry.io/otel v1.6.3
 	go.opentelemetry.io/otel/exporters/prometheus v0.28.0
-	go.opentelemetry.io/otel/metric v0.28.0
+	go.opentelemetry.io/otel/metric v0.29.0
 	go.opentelemetry.io/otel/sdk v1.6.3
 	go.opentelemetry.io/otel/sdk/metric v0.28.0
 )

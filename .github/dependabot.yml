@@ -19,33 +19,25 @@ updates:
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: "go.opentelemetry.io/otel"
-      - dependency-name: "go.opentelemetry.io/otel/exporters*"
-      - dependency-name: "go.opentelemetry.io/otel/sdk*"
+      - dependency-name: "go.opentelemetry.io/*"
 
   - package-ecosystem: "gomod"
     directory: "/tests/postgres"
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: "go.opentelemetry.io/otel"
-      - dependency-name: "go.opentelemetry.io/otel/exporters*"
-      - dependency-name: "go.opentelemetry.io/otel/sdk*"
+      - dependency-name: "go.opentelemetry.io/*"
 
   - package-ecosystem: "gomod"
     directory: "/tests/mysql"
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: "go.opentelemetry.io/otel"
-      - dependency-name: "go.opentelemetry.io/otel/exporters*"
-      - dependency-name: "go.opentelemetry.io/otel/sdk*"
+      - dependency-name: "go.opentelemetry.io/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: "go.opentelemetry.io/otel"
-      - dependency-name: "go.opentelemetry.io/otel/exporters*"
-      - dependency-name: "go.opentelemetry.io/otel/sdk*"
+      - dependency-name: "go.opentelemetry.io/*"

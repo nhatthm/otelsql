@@ -7,7 +7,7 @@ require (
 	github.com/bool64/sqluct v0.1.9
 	github.com/cucumber/godog v0.12.5
 	github.com/godogx/clocksteps v0.1.1
-	github.com/jmoiron/sqlx v1.3.4
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql v0.1.0
 	github.com/nhatthm/testcontainers-go-extra v0.2.0

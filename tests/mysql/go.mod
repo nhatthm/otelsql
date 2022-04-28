@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/Masterminds/squirrel v1.5.2
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/golang-migrate/migrate/v4 v4.15.1
+	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql/tests/suite v0.0.0
 	github.com/nhatthm/testcontainers-go-extra v0.2.0

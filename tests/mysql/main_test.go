@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/Masterminds/squirrel"
-	_ "github.com/go-sql-driver/mysql"                      // Database driver
-	_ "github.com/golang-migrate/migrate/v4/database/mysql" // Database driver
+	_ "github.com/go-sql-driver/mysql" // Database driver
 	"github.com/nhatthm/testcontainers-go-extra"
 	"github.com/nhatthm/testcontainers-go-registry/database/mysql"
 

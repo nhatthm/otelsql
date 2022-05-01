@@ -15,10 +15,10 @@ require (
 	github.com/stretchr/testify v1.7.1
 	github.com/swaggest/assertjson v1.6.8
 	go.opentelemetry.io/otel v1.7.0
-	go.opentelemetry.io/otel/exporters/prometheus v0.29.0
+	go.opentelemetry.io/otel/exporters/prometheus v0.30.0
 	go.opentelemetry.io/otel/metric v0.30.0
-	go.opentelemetry.io/otel/sdk v1.6.3
-	go.opentelemetry.io/otel/sdk/metric v0.29.0
+	go.opentelemetry.io/otel/sdk v1.7.0
+	go.opentelemetry.io/otel/sdk/metric v0.30.0
 )
 
 require (
@@ -63,7 +63,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
-	github.com/prometheus/common v0.33.0 // indirect
+	github.com/prometheus/common v0.34.0 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
@@ -75,7 +75,7 @@ require (
 	go.opencensus.io v0.23.0 // indirect
 	go.opentelemetry.io/otel/trace v1.7.0 // indirect
 	golang.org/x/sys v0.0.0-20220412071739-889880a91fd5 // indirect
-	google.golang.org/grpc v1.45.0 // indirect
+	google.golang.org/grpc v1.46.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
 
@@ -86,9 +86,9 @@ require (
 	github.com/docker/docker v20.10.14+incompatible // indirect
 	github.com/godogx/dbsteps v0.1.2
 	github.com/magiconair/properties v1.8.6 // indirect
-	github.com/moby/sys/mount v0.3.1 // indirect
+	github.com/moby/sys/mount v0.3.2 // indirect
 	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
-	google.golang.org/genproto v0.0.0-20220407144326-9054f6ed7bac // indirect
+	google.golang.org/genproto v0.0.0-20220429170224-98d788798c3e // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
 

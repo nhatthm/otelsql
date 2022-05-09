@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Masterminds/squirrel v1.5.2
-	github.com/jackc/pgx/v4 v4.16.0
+	github.com/jackc/pgx/v4 v4.16.1
 	github.com/lib/pq v1.10.5
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql/tests/suite v0.0.0-20220127125055-5da30ca2778a
@@ -50,7 +50,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/iancoleman/orderedmap v0.2.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
-	github.com/jackc/pgconn v1.12.0 // indirect
+	github.com/jackc/pgconn v1.12.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgproto3/v2 v2.3.0 // indirect

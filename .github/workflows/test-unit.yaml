@@ -52,7 +52,7 @@ jobs:
           make test-unit
 
       - name: Upload code coverage (unit)
-        if: matrix.go-version == env.GO_LATEST_VERSION
+        if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
         uses: codecov/codecov-action@v3
         with:
           files: ./unit.coverprofile

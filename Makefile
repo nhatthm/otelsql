@@ -12,36 +12,52 @@ ifeq ($(GOARCH), 386)
 endif
 
 goModules := $(shell find . -name 'go.mod' | xargs dirname)
+tidyGoModules := $(subst -.,-module,$(subst /,-,$(addprefix tidy-,$(goModules))))
 lintGoModules := $(subst -.,-module,$(subst /,-,$(addprefix lint-,$(goModules))))
 compatibilityTests := $(addprefix test-compatibility-,$(filter-out suite,$(subst ./,,$(shell cd tests;find . -name 'go.mod' | xargs dirname))))
 
-.PHONY: $(VENDOR_DIR) $(lintGoModules) $(compatibilityTests) lint test test-unit test-compatibility
-
+.PHONY: $(VENDOR_DIR)
 $(VENDOR_DIR):
 	@mkdir -p $(VENDOR_DIR)
-	@$(GO) mod vendor
 	@$(GO) mod tidy
+	@$(GO) mod vendor
 
+.PHONY: $(lintGoModules)
 $(lintGoModules):
 	$(eval GO_MODULE := "$(subst lint/module,.,$(subst -,/,$(subst lint-module-,,$@)))")
 
 	@echo ">> module: $(GO_MODULE)"
 	@cd "$(GO_MODULE)"; $(GOLANGCI_LINT) run
 
+.PHONY: lint
 lint: $(lintGoModules)
 
-test: test-unit test-compatibility
+.PHONY: $(tidyGoModules)
+$(tidyGoModules):
+	$(eval GO_MODULE := "$(subst tidy/module,.,$(subst -,/,$(subst tidy-module-,,$@)))")
+
+	@echo ">> module: $(GO_MODULE)"
+	@cd "$(GO_MODULE)"; $(GO) mod tidy -compat=1.17
+
+.PHONY: tidy
+tidy: $(tidyGoModules)
 
 ## Run unit tests
+.PHONY: test-unit
 test-unit:
 	@echo ">> unit test"
 	@$(GO) test -gcflags=-l -coverprofile=unit.coverprofile -covermode=atomic $(TEST_FLAGS) ./...
 	@echo
 
+.PHONY: $(compatibilityTests)
 $(compatibilityTests):
 	$(eval COMPATIBILITY_TEST := "$(subst test-compatibility-,,$@)")
 	@echo ">> compatibility test: $(COMPATIBILITY_TEST)"
 	@cd "tests/$(COMPATIBILITY_TEST)"; $(GO) test -gcflags=-l -v ./...
 	@echo
 
+.PHONY: test-compatibility
 test-compatibility: $(compatibilityTests)
+
+.PHONY: test
+test: test-unit test-compatibility

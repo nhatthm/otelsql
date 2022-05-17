@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/Masterminds/squirrel v1.5.2
 	github.com/jackc/pgx/v4 v4.16.1
-	github.com/lib/pq v1.10.5
+	github.com/lib/pq v1.10.6
 	github.com/nhatthm/go-clock v0.6.0
 	github.com/nhatthm/otelsql/tests/suite v0.0.0-20220127125055-5da30ca2778a
 	github.com/nhatthm/testcontainers-go-extra v0.2.0

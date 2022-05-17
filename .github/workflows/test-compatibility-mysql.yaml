@@ -4,19 +4,26 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 env:
   GO111MODULE: "on"
+  GO_VERSION: 1.17
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        go-version: [ 1.17.x, 1.18.x ]
-        arch: [ "386", amd64 ]
+        go-version: [ 1.17.x ]
+        arch: [ amd64 ]
         mysql-version: [ "8" ]
+#        go-version: [ 1.17.x, 1.18.x ]
+#        arch: [ "386", amd64 ]
+#        mysql-version: [ "8" ]
     runs-on: ubuntu-latest
     steps:
       - name: Install Go
@@ -24,26 +31,26 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Go cache
-        uses: actions/cache@v3
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-mysql-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-mysql-cache
-
-      - name: Test
-        id: test
-        env:
-          GOARCH: ${{ matrix.arch }}
-          MYSQL_VERSION: ${{ matrix.mysql-version }}
-        run: |
-          make test-compatibility-mysql
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Go cache
+#        uses: actions/cache@v3
+#        with:
+#          # In order:
+#          # * Module download cache
+#          # * Build cache (Linux)
+#          path: |
+#            ~/go/pkg/mod
+#            ~/.cache/go-build
+#          key: ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-mysql-cache-${{ hashFiles('**/go.sum') }}
+#          restore-keys: |
+#            ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-mysql-cache
+#
+#      - name: Test
+#        id: test
+#        env:
+#          GOARCH: ${{ matrix.arch }}
+#          MYSQL_VERSION: ${{ matrix.mysql-version }}
+#        run: |
+#          make test-compatibility-mysql

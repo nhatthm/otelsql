@@ -21,7 +21,7 @@ jobs:
       - name: set-version
         run: .github/scripts/set_version.sh "${{ github.event.inputs.version }}"
 
-      - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
+      - uses: EndBug/add-and-commit@v9
         with:
           add: version.go
           default_author: github_actions

@@ -4,23 +4,29 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 env:
   GO111MODULE: "on"
   GO_LATEST_VERSION: "1.18.x"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-        go-version: [ 1.17.x, 1.18.x ]
-        arch: ["386", amd64]
-        exclude:
-          - os: macos-latest
-            arch: "386"
+        os: [ ubuntu-latest ]
+        go-version: [ 1.17.x ]
+        arch: [amd64]
+#        os: [ ubuntu-latest, macos-latest, windows-latest ]
+#        go-version: [ 1.17.x, 1.18.x ]
+#        arch: [ "386", amd64 ]
+#        exclude:
+#          - os: macos-latest
+#            arch: "386"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Go
@@ -28,39 +34,39 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Go cache
-        uses: actions/cache@v3
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
-
-      - name: Test
-        id: test
-        env:
-          GOARCH: ${{ matrix.arch }}
-        run: |
-          make test-unit
-
-      - name: Upload code coverage (unit)
-        if: matrix.go-version == env.GO_LATEST_VERSION
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./unit.coverprofile
-          flags: unittests-${{ runner.os }}-${{ runner.arch }}
-
-#      - name: Upload code coverage (features)
-#        if: matrix.go-version == env.GO_LATEST_VERSION
-#        uses: codecov/codecov-action@v1
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Go cache
+#        uses: actions/cache@v3
 #        with:
-#          file: ./features.coverprofile
-#          flags: featurestests-${{ runner.os }}
+#          # In order:
+#          # * Module download cache
+#          # * Build cache (Linux)
+#          path: |
+#            ~/go/pkg/mod
+#            ~/.cache/go-build
+#          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
+#          restore-keys: |
+#            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
+#
+#      - name: Test
+#        id: test
+#        env:
+#          GOARCH: ${{ matrix.arch }}
+#        run: |
+#          make test-unit
+#
+#      - name: Upload code coverage (unit)
+#        if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
+#        uses: codecov/codecov-action@v3
+#        with:
+#          files: ./unit.coverprofile
+#          flags: unittests-${{ runner.os }}-${{ runner.arch }}
+#
+##      - name: Upload code coverage (features)
+##        if: matrix.go-version == env.GO_LATEST_VERSION
+##        uses: codecov/codecov-action@v1
+##        with:
+##          file: ./features.coverprofile
+##          flags: featurestests-${{ runner.os }}

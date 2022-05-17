@@ -4,19 +4,26 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 env:
   GO111MODULE: "on"
+  GO_VERSION: 1.17
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        go-version: [ 1.17.x, 1.18.x ]
-        arch: [ "386", amd64 ]
-        postgres-version: [ "12", "13", "14" ]
+        go-version: [ 1.17.x ]
+        arch: [ amd64 ]
+        postgres-version: [ "14" ]
+#        go-version: [ 1.17.x, 1.18.x ]
+#        arch: [ "386", amd64 ]
+#        postgres-version: [ "12", "13", "14" ]
     runs-on: ubuntu-latest
     steps:
       - name: Install Go
@@ -24,27 +31,27 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Go cache
-        uses: actions/cache@v3
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-postgres-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-postgres-cache
-
-      - name: Test
-        id: test
-        env:
-          GOARCH: ${{ matrix.arch }}
-          POSTGRES_VERSION: ${{ matrix.postgres-version }}-alpine
-          POSTGRES_DRIVER: postgres
-        run: |
-          make test-compatibility-postgres
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Go cache
+#        uses: actions/cache@v3
+#        with:
+#          # In order:
+#          # * Module download cache
+#          # * Build cache (Linux)
+#          path: |
+#            ~/go/pkg/mod
+#            ~/.cache/go-build
+#          key: ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-postgres-cache-${{ hashFiles('**/go.sum') }}
+#          restore-keys: |
+#            ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-postgres-cache
+#
+#      - name: Test
+#        id: test
+#        env:
+#          GOARCH: ${{ matrix.arch }}
+#          POSTGRES_VERSION: ${{ matrix.postgres-version }}-alpine
+#          POSTGRES_DRIVER: postgres
+#        run: |
+#          make test-compatibility-postgres

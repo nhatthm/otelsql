@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"go.opentelemetry.io/otel/attribute"
-	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
 // float64Recorder adds a new value to the list of Histogram's records.

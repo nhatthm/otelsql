@@ -1,0 +1,208 @@
+name: pr
+
+on:
+  pull_request:
+
+env:
+  GO111MODULE: "on"
+  GO_VERSION: 1.17
+  GO_LATEST_VERSION: "1.18.x"
+  GOLANGCI_LINT_VERSION: v1.45.0
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  precondition:
+    name: precondition
+    outputs:
+      passed: ${{ steps.check.outputs.passed == '' && 'true' || steps.check.outputs.passed }}
+    runs-on: ubuntu-latest
+    env:
+      IS_DEPENDABOT_PR: ${{ startsWith(github.head_ref, 'dependabot/go_modules/') && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@v3
+        if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Go cache
+        uses: actions/cache@v3
+        if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
+        with:
+          # In order:
+          # * Module download cache
+          # * Build cache (Linux)
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache
+
+      - id: check
+        if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
+        run: .github/scripts/pr_precondition.sh
+
+  lint:
+    name: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        module: [ ".", "tests/suite", "tests/mysql", "tests/postgres" ]
+    runs-on: ubuntu-latest
+    needs: precondition
+    if: ${{ needs.precondition.outputs.passed == 'true' }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: ${{ env.GOLANGCI_LINT_VERSION }}
+          working-directory: ${{ matrix.module }}
+
+      - name: gherkin-lint
+        uses: nhatthm/gherkin-lint-action@v1.0.0
+        with:
+          feature_files: tests/features/*
+          config_file: tests/.gherkin-lintrc
+
+  test-unit:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        go-version: [ 1.17.x, 1.18.x ]
+        arch: [ "386", amd64 ]
+        exclude:
+          - os: macos-latest
+            arch: "386"
+    runs-on: ${{ matrix.os }}
+    needs: precondition
+    if: ${{ needs.precondition.outputs.passed == 'true' }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Go cache
+        uses: actions/cache@v3
+        with:
+          # In order:
+          # * Module download cache
+          # * Build cache (Linux)
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
+
+      - name: Test
+        id: test
+        env:
+          GOARCH: ${{ matrix.arch }}
+        run: |
+          make test-unit
+
+      - name: Upload code coverage (unit)
+        if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./unit.coverprofile
+          flags: unittests-${{ runner.os }}-${{ runner.arch }}
+
+  test-compatibility-postgres:
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [ 1.17.x, 1.18.x ]
+        arch: [ "386", amd64 ]
+        postgres-version: [ "12", "13", "14" ]
+        postgres-driver: [ "postgres", "pgx" ]
+    runs-on: ubuntu-latest
+    needs: test-unit
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Go cache
+        uses: actions/cache@v3
+        with:
+          # In order:
+          # * Module download cache
+          # * Build cache (Linux)
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
+
+      - name: Test
+        id: test
+        env:
+          GOARCH: ${{ matrix.arch }}
+          POSTGRES_VERSION: ${{ matrix.postgres-version }}-alpine
+          POSTGRES_DRIVER: ${{ matrix.postgres-driver }}
+        run: |
+          make test-compatibility-postgres
+
+  test-compatibility-mysql:
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [ 1.17.x, 1.18.x ]
+        arch: [ "386", amd64 ]
+        mysql-version: [ "8" ]
+    runs-on: ubuntu-latest
+    needs: test-unit
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Go cache
+        uses: actions/cache@v3
+        with:
+          # In order:
+          # * Module download cache
+          # * Build cache (Linux)
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
+
+      - name: Test
+        id: test
+        env:
+          GOARCH: ${{ matrix.arch }}
+          MYSQL_VERSION: ${{ matrix.mysql-version }}
+        run: |
+          make test-compatibility-mysql

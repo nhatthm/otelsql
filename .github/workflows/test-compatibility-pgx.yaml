@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 env:
   GO111MODULE: "on"
+  GO_VERSION: 1.17
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -36,9 +40,9 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-postgres-cache-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-compatibility-postgres-cache
+            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
 
       - name: Test
         id: test

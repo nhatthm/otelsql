@@ -1,0 +1,51 @@
+name: pr-tidy
+
+on:
+  pull_request_target:
+
+env:
+  GO111MODULE: "on"
+  GO_VERSION: 1.17
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  tidy:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.head_ref, 'dependabot/go_modules/')  }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PUSH_TOKEN }}
+          ref: ${{ github.head_ref }}
+
+      - name: Go cache
+        uses: actions/cache@v3
+        with:
+          # In order:
+          # * Module download cache
+          # * Build cache (Linux)
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache
+
+      - name: Tidy
+        run: |
+          make tidy
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          default_author: "github_actions"
+          message: "go mod tidy"
+          push: true

@@ -4,11 +4,14 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 env:
   GO111MODULE: "on"
   GO_LATEST_VERSION: "1.18.x"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -17,7 +20,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         go-version: [ 1.17.x, 1.18.x ]
-        arch: ["386", amd64]
+        arch: [ "386", amd64 ]
         exclude:
           - os: macos-latest
             arch: "386"
@@ -52,15 +55,8 @@ jobs:
           make test-unit
 
       - name: Upload code coverage (unit)
-        if: matrix.go-version == env.GO_LATEST_VERSION
+        if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
         uses: codecov/codecov-action@v3
         with:
           files: ./unit.coverprofile
           flags: unittests-${{ runner.os }}-${{ runner.arch }}
-
-#      - name: Upload code coverage (features)
-#        if: matrix.go-version == env.GO_LATEST_VERSION
-#        uses: codecov/codecov-action@v1
-#        with:
-#          file: ./features.coverprofile
-#          flags: featurestests-${{ runner.os }}

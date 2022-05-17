@@ -7,6 +7,10 @@ env:
   GO111MODULE: "on"
   GO_VERSION: 1.17
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tidy:
     runs-on: ubuntu-latest

@@ -22,18 +22,14 @@ updates:
       - dependency-name: "go.opentelemetry.io/*"
 
   - package-ecosystem: "gomod"
-    directory: "/tests/postgres"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "go.opentelemetry.io/*"
-
-  - package-ecosystem: "gomod"
     directory: "/tests/mssql"
     schedule:
       interval: "daily"
     ignore:
       - dependency-name: "go.opentelemetry.io/*"
+      - dependency-name: "github.com/Masterminds/squirrel"
+      - dependency-name: "github.com/nhatthm/go-clock"
+      - dependency-name: "github.com/nhatthm/testcontainers-go-*"
 
   - package-ecosystem: "gomod"
     directory: "/tests/mysql"
@@ -41,10 +37,21 @@ updates:
       interval: "daily"
     ignore:
       - dependency-name: "go.opentelemetry.io/*"
+      - dependency-name: "github.com/Masterminds/squirrel"
+      - dependency-name: "github.com/nhatthm/go-clock"
+      - dependency-name: "github.com/nhatthm/testcontainers-go-*"
+
+  - package-ecosystem: "gomod"
+    directory: "/tests/postgres"
+    schedule:
+        interval: "daily"
+    ignore:
+        - dependency-name: "go.opentelemetry.io/*"
+        - dependency-name: "github.com/Masterminds/squirrel"
+        - dependency-name: "github.com/nhatthm/go-clock"
+        - dependency-name: "github.com/nhatthm/testcontainers-go-*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-    ignore:
-      - dependency-name: "go.opentelemetry.io/*"

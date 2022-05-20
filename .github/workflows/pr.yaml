@@ -54,7 +54,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        module: [ ".", "tests/suite", "tests/mysql", "tests/postgres" ]
+        module: [ ".", "tests/suite", "tests/mssql", "tests/mysql", "tests/postgres" ]
     runs-on: ubuntu-latest
     needs: precondition
     if: ${{ needs.precondition.outputs.passed == 'true' }}

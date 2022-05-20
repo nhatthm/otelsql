@@ -574,8 +574,8 @@ github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 h1:SOEGU9fKiNWd/HOJuq
 github.com/lann/builder v0.0.0-20180802200727-47ae307949d0/go.mod h1:dXGbAdH5GtBTC4WfIxhKZfyBF/HBFgRZSWwZ9g/He9o=
 github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 h1:P6pPBnrTSX3DEVR4fDembhRWSsG5rVo6hYhAB/ADZrk=
 github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0/go.mod h1:vmVJ0l/dxyfGW6FmdpVm2joNMFikkuWg0EoCKLGUMNw=
-github.com/lib/pq v1.2.0 h1:LXpIM/LZ5xGFhOpXAQUIMM1HdyqzVYM13zNdjCEEcA0=
 github.com/lib/pq v1.2.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
+github.com/lib/pq v1.10.6 h1:jbk+ZieJ0D7EVGJYpL9QTz7/YW6UHbmdnZWYyK5cdBs=
 github.com/linuxkit/virtsock v0.0.0-20201010232012-f8cee7dfc7a3/go.mod h1:3r6x7q95whyfWQpmGZTu3gk3v2YkMi05HEzl7Tf7YEo=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/magiconair/properties v1.8.1/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
@@ -647,6 +647,8 @@ github.com/nhatthm/go-clock v0.6.0 h1:R8I8slcnValPDdM4Cd3Tk3JSSDnZk3nPuLzzPFInYt
 github.com/nhatthm/go-clock v0.6.0/go.mod h1:KASu97ux5p0fpVsazI4sGJN+HlzeobKsvEtjaFQUXjc=
 github.com/nhatthm/testcontainers-go-extra v0.2.0 h1:JtOhyloJfWNb7G7snNz53wEF5//5ie1DThV/QzMZY28=
 github.com/nhatthm/testcontainers-go-extra v0.2.0/go.mod h1:7D6TNVfrDSsI/q6LsMqPtUVd8m1U+xR2jydZBKaK4NY=
+github.com/nhatthm/testcontainers-go-registry v0.4.0 h1:difOQ3Q4K1B2qjqV4qUzz8G4GWFLPno88oq2LkEVrXE=
+github.com/nhatthm/testcontainers-go-registry v0.4.0/go.mod h1:dPVvEYwaXH5Kl7XIYvsDJPgSE4qa8/KlP+i49FkiRLA=
 github.com/nhatthm/timeparser v0.2.0 h1:iItJSmsdRUMuEj/sTCcl1V1KT96TbuQ03uRpVDudodo=
 github.com/nhatthm/timeparser v0.2.0/go.mod h1:FPeNpb70J+UHjmQifiImZWrDnc4Ao8dGdtZ08oaUdro=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=

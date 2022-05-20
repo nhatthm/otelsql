@@ -3,7 +3,7 @@ module github.com/nhatthm/otelsql/tests/postgres
 go 1.17
 
 require (
-	github.com/Masterminds/squirrel v1.5.2
+	github.com/Masterminds/squirrel v1.5.3
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/lib/pq v1.10.6
 	github.com/nhatthm/go-clock v0.6.0

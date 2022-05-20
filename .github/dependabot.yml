@@ -29,6 +29,13 @@ updates:
       - dependency-name: "go.opentelemetry.io/*"
 
   - package-ecosystem: "gomod"
+    directory: "/tests/mssql"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "go.opentelemetry.io/*"
+
+  - package-ecosystem: "gomod"
     directory: "/tests/mysql"
     schedule:
       interval: "daily"

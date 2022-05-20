@@ -127,14 +127,13 @@ jobs:
           files: ./unit.coverprofile
           flags: unittests-${{ runner.os }}-${{ runner.arch }}
 
-  test-compatibility-postgres:
+  test-compatibility-mssql:
     strategy:
       fail-fast: false
       matrix:
         go-version: [ 1.17.x, 1.18.x ]
         arch: [ "386", amd64 ]
-        postgres-version: [ "12", "13", "14" ]
-        postgres-driver: [ "postgres", "pgx" ]
+        mssql-version: [ "2019" ]
     runs-on: ubuntu-latest
     needs: test-unit
     steps:
@@ -155,18 +154,17 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
+            ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache
 
       - name: Test
         id: test
         env:
           GOARCH: ${{ matrix.arch }}
-          POSTGRES_VERSION: ${{ matrix.postgres-version }}-alpine
-          POSTGRES_DRIVER: ${{ matrix.postgres-driver }}
+          MSSQL_VERSION: ${{ matrix.mssql-version }}-latest
         run: |
-          make test-compatibility-postgres
+          make test-compatibility-mssql
 
   test-compatibility-mysql:
     strategy:
@@ -195,9 +193,9 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
+            ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache
 
       - name: Test
         id: test
@@ -206,3 +204,44 @@ jobs:
           MYSQL_VERSION: ${{ matrix.mysql-version }}
         run: |
           make test-compatibility-mysql
+
+  test-compatibility-postgres:
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [ 1.17.x, 1.18.x ]
+        arch: [ "386", amd64 ]
+        postgres-version: [ "12", "13", "14" ]
+        postgres-driver: [ "postgres", "pgx" ]
+    runs-on: ubuntu-latest
+    needs: test-unit
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Go cache
+        uses: actions/cache@v3
+        with:
+          # In order:
+          # * Module download cache
+          # * Build cache (Linux)
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache
+
+      - name: Test
+        id: test
+        env:
+          GOARCH: ${{ matrix.arch }}
+          POSTGRES_VERSION: ${{ matrix.postgres-version }}-alpine
+          POSTGRES_DRIVER: ${{ matrix.postgres-driver }}
+        run: |
+          make test-compatibility-postgres

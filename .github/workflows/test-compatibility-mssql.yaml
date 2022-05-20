@@ -1,4 +1,4 @@
-name: compatibility-test-mysql
+name: compatibility-test-mssql
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       matrix:
         go-version: [ 1.17.x, 1.18.x ]
         arch: [ "386", amd64 ]
-        mysql-version: [ "8" ]
+        mssql-version: [ "2019" ]
     runs-on: ubuntu-latest
     steps:
       - name: Install Go
@@ -40,14 +40,14 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache
+            ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache
 
       - name: Test
         id: test
         env:
           GOARCH: ${{ matrix.arch }}
-          MYSQL_VERSION: ${{ matrix.mysql-version }}
+          MSSQL_VERSION: ${{ matrix.mssql-version }}-latest
         run: |
-          make test-compatibility-mysql
+          make test-compatibility-mssql

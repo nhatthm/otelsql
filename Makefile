@@ -13,6 +13,7 @@ endif
 
 goModules := $(shell find . -name 'go.mod' | xargs dirname)
 tidyGoModules := $(subst -.,-module,$(subst /,-,$(addprefix tidy-,$(goModules))))
+updateGoModules := $(subst -.,-module,$(subst /,-,$(addprefix update-,$(goModules))))
 lintGoModules := $(subst -.,-module,$(subst /,-,$(addprefix lint-,$(goModules))))
 compatibilityTests := $(addprefix test-compatibility-,$(filter-out suite,$(subst ./,,$(shell cd tests;find . -name 'go.mod' | xargs dirname))))
 
@@ -41,6 +42,16 @@ $(tidyGoModules):
 
 .PHONY: tidy
 tidy: $(tidyGoModules)
+
+.PHONY: $(updateGoModules)
+$(updateGoModules):
+	$(eval GO_MODULE := "$(subst update/module,.,$(subst -,/,$(subst update-module-,,$@)))")
+
+	@echo ">> module: $(GO_MODULE)"
+	@cd "$(GO_MODULE)"; $(GO) get -u ./...
+
+.PHONY: update
+update: $(updateGoModules)
 
 ## Run unit tests
 .PHONY: test-unit

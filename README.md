@@ -614,6 +614,36 @@ The traces are almost identical with some minor changes:
         </tr>
         <tr>
             <td>
+                <code style="white-space: nowrap">denisenkom/go-mssqldb</code>
+            </td>
+            <td style="white-space: nowrap">
+                SQL Server 2019
+            </td>
+            <td colspan="6" align="center">
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mssql.yaml">
+                    <img
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mssql.yaml/badge.svg?branch=master" alt="Build Status"
+                        style="max-width: 100%;">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code style="white-space: nowrap">go-sql-driver/mysql</code>
+            </td>
+            <td style="white-space: nowrap">
+                MySQL 8
+            </td>
+            <td colspan="6" align="center">
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml">
+                    <img
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml/badge.svg?branch=master" alt="Build Status"
+                        style="max-width: 100%;">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <code style="white-space: nowrap">jackc/pgx/stdlib</code>
             </td>
             <td style="white-space: nowrap">
@@ -638,21 +668,6 @@ The traces are almost identical with some minor changes:
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml">
                     <img
                         src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml/badge.svg?branch=master" alt="Build Status"
-                        style="max-width: 100%;">
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code style="white-space: nowrap">go-sql-driver/mysql</code>
-            </td>
-            <td style="white-space: nowrap">
-                MySQL 8
-            </td>
-            <td colspan="6" align="center">
-                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml">
-                    <img
-                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml/badge.svg?branch=master" alt="Build Status"
                         style="max-width: 100%;">
                 </a>
             </td>

@@ -3,7 +3,7 @@ module github.com/nhatthm/otelsql/tests/suite
 go 1.17
 
 require (
-	github.com/Masterminds/squirrel v1.5.2
+	github.com/Masterminds/squirrel v1.5.3
 	github.com/bool64/sqluct v0.1.9
 	github.com/cucumber/godog v0.12.5
 	github.com/godogx/clocksteps v0.1.1

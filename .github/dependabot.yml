@@ -44,7 +44,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/tests/postgres"
     schedule:
-        interval: "daily"
+      interval: "daily"
     ignore:
         - dependency-name: "go.opentelemetry.io/*"
         - dependency-name: "github.com/Masterminds/squirrel"

@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          token: ${{ secrets.RELEASE_TOKEN }}
           ref: master
           fetch-depth: 0
 
@@ -23,8 +24,8 @@ jobs:
 
       - uses: EndBug/add-and-commit@v9
         with:
+          default_author: "github_actions"
           add: version.go
-          default_author: github_actions
           message: "Release ${{ env.VERSION }}"
           push: true
           tag: "${{ env.VERSION }}"

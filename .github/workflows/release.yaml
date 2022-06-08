@@ -22,13 +22,26 @@ jobs:
       - name: set-version
         run: .github/scripts/set_version.sh "${{ github.event.inputs.version }}"
 
+      - name: setup-gpg
+        id: setup-gpg
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          passphrase: ${{ secrets.RELEASE_SECRET }}
+          git_config_global: true
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - uses: EndBug/add-and-commit@v9
         with:
-          default_author: "github_actions"
           add: version.go
           message: "Release ${{ env.VERSION }}"
           push: true
           tag: "${{ env.VERSION }}"
+          author_name: ${{ steps.setup-gpg.outputs.name }}
+          author_email: ${{ steps.setup-gpg.outputs.email }}
+          committer_name: ${{ steps.setup-gpg.outputs.name }}
+          committer_email: ${{ steps.setup-gpg.outputs.email }}
 
       - uses: softprops/action-gh-release@v1
         with:

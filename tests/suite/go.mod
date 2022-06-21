@@ -13,7 +13,7 @@ require (
 	github.com/nhatthm/testcontainers-go-extra v0.3.0
 	github.com/nhatthm/testcontainers-go-registry v0.4.1
 	github.com/prometheus/client_golang v1.12.2
-	github.com/stretchr/testify v1.7.3
+	github.com/stretchr/testify v1.7.4
 	github.com/swaggest/assertjson v1.7.0
 	go.opentelemetry.io/otel v1.7.0
 	go.opentelemetry.io/otel/exporters/prometheus v0.30.0

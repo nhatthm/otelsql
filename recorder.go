@@ -36,7 +36,7 @@ func (r methodRecorderImpl) Record(ctx context.Context, method string, labels ..
 	attrs = append(attrs, semconv.DBOperationKey.String(method))
 
 	return func(err error) {
-		elapsedTime := microsecondsSince(startTime)
+		elapsedTime := millisecondsSince(startTime)
 
 		if err == nil {
 			attrs = append(attrs, dbSQLStatusOK)

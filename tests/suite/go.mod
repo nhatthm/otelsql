@@ -16,10 +16,10 @@ require (
 	github.com/stretchr/testify v1.8.0
 	github.com/swaggest/assertjson v1.7.0
 	go.opentelemetry.io/otel v1.8.0
-	go.opentelemetry.io/otel/exporters/prometheus v0.30.0
-	go.opentelemetry.io/otel/metric v0.30.0
-	go.opentelemetry.io/otel/sdk v1.7.0
-	go.opentelemetry.io/otel/sdk/metric v0.30.0
+	go.opentelemetry.io/otel/exporters/prometheus v0.31.0
+	go.opentelemetry.io/otel/metric v0.31.0
+	go.opentelemetry.io/otel/sdk v1.8.0
+	go.opentelemetry.io/otel/sdk/metric v0.31.0
 )
 
 require (
@@ -27,7 +27,7 @@ require (
 	github.com/Microsoft/hcsshim v0.9.3 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bool64/ctxd v1.1.3 // indirect
-	github.com/bool64/shared v0.1.4 // indirect
+	github.com/bool64/shared v0.1.5 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/containerd/cgroups v1.0.4 // indirect
@@ -38,7 +38,7 @@ require (
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/godogx/resource v0.1.0 // indirect
+	github.com/godogx/resource v0.1.1 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -59,11 +59,11 @@ require (
 	github.com/onsi/gomega v1.15.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.0.3-0.20211202183452-c5a74bcca799 // indirect
-	github.com/opencontainers/runc v1.1.2 // indirect
+	github.com/opencontainers/runc v1.1.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
-	github.com/prometheus/common v0.34.0 // indirect
+	github.com/prometheus/common v0.36.0 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
@@ -74,7 +74,7 @@ require (
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.opentelemetry.io/otel/trace v1.8.0 // indirect
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
+	golang.org/x/sys v0.0.0-20220708085239-5a0f0661e09d // indirect
 	google.golang.org/grpc v1.47.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
@@ -87,8 +87,8 @@ require (
 	github.com/godogx/dbsteps v0.1.2
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/moby/sys/mount v0.3.3 // indirect
-	golang.org/x/net v0.0.0-20220607020251-c690dde0001d // indirect
-	google.golang.org/genproto v0.0.0-20220602131408-e326c6e8e9c8 // indirect
+	golang.org/x/net v0.0.0-20220708220712-1185a9018129 // indirect
+	google.golang.org/genproto v0.0.0-20220711132622-b6f31b0ceb50 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
 

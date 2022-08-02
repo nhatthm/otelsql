@@ -15,7 +15,7 @@ require (
 	github.com/prometheus/client_golang v1.12.2
 	github.com/stretchr/testify v1.8.0
 	github.com/swaggest/assertjson v1.7.0
-	go.opentelemetry.io/otel v1.8.0
+	go.opentelemetry.io/otel v1.9.0
 	go.opentelemetry.io/otel/exporters/prometheus v0.31.0
 	go.opentelemetry.io/otel/metric v0.31.0
 	go.opentelemetry.io/otel/sdk v1.8.0
@@ -73,7 +73,7 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	go.opentelemetry.io/otel/trace v1.8.0 // indirect
+	go.opentelemetry.io/otel/trace v1.9.0 // indirect
 	golang.org/x/sys v0.0.0-20220708085239-5a0f0661e09d // indirect
 	google.golang.org/grpc v1.47.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

@@ -12,7 +12,7 @@ require (
 	github.com/nhatthm/otelsql v0.1.0
 	github.com/nhatthm/testcontainers-go-extra v0.3.0
 	github.com/nhatthm/testcontainers-go-registry v0.4.1
-	github.com/prometheus/client_golang v1.12.2
+	github.com/prometheus/client_golang v1.13.0
 	github.com/stretchr/testify v1.8.0
 	github.com/swaggest/assertjson v1.7.0
 	go.opentelemetry.io/otel v1.9.0
@@ -63,8 +63,8 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
-	github.com/prometheus/common v0.36.0 // indirect
-	github.com/prometheus/procfs v0.7.3 // indirect
+	github.com/prometheus/common v0.37.0 // indirect
+	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
@@ -89,7 +89,7 @@ require (
 	github.com/moby/sys/mount v0.3.3 // indirect
 	golang.org/x/net v0.0.0-20220708220712-1185a9018129 // indirect
 	google.golang.org/genproto v0.0.0-20220711132622-b6f31b0ceb50 // indirect
-	google.golang.org/protobuf v1.28.0 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
 )
 
 replace github.com/nhatthm/otelsql => ../../

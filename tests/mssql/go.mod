@@ -38,7 +38,7 @@ require (
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/godogx/clocksteps v0.1.1 // indirect
+	github.com/godogx/clocksteps v0.2.0 // indirect
 	github.com/godogx/dbsteps v0.1.2 // indirect
 	github.com/godogx/resource v0.1.1 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
@@ -85,6 +85,7 @@ require (
 	github.com/testcontainers/testcontainers-go v0.13.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
+	go.nhat.io/clock v0.7.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.opentelemetry.io/otel v1.9.0 // indirect
 	go.opentelemetry.io/otel/exporters/prometheus v0.31.0 // indirect

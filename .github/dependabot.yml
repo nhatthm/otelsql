@@ -27,10 +27,10 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      - dependency-name: "go.nhat.io/clock"
+      - dependency-name: "go.nhat.io/testcontainers-*"
       - dependency-name: "go.opentelemetry.io/*"
       - dependency-name: "github.com/Masterminds/squirrel"
-      - dependency-name: "github.com/nhatthm/go-clock"
-      - dependency-name: "github.com/nhatthm/testcontainers-go-*"
       - dependency-name: "github.com/stretchr/testify"
 
   - package-ecosystem: "gomod"
@@ -38,10 +38,10 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      - dependency-name: "go.nhat.io/clock"
+      - dependency-name: "go.nhat.io/testcontainers-*"
       - dependency-name: "go.opentelemetry.io/*"
       - dependency-name: "github.com/Masterminds/squirrel"
-      - dependency-name: "github.com/nhatthm/go-clock"
-      - dependency-name: "github.com/nhatthm/testcontainers-go-*"
       - dependency-name: "github.com/stretchr/testify"
 
   - package-ecosystem: "gomod"
@@ -49,10 +49,10 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      - dependency-name: "go.nhat.io/clock"
+      - dependency-name: "go.nhat.io/testcontainers-*"
       - dependency-name: "go.opentelemetry.io/*"
       - dependency-name: "github.com/Masterminds/squirrel"
-      - dependency-name: "github.com/nhatthm/go-clock"
-      - dependency-name: "github.com/nhatthm/testcontainers-go-*"
       - dependency-name: "github.com/stretchr/testify"
 
   - package-ecosystem: "github-actions"

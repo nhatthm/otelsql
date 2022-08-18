@@ -5,9 +5,9 @@ on:
 
 env:
   GO111MODULE: "on"
-  GO_VERSION: 1.17
-  GO_LATEST_VERSION: "1.18.x"
-  GOLANGCI_LINT_VERSION: v1.45.0
+  GO_VERSION: 1.18
+  GO_LATEST_VERSION: "1.19.x"
+  GOLANGCI_LINT_VERSION: v1.48.0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}

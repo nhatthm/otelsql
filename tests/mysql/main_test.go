@@ -6,8 +6,8 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	_ "github.com/go-sql-driver/mysql" // Database driver
-	"github.com/nhatthm/testcontainers-go-extra"
-	"github.com/nhatthm/testcontainers-go-registry/database/mysql"
+	"go.nhat.io/testcontainers-extra"
+	"go.nhat.io/testcontainers-registry/mysql"
 
 	"github.com/nhatthm/otelsql/tests/suite"
 )

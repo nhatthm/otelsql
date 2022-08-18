@@ -3,7 +3,7 @@ package mysql
 import (
 	"context"
 
-	"github.com/nhatthm/go-clock"
+	"go.nhat.io/clock"
 
 	"github.com/nhatthm/otelsql/tests/suite"
 	"github.com/nhatthm/otelsql/tests/suite/customer"

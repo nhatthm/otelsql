@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/Masterminds/squirrel"
-	"github.com/nhatthm/testcontainers-go-extra"
-	"github.com/nhatthm/testcontainers-go-registry/database/mssql"
+	"go.nhat.io/testcontainers-extra"
+	"go.nhat.io/testcontainers-registry/mssql"
 
 	"github.com/nhatthm/otelsql/tests/suite"
 )

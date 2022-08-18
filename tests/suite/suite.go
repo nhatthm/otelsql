@@ -12,9 +12,9 @@ import (
 	"github.com/Masterminds/squirrel"
 	"github.com/cucumber/godog"
 	"github.com/godogx/clocksteps"
-	"github.com/nhatthm/testcontainers-go-extra"
-	_ "github.com/nhatthm/testcontainers-go-registry" // Let dependabot manage the update.
 	"github.com/stretchr/testify/require"
+	"go.nhat.io/testcontainers-extra"
+	_ "go.nhat.io/testcontainers-registry" // Let dependabot manage the update.
 )
 
 type logger func(format string, args ...interface{})

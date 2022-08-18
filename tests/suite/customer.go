@@ -7,8 +7,8 @@ import (
 	"fmt"
 
 	"github.com/cucumber/godog"
-	"github.com/nhatthm/go-clock"
 	"github.com/swaggest/assertjson"
+	"go.nhat.io/clock"
 
 	"github.com/nhatthm/otelsql/tests/suite/customer"
 )

@@ -2,7 +2,7 @@ package suite
 
 import (
 	"github.com/Masterminds/squirrel"
-	"github.com/nhatthm/testcontainers-go-extra"
+	"go.nhat.io/testcontainers-extra"
 )
 
 // Option sets up the test suite.

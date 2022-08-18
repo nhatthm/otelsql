@@ -7,8 +7,8 @@ import (
 	"github.com/Masterminds/squirrel"
 	_ "github.com/jackc/pgx/v4/stdlib" // Database driver
 	_ "github.com/lib/pq"              // Database driver
-	"github.com/nhatthm/testcontainers-go-extra"
-	pg "github.com/nhatthm/testcontainers-go-registry/database/postgres"
+	"go.nhat.io/testcontainers-extra"
+	pg "go.nhat.io/testcontainers-registry/postgres"
 
 	"github.com/nhatthm/otelsql/tests/suite"
 )

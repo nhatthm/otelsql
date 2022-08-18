@@ -1,5 +1,7 @@
 VENDOR_DIR = vendor
 
+GOLANGCI_LINT_VERSION ?= v1.48.0
+
 GO ?= go
 GOLANGCI_LINT ?= golangci-lint
 GHERKIN_LINT ?= gherkin-lint
@@ -24,11 +26,11 @@ $(VENDOR_DIR):
 	@$(GO) mod vendor
 
 .PHONY: $(lintGoModules)
-$(lintGoModules):
+$(lintGoModules): bin/$(GOLANGCI_LINT)
 	$(eval GO_MODULE := "$(subst lint/module,.,$(subst -,/,$(subst lint-module-,,$@)))")
 
 	@echo ">> module: $(GO_MODULE)"
-	@cd "$(GO_MODULE)"; $(GOLANGCI_LINT) run
+	@cd "$(GO_MODULE)"; bin/$(GOLANGCI_LINT) run
 
 .PHONY: lint
 lint: $(lintGoModules)
@@ -72,3 +74,8 @@ test-compatibility: $(compatibilityTests)
 
 .PHONY: test
 test: test-unit test-compatibility
+
+bin/$(GOLANGCI_LINT):
+	@echo "$(OK_COLOR)==> Installing golangci-lint $(GOLANGCI_LINT_VERSION)$(NO_COLOR)"; \
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ./bin "$(GOLANGCI_LINT_VERSION)"
+	@mv ./bin/golangci-lint bin/$(GOLANGCI_LINT)

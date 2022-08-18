@@ -22,6 +22,7 @@ linters:
   disable:
     - contextcheck
     - exhaustivestruct
+    - exhaustruct
     - forbidigo
     - forcetypeassert
     - gci
@@ -35,6 +36,9 @@ linters:
     - ireturn
     - lll
     - maligned
+    - nolintlint # https://github.com/golangci/golangci-lint/issues/3063
+    - nonamedreturns
+    - nosnakecase
     - paralleltest
     - scopelint
     - tagliatelle
@@ -48,6 +52,7 @@ issues:
     - linters:
         - containedctx
         - dupl
+        - execinquery
         - funlen
         - goconst
         - goerr113

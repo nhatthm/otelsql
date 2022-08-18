@@ -141,18 +141,19 @@ func DisableErrSkip() DriverOption {
 // TraceQuery sets a custom function that will return a list of attributes to add to the spans with a given query and args.
 //
 // For example:
-// 	otelsql.TraceQuery(func(sql string, args []driver.NamedValue) []attribute.KeyValue {
-// 		attrs := make([]attribute.KeyValue, 0)
-// 		attrs = append(attrs, semconv.DBStatementKey.String(sql))
 //
-// 		for _, arg := range args {
-// 			if arg.Name != "password" {
-// 				attrs = append(attrs, sqlattribute.FromNamedValue(arg))
-// 			}
-// 		}
+//	otelsql.TraceQuery(func(sql string, args []driver.NamedValue) []attribute.KeyValue {
+//		attrs := make([]attribute.KeyValue, 0)
+//		attrs = append(attrs, semconv.DBStatementKey.String(sql))
 //
-// 		return attrs
-// 	})
+//		for _, arg := range args {
+//			if arg.Name != "password" {
+//				attrs = append(attrs, sqlattribute.FromNamedValue(arg))
+//			}
+//		}
+//
+//		return attrs
+//	})
 func TraceQuery(f queryTracer) DriverOption {
 	return driverOptionFunc(func(o *driverOptions) {
 		o.trace.queryTracer = f

@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.3
 	github.com/bool64/sqluct v0.1.9
 	github.com/cucumber/godog v0.12.5
-	github.com/godogx/clocksteps v0.2.0
+	github.com/godogx/clocksteps v0.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/nhatthm/otelsql v0.1.0
 	github.com/prometheus/client_golang v1.13.0
@@ -61,7 +61,6 @@ require (
 	github.com/moby/sys/mountinfo v0.6.2 // indirect
 	github.com/moby/term v0.0.0-20220808134915-39b0c02b01ae // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
-	github.com/nhatthm/timeparser v0.2.0 // indirect
 	github.com/onsi/ginkgo v1.16.4 // indirect
 	github.com/onsi/gomega v1.15.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
@@ -79,6 +78,7 @@ require (
 	github.com/testcontainers/testcontainers-go v0.13.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
+	go.nhat.io/timeparser v0.3.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.opentelemetry.io/otel/trace v1.9.0 // indirect
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect

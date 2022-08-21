@@ -1,3 +1,5 @@
+> ⚠️ From `v0.5.0`, the project will be rebranded to `go.nhat.io/otelsql`. `v.4.x` is the last version with `github.com/nhatthm/otelsql`.
+
 # OpenTelemetry SQL database driver wrapper for Go
 
 [![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/otelsql)](https://github.com/nhatthm/otelsql/releases/latest)

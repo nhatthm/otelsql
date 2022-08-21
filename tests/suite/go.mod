@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.3
 	github.com/bool64/sqluct v0.1.9
 	github.com/cucumber/godog v0.12.5
-	github.com/godogx/clocksteps v0.2.0
+	github.com/godogx/clocksteps v0.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/nhatthm/otelsql v0.1.0
 	github.com/prometheus/client_golang v1.13.0
@@ -21,6 +21,8 @@ require (
 	go.opentelemetry.io/otel/sdk v1.9.0
 	go.opentelemetry.io/otel/sdk/metric v0.31.0
 )
+
+require go.nhat.io/timeparser v0.3.0 // indirect
 
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
@@ -61,7 +63,6 @@ require (
 	github.com/moby/sys/mountinfo v0.6.2 // indirect
 	github.com/moby/term v0.0.0-20220808134915-39b0c02b01ae // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
-	github.com/nhatthm/timeparser v0.2.0 // indirect
 	github.com/onsi/ginkgo v1.16.4 // indirect
 	github.com/onsi/gomega v1.15.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect

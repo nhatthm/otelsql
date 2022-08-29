@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/squirrel v1.5.3
-	github.com/jackc/pgx/v4 v4.17.0
+	github.com/jackc/pgx/v4 v4.17.1
 	github.com/lib/pq v1.10.6
 	github.com/nhatthm/otelsql/tests/suite v0.0.0-20220127125055-5da30ca2778a
 	go.nhat.io/clock v0.7.0

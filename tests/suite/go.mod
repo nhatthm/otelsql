@@ -15,7 +15,7 @@ require (
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/testcontainers-extra v0.5.0
 	go.nhat.io/testcontainers-registry v0.7.0
-	go.opentelemetry.io/otel v1.9.0
+	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/exporters/prometheus v0.31.0
 	go.opentelemetry.io/otel/metric v0.31.0
 	go.opentelemetry.io/otel/sdk v1.9.0
@@ -80,7 +80,7 @@ require (
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.nhat.io/timeparser v0.3.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	go.opentelemetry.io/otel/trace v1.9.0 // indirect
+	go.opentelemetry.io/otel/trace v1.10.0 // indirect
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
 	golang.org/x/sys v0.0.0-20220818161305-2296e01440c6 // indirect
 	google.golang.org/genproto v0.0.0-20220817144833-d7fd3f11b9b1 // indirect

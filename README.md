@@ -1,12 +1,12 @@
-> ⚠️ From `v0.5.0`, the project will be rebranded to `go.nhat.io/otelsql`. `v.4.x` is the last version with `github.com/nhatthm/otelsql`.
+> ⚠️ From `v0.5.0`, the project is rebranded to `go.nhat.io/otelsql`. `v0.4.x` is the last version with `github.com/nhatthm/otelsql`.
 
 # OpenTelemetry SQL database driver wrapper for Go
 
 [![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/otelsql)](https://github.com/nhatthm/otelsql/releases/latest)
 [![Build Status](https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml/badge.svg?branch=master)](https://github.com/nhatthm/otelsql/actions/workflows/test-unit.yaml)
 [![codecov](https://codecov.io/gh/nhatthm/otelsql/branch/master/graph/badge.svg?token=eTdAgDE2vR)](https://codecov.io/gh/nhatthm/otelsql)
-[![Go Report Card](https://goreportcard.com/badge/github.com/nhatthm/otelsql)](https://goreportcard.com/report/github.com/nhatthm/otelsql)
-[![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/github.com/nhatthm/otelsql)
+[![Go Report Card](https://goreportcard.com/badge/go.nhat.io/otelsql)](https://goreportcard.com/report/go.nhat.io/otelsql)
+[![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/go.nhat.io/otelsql)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=PJZSGJN57TDJY)
 
 Add a OpenTelemetry wrapper to your existing database code to instrument the interactions with the database. The wrapper supports both traces and metrics.
@@ -42,17 +42,20 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 ## Install
 
 ```bash
-go get github.com/nhatthm/otelsql
+go get go.nhat.io/otelsql
 ```
 
 Compatibility
 
-| `otelsql` | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/sdk/metric` |
-|:---------:|:--------------------------------:|:-------------------------------------:|
-| `v0.1.*`  |       `v1.3.0` ~> `latest`       |        `v0.26.0` ~> `v0.27.0`         |
-| `v0.2.*`  |       `v1.3.0` ~> `latest`       |        `v0.28.0` ~> `v0.30.0`         |
-| `v0.3.*`  |       `v1.3.0` ~> `latest`       |        `v0.28.0` ~> `v0.30.0`         |
-| `v0.4.*`  |       `v1.3.0` ~> `latest`       |         `v0.31.0` ~> `latest`         |
+|         `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/sdk/metric` |
+|:--------------------------:|:--------------------------------:|:-------------------------------------:|
+| `v0.5.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |         `v0.31.0` ~> `latest`         |
+|   `v0.4.*` <sup>1</sup>    |       `v1.9.0` ~> `latest`       |         `v0.31.0` ~> `latest`         |
+|   `v0.3.*` <sup>1</sup>    |       `v1.7.0` ~> `latest`       |        `v0.28.0` ~> `v0.30.0`         |
+|   `v0.2.*` <sup>1</sup>    |       `v1.6.2` ~> `latest`       |        `v0.28.0` ~> `v0.30.0`         |
+|   `v0.1.*` <sup>1</sup>    |       `v1.4.1` ~> `latest`       |        `v0.26.0` ~> `v0.27.0`         |
+
+<sup>1</sup> Old versions were shipped under `github.com/nhatthm/otelsql`. Use `go get github.com/nhatthm/otelsql` instead.
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -67,7 +70,7 @@ package example
 import (
 	"database/sql"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
@@ -100,7 +103,7 @@ package example
 import (
 	"database/sql"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
@@ -191,7 +194,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -218,7 +221,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -257,7 +260,7 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 	"go.opentelemetry.io/otel/codes"
 )
 
@@ -323,7 +326,7 @@ import (
 	"database/sql"
 	"database/sql/driver"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
@@ -393,7 +396,7 @@ import (
 	"database/sql"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 )
 
 func openDB(dsn string) (*sql.DB, error) {

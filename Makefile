@@ -1,9 +1,11 @@
+MODULE_NAME=otelsql
+
 VENDOR_DIR = vendor
 
-GOLANGCI_LINT_VERSION ?= v1.48.0
+GOLANGCI_LINT_VERSION ?= v1.49.0
 
 GO ?= go
-GOLANGCI_LINT ?= golangci-lint
+GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
 GHERKIN_LINT ?= gherkin-lint
 
 TEST_FLAGS = -race
@@ -26,11 +28,11 @@ $(VENDOR_DIR):
 	@$(GO) mod vendor
 
 .PHONY: $(lintGoModules)
-$(lintGoModules): bin/$(GOLANGCI_LINT)
+$(lintGoModules): $(GOLANGCI_LINT)
 	$(eval GO_MODULE := "$(subst lint/module,.,$(subst -,/,$(subst lint-module-,,$@)))")
 
 	@echo ">> module: $(GO_MODULE)"
-	@cd "$(GO_MODULE)"; bin/$(GOLANGCI_LINT) run
+	@cd "$(GO_MODULE)"; $(GOLANGCI_LINT) run
 
 .PHONY: lint
 lint: $(lintGoModules)
@@ -75,7 +77,12 @@ test-compatibility: $(compatibilityTests)
 .PHONY: test
 test: test-unit test-compatibility
 
-bin/$(GOLANGCI_LINT):
+.PHONY: gha-vars
+gha-vars:
+	@echo "::set-output name=MODULE_NAME::$(MODULE_NAME)"
+	@echo "::set-output name=GOLANGCI_LINT_VERSION::$(GOLANGCI_LINT_VERSION)"
+
+$(GOLANGCI_LINT):
 	@echo "$(OK_COLOR)==> Installing golangci-lint $(GOLANGCI_LINT_VERSION)$(NO_COLOR)"; \
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ./bin "$(GOLANGCI_LINT_VERSION)"
-	@mv ./bin/golangci-lint bin/$(GOLANGCI_LINT)
+	@mv ./bin/golangci-lint $(GOLANGCI_LINT)

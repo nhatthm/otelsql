@@ -12,7 +12,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
 
-	sqlattribute "github.com/nhatthm/otelsql/attribute"
+	xattr "go.nhat.io/otelsql/attribute"
 )
 
 type spanNameFormatter func(ctx context.Context, op string) string
@@ -171,7 +171,7 @@ func traceQueryWithArgs(_ context.Context, sql string, args []driver.NamedValue)
 	attrs = append(attrs, semconv.DBStatementKey.String(sql))
 
 	for _, arg := range args {
-		attrs = append(attrs, sqlattribute.FromNamedValue(arg))
+		attrs = append(attrs, xattr.FromNamedValue(arg))
 	}
 
 	return attrs

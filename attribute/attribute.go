@@ -105,7 +105,9 @@ func KeyValueDuration(key attribute.Key, d time.Duration) attribute.KeyValue {
 }
 
 func shortenString(s string) string {
-	if len(s) <= _maxStringValueLength {
+	runes := []rune(s)
+
+	if len(runes) <= _maxStringValueLength {
 		return s
 	}
 
@@ -113,7 +115,7 @@ func shortenString(s string) string {
 	sb := strings.Builder{}
 
 	sb.Grow(_maxStringValueLength)
-	sb.WriteString(s[0:end])
+	sb.WriteString(string(runes[:end]))
 	sb.WriteString(_shortenedPattern)
 
 	return sb.String()

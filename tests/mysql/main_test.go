@@ -9,7 +9,7 @@ import (
 	"go.nhat.io/testcontainers-extra"
 	"go.nhat.io/testcontainers-registry/mysql"
 
-	"github.com/nhatthm/otelsql/tests/suite"
+	"go.nhat.io/otelsql/tests/suite"
 )
 
 const (

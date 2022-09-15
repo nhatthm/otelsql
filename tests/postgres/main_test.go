@@ -10,7 +10,7 @@ import (
 	"go.nhat.io/testcontainers-extra"
 	pg "go.nhat.io/testcontainers-registry/postgres"
 
-	"github.com/nhatthm/otelsql/tests/suite"
+	"go.nhat.io/otelsql/tests/suite"
 )
 
 const (

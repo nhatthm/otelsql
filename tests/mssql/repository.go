@@ -5,8 +5,8 @@ import (
 
 	"go.nhat.io/clock"
 
-	"github.com/nhatthm/otelsql/tests/suite"
-	"github.com/nhatthm/otelsql/tests/suite/customer"
+	"go.nhat.io/otelsql/tests/suite"
+	"go.nhat.io/otelsql/tests/suite/customer"
 )
 
 type repository struct {

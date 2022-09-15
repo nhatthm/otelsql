@@ -19,7 +19,7 @@ import (
 
 const _maxDriver = 150
 
-const instrumentationName = "github.com/nhatthm/otelsql"
+const instrumentationName = "go.nhat.io/otelsql"
 
 var regMu sync.Mutex
 

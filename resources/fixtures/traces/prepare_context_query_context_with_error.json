@@ -47,7 +47,7 @@
             }
         ],
         "InstrumentationLibrary": {
-            "Name": "github.com/nhatthm/otelsql",
+            "Name": "go.nhat.io/otelsql",
             "Version": "<ignore-diff>",
             "SchemaURL": "<ignore-diff>"
         }
@@ -88,7 +88,7 @@
                         "Key": "exception.type",
                         "Value": {
                             "Type": "STRING",
-                            "Value": "github.com/nhatthm/otelsql_test.testError"
+                            "Value": "go.nhat.io/otelsql_test.testError"
                         }
                     },
                     {
@@ -122,7 +122,7 @@
             }
         ],
         "InstrumentationLibrary": {
-            "Name": "github.com/nhatthm/otelsql",
+            "Name": "go.nhat.io/otelsql",
             "Version": "<ignore-diff>",
             "SchemaURL": "<ignore-diff>"
         }

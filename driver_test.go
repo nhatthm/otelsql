@@ -16,9 +16,9 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/nhatthm/otelsql"
-	"github.com/nhatthm/otelsql/internal/test/oteltest"
-	"github.com/nhatthm/otelsql/internal/test/sqlmock"
+	"go.nhat.io/otelsql"
+	"go.nhat.io/otelsql/internal/test/oteltest"
+	"go.nhat.io/otelsql/internal/test/sqlmock"
 )
 
 func TestRegister_UnknownDriver(t *testing.T) {

@@ -11,8 +11,8 @@ import (
 	"github.com/godogx/dbsteps"
 	"github.com/jmoiron/sqlx"
 
-	"github.com/nhatthm/otelsql"
-	"github.com/nhatthm/otelsql/tests/suite/customer"
+	"go.nhat.io/otelsql"
+	"go.nhat.io/otelsql/tests/suite/customer"
 )
 
 // DatabaseContext is a set of PreparerContext, ExecerContext, QueryerContext.

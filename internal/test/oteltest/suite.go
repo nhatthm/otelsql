@@ -23,8 +23,8 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
 
-	testassert "github.com/nhatthm/otelsql/internal/test/assert"
-	"github.com/nhatthm/otelsql/internal/test/sqlmock"
+	testassert "go.nhat.io/otelsql/internal/test/assert"
+	"go.nhat.io/otelsql/internal/test/sqlmock"
 )
 
 // Suite is a test suite.

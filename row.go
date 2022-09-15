@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 
-	sqlattribute "github.com/nhatthm/otelsql/attribute"
+	xattr "go.nhat.io/otelsql/attribute"
 )
 
 const (
@@ -199,7 +199,7 @@ func rowsCloseAttributes(count int64, totalTime time.Duration) []attribute.KeyVa
 		return attrs
 	}
 
-	attrs = append(attrs, sqlattribute.KeyValueDuration(dbSQLRowsNextLatencyAvg, time.Duration(int64(totalTime)/count)))
+	attrs = append(attrs, xattr.KeyValueDuration(dbSQLRowsNextLatencyAvg, time.Duration(int64(totalTime)/count)))
 
 	return attrs
 }

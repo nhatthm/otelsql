@@ -47,7 +47,7 @@
             }
         ],
         "InstrumentationLibrary": {
-            "Name": "github.com/nhatthm/otelsql",
+            "Name": "go.nhat.io/otelsql",
             "Version": "<ignore-diff>",
             "SchemaURL": "<ignore-diff>"
         }

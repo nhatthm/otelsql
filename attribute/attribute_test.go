@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/otel/attribute"
 
-	sqlattribute "github.com/nhatthm/otelsql/attribute"
+	xattr "go.nhat.io/otelsql/attribute"
 )
 
 const key = attribute.Key("key")
@@ -57,7 +57,7 @@ func BenchmarkFromNamedValue(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		for _, v := range namedValues {
-			sqlattribute.FromNamedValue(v)
+			xattr.FromNamedValue(v)
 		}
 	}
 }
@@ -67,7 +67,7 @@ func BenchmarkKeyValueDuration(b *testing.B) {
 	d := time.Duration(r.Int63n(int64(10 * time.Second)))
 
 	for i := 0; i < b.N; i++ {
-		sqlattribute.KeyValueDuration(key, d)
+		xattr.KeyValueDuration(key, d)
 	}
 }
 
@@ -102,7 +102,7 @@ func TestFromNamedValue(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			actual := sqlattribute.FromNamedValue(tc.value)
+			actual := xattr.FromNamedValue(tc.value)
 
 			assert.Equal(t, tc.expected, actual)
 		})
@@ -258,7 +258,7 @@ func TestKeyValue(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			actual := sqlattribute.KeyValue(key, tc.value)
+			actual := xattr.KeyValue(key, tc.value)
 
 			assert.Equal(t, tc.expected, actual)
 		})
@@ -309,7 +309,7 @@ func TestKeyValueDuration(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			actual := sqlattribute.KeyValueDuration(key, tc.duration)
+			actual := xattr.KeyValueDuration(key, tc.duration)
 
 			assert.Equal(t, tc.expected, actual)
 		})

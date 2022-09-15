@@ -10,7 +10,7 @@ import (
 	"github.com/swaggest/assertjson"
 	"go.nhat.io/clock"
 
-	"github.com/nhatthm/otelsql/tests/suite/customer"
+	"go.nhat.io/otelsql/tests/suite/customer"
 )
 
 // CustomerRepositoryConstructor is constructor to create a new repository using DatabaseContext.

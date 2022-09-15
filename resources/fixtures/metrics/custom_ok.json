@@ -1,10 +1,10 @@
 [
     {
-        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.name=test,db.operation=go.sql.ping,db.sql.status=OK,db.system=postgresql}",
+        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.name=test,db.operation=go.sql.ping,db.sql.status=OK,db.system=postgresql}",
         "Sum": 1
     },
     {
-        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.instance=default,db.name=test,db.operation=go.sql.ping,db.sql.status=OK,db.system=postgresql}",
+        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.name=test,db.operation=go.sql.ping,db.sql.status=OK,db.system=postgresql}",
         "Sum": "<ignore-diff>"
     }
 ]

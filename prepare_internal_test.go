@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 
-	"github.com/nhatthm/otelsql/internal/test/oteltest"
+	"go.nhat.io/otelsql/internal/test/oteltest"
 )
 
 func BenchmarkPrepareStats(b *testing.B) {

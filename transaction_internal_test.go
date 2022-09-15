@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 
-	"github.com/nhatthm/otelsql/internal/test/oteltest"
+	"go.nhat.io/otelsql/internal/test/oteltest"
 )
 
 func TestChainTxFuncMiddlewares_NoMiddleware(t *testing.T) {

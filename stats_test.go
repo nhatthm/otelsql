@@ -9,12 +9,12 @@ import (
 	"github.com/stretchr/testify/require"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 
-	"github.com/nhatthm/otelsql"
-	"github.com/nhatthm/otelsql/internal/test/oteltest"
-	"github.com/nhatthm/otelsql/internal/test/sqlmock"
+	"go.nhat.io/otelsql"
+	"go.nhat.io/otelsql/internal/test/oteltest"
+	"go.nhat.io/otelsql/internal/test/sqlmock"
 )
 
-const instrumentationName = "github.com/nhatthm/otelsql"
+const instrumentationName = "go.nhat.io/otelsql"
 
 func TestRecordStats(t *testing.T) {
 	t.Parallel()

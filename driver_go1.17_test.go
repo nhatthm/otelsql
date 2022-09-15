@@ -11,7 +11,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nhatthm/otelsql"
+	"go.nhat.io/otelsql"
 )
 
 func TestRegister_OpenError(t *testing.T) {

@@ -1,22 +1,20 @@
+---
 name: lint
 
 on:
   push:
-    tags:
-      - v*
     branches:
       - master
 
 env:
   GO_VERSION: 1.18
-  GOLANGCI_LINT_VERSION: v1.48.0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint:
+  lint-go:
     name: lint
     strategy:
       fail-fast: false
@@ -31,11 +29,21 @@ jobs:
         with:
             go-version: ${{ env.GO_VERSION }}
 
+      - id: vars
+        run: |
+          make gha-vars
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: ${{ env.GOLANGCI_LINT_VERSION }}
+          version: ${{ steps.vars.outputs.GOLANGCI_LINT_VERSION }}
           working-directory: ${{ matrix.module }}
+
+  lint-gherkin:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
       - name: gherkin-lint
         uses: nhatthm/gherkin-lint-action@v1.0.0

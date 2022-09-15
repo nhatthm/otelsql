@@ -1,18 +1,18 @@
 [
     {
-        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.prepare,db.sql.status=OK}",
+        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.operation=go.sql.prepare,db.sql.status=OK}",
         "Sum": 1
     },
     {
-        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.stmt.exec,db.sql.status=OK}",
+        "Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.operation=go.sql.stmt.exec,db.sql.status=OK}",
         "Sum": 1
     },
     {
-        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.prepare,db.sql.status=OK}",
+        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.operation=go.sql.prepare,db.sql.status=OK}",
         "Sum": "<ignore-diff>"
     },
     {
-        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=github.com/nhatthm/otelsql,db.operation=go.sql.stmt.exec,db.sql.status=OK}",
+        "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.operation=go.sql.stmt.exec,db.sql.status=OK}",
         "Sum": "<ignore-diff>"
     }
 ]

@@ -8,16 +8,16 @@ require (
 	github.com/cucumber/godog v0.12.5
 	github.com/godogx/clocksteps v0.3.0
 	github.com/jmoiron/sqlx v1.3.5
-	go.nhat.io/otelsql v0.1.0
 	github.com/prometheus/client_golang v1.13.0
 	github.com/stretchr/testify v1.8.0
 	github.com/swaggest/assertjson v1.7.0
 	go.nhat.io/clock v0.7.0
+	go.nhat.io/otelsql v0.1.0
 	go.nhat.io/testcontainers-extra v0.6.0
 	go.nhat.io/testcontainers-registry v0.8.0
 	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/exporters/prometheus v0.31.0
-	go.opentelemetry.io/otel/metric v0.31.0
+	go.opentelemetry.io/otel/metric v0.32.0
 	go.opentelemetry.io/otel/sdk v1.10.0
 	go.opentelemetry.io/otel/sdk/metric v0.31.0
 )

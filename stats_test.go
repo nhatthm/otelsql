@@ -7,7 +7,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	"go.opentelemetry.io/otel/metric/instrument"
+	"go.opentelemetry.io/otel/metric/unit"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 
 	"go.nhat.io/otelsql"
 	"go.nhat.io/otelsql/internal/test/oteltest"
@@ -49,14 +51,15 @@ func TestRecordStats_Error(t *testing.T) {
 
 	testCases := []struct {
 		metric string
+		unit   unit.Unit
 	}{
-		{metric: "db.sql.connections.open"},
-		{metric: "db.sql.connections.idle"},
-		{metric: "db.sql.connections.active"},
-		{metric: "db.sql.connections.wait_count"},
-		{metric: "db.sql.connections.wait_duration"},
-		{metric: "db.sql.connections.idle_closed"},
-		{metric: "db.sql.connections.lifetime_closed"},
+		{metric: "db.sql.connections.open", unit: unit.Dimensionless},
+		{metric: "db.sql.connections.idle", unit: unit.Dimensionless},
+		{metric: "db.sql.connections.active", unit: unit.Dimensionless},
+		{metric: "db.sql.connections.wait_count", unit: unit.Dimensionless},
+		{metric: "db.sql.connections.wait_duration", unit: unit.Milliseconds},
+		{metric: "db.sql.connections.idle_closed", unit: unit.Dimensionless},
+		{metric: "db.sql.connections.lifetime_closed", unit: unit.Dimensionless},
 	}
 
 	for _, tc := range testCases {
@@ -69,15 +72,15 @@ func TestRecordStats_Error(t *testing.T) {
 					db, err := newDB(sc.DatabaseDSN())
 					require.NoError(t, err)
 
-					_, err = sc.MeterProvider().Meter(instrumentationName).SyncInt64().Counter(tc.metric)
+					_, err = sc.MeterProvider().Meter(instrumentationName).AsyncInt64().UpDownCounter(tc.metric, instrument.WithUnit(tc.unit))
 					require.NoError(t, err)
 
 					err = otelsql.RecordStats(db,
 						otelsql.WithMeterProvider(sc.MeterProvider()),
 					)
-					expected := fmt.Sprintf(`metric %s registered as Int64Kind CounterInstrumentKind: a metric was already registered by this name with another kind or number type`, tc.metric)
+					expected := fmt.Sprintf(`instrument already registered: name %s`, tc.metric)
 
-					assert.EqualError(t, err, expected)
+					assert.ErrorContains(t, err, expected)
 				})
 		})
 	}

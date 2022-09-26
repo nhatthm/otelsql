@@ -8,19 +8,15 @@ import (
 	"sort"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/otel/exporters/stdout/stdoutmetric"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/metric"
-	controller "go.opentelemetry.io/otel/sdk/metric/controller/basic"
-	"go.opentelemetry.io/otel/sdk/metric/export/aggregation"
-	processor "go.opentelemetry.io/otel/sdk/metric/processor/basic"
-	selector "go.opentelemetry.io/otel/sdk/metric/selector/simple"
+	metricsdk "go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/resource"
-	sdkTrace "go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	"go.opentelemetry.io/otel/trace"
 
 	testassert "go.nhat.io/otelsql/internal/test/assert"
@@ -42,8 +38,8 @@ type SuiteContext interface {
 type suiteContext struct {
 	test testing.TB
 
-	tracerProvider   *sdkTrace.TracerProvider
-	metricController *controller.Controller
+	tracerProvider *tracesdk.TracerProvider
+	meterProvider  *metricsdk.MeterProvider
 
 	sqlMocker sqlmock.Sqlmocker
 }
@@ -55,7 +51,7 @@ func (s *suiteContext) TracerProvider() trace.TracerProvider {
 
 // MeterProvider supports named Meter instances.
 func (s *suiteContext) MeterProvider() metric.MeterProvider {
-	return s.metricController
+	return s.meterProvider
 }
 
 // DatabaseDSN returns a database dsn to the sqlmock instance.
@@ -67,8 +63,8 @@ func (s *suiteContext) DatabaseDSN() string {
 type SuiteOption func(c *suiteConfig)
 
 type suiteConfig struct {
-	tracerProvider   *sdkTrace.TracerProvider
-	metricController *controller.Controller
+	tracerProvider *tracesdk.TracerProvider
+	meterProvider  *metricsdk.MeterProvider
 
 	assertTracesFuncs  []testassert.Func
 	assertMetricsFuncs []testassert.Func
@@ -77,8 +73,8 @@ type suiteConfig struct {
 }
 
 type suite struct {
-	tracerProvider   *sdkTrace.TracerProvider
-	metricController *controller.Controller
+	tracerProvider *tracesdk.TracerProvider
+	meterProvider  *metricsdk.MeterProvider
 
 	assertTraces  testassert.Func
 	assertMetrics testassert.Func
@@ -92,18 +88,21 @@ type suite struct {
 func (s *suite) start(tb testing.TB) *suiteContext {
 	tb.Helper()
 
-	handleErr(s.metricController.Start(context.Background()))
+	// handleErr(s.meterProvider.Start(context.Background()))
 
 	return &suiteContext{
-		test:             tb,
-		tracerProvider:   s.tracerProvider,
-		metricController: s.metricController,
-		sqlMocker:        s.sqlMocker,
+		test:           tb,
+		tracerProvider: s.tracerProvider,
+		meterProvider:  s.meterProvider,
+		sqlMocker:      s.sqlMocker,
 	}
 }
 
 func (s *suite) end() {
-	_ = s.metricController.Stop(context.Background()) // nolint: errcheck
+	ctx := context.Background()
+
+	_ = s.meterProvider.ForceFlush(ctx) // nolint: errcheck
+	_ = s.meterProvider.Shutdown(ctx)   // nolint: errcheck
 }
 
 // Run creates a new test suite and run it.
@@ -136,20 +135,20 @@ func New(opts ...SuiteOption) Suite {
 		outTraces  fmt.Stringer = new(bytes.Buffer)
 	)
 
-	if cfg.metricController == nil {
-		metricExporter, out := mustNewMetricExporter()
+	if cfg.meterProvider == nil {
+		r, out := mustNewMetricReader()
 
-		cfg.metricController = newController(controller.WithExporter(metricExporter))
+		cfg.meterProvider = newMeterProvider(metricsdk.WithReader(r))
 		outMetrics = out
 	}
 
 	if cfg.tracerProvider == nil {
 		traceExporter, out := mustNewTraceExporter()
 
-		tp := sdkTrace.NewTracerProvider(
-			sdkTrace.WithSampler(sdkTrace.AlwaysSample()),
-			sdkTrace.WithSyncer(traceExporter),
-			sdkTrace.WithResource(resource.NewWithAttributes(
+		tp := tracesdk.NewTracerProvider(
+			tracesdk.WithSampler(tracesdk.AlwaysSample()),
+			tracesdk.WithSyncer(traceExporter),
+			tracesdk.WithResource(resource.NewWithAttributes(
 				semconv.SchemaURL, semconv.ServiceNameKey.String("oteltest"),
 			)),
 		)
@@ -159,8 +158,8 @@ func New(opts ...SuiteOption) Suite {
 	}
 
 	s := &suite{
-		metricController: cfg.metricController,
-		tracerProvider:   cfg.tracerProvider,
+		meterProvider:  cfg.meterProvider,
+		tracerProvider: cfg.tracerProvider,
 
 		assertMetrics: chainAsserters(cfg.assertMetricsFuncs...),
 		assertTraces:  chainAsserters(cfg.assertTracesFuncs...),
@@ -220,26 +219,30 @@ func MockDatabase(mocks ...func(m sqlmock.Sqlmock)) SuiteOption {
 	}
 }
 
-func newMetricExporter() (*stdoutmetric.Exporter, fmt.Stringer, error) {
+func newMetricReader() (metricsdk.Reader, fmt.Stringer, error) {
 	out := new(bytes.Buffer)
 
-	e, err := stdoutmetric.New(
-		stdoutmetric.WithPrettyPrint(),
-		stdoutmetric.WithoutTimestamps(),
-		stdoutmetric.WithWriter(out),
-	)
+	enc := json.NewEncoder(out)
+	enc.SetIndent("", "  ")
+
+	e, err := stdoutmetric.New(stdoutmetric.WithEncoder(&metricEncoder{Encoder: enc}))
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return e, out, nil
+	r := &metricReader{
+		exporter: e,
+		Reader:   metricsdk.NewManualReader(),
+	}
+
+	return r, out, nil
 }
 
-func mustNewMetricExporter() (*stdoutmetric.Exporter, fmt.Stringer) {
-	e, out, err := newMetricExporter()
+func mustNewMetricReader() (metricsdk.Reader, fmt.Stringer) {
+	r, out, err := newMetricReader()
 	handleErr(err)
 
-	return e, out
+	return r, out
 }
 
 func newTraceExporter() (*stdouttrace.Exporter, fmt.Stringer, error) {
@@ -264,22 +267,14 @@ func mustNewTraceExporter() (*stdouttrace.Exporter, fmt.Stringer) {
 	return e, out
 }
 
-func newController(opts ...controller.Option) *controller.Controller {
+func newMeterProvider(opts ...metricsdk.Option) *metricsdk.MeterProvider {
 	opts = append(opts,
-		controller.WithResource(resource.NewSchemaless(
+		metricsdk.WithResource(resource.NewSchemaless(
 			semconv.ServiceNameKey.String("otelsql"),
 		)),
-		controller.WithCollectPeriod(time.Hour),
 	)
 
-	return controller.New(
-		processor.NewFactory(
-			selector.NewWithHistogramDistribution(),
-			aggregation.CumulativeTemporalitySelector(),
-			processor.WithMemory(true),
-		),
-		opts...,
-	)
+	return metricsdk.NewMeterProvider(opts...)
 }
 
 func handleErr(err error) {

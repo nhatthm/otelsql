@@ -21,6 +21,10 @@ updateGoModules := $(subst -.,-module,$(subst /,-,$(addprefix update-,$(goModule
 lintGoModules := $(subst -.,-module,$(subst /,-,$(addprefix lint-,$(goModules))))
 compatibilityTests := $(addprefix test-compatibility-,$(filter-out suite,$(subst ./,,$(shell cd tests;find . -name 'go.mod' | xargs dirname))))
 
+.PHONY: help
+help:
+	@make -qpRr | egrep -e '^[a-z].*:$$' | sed -e 's~:~~g' | sort
+
 .PHONY: $(VENDOR_DIR)
 $(VENDOR_DIR):
 	@mkdir -p $(VENDOR_DIR)
@@ -42,7 +46,7 @@ $(tidyGoModules):
 	$(eval GO_MODULE := "$(subst tidy/module,.,$(subst -,/,$(subst tidy-module-,,$@)))")
 
 	@echo ">> module: $(GO_MODULE)"
-	@cd "$(GO_MODULE)"; $(GO) mod tidy -compat=1.17
+	@cd "$(GO_MODULE)"; $(GO) mod tidy
 
 .PHONY: tidy
 tidy: $(tidyGoModules)

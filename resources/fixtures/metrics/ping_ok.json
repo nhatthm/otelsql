@@ -5,6 +5,7 @@
     },
     {
         "Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.operation=go.sql.ping,db.sql.status=OK}",
-        "Sum": "<ignore-diff>"
+        "Sum": "<ignore-diff>",
+        "Count": 1
     }
 ]

@@ -13,7 +13,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	"go.opentelemetry.io/otel/trace"
 
 	"go.nhat.io/otelsql"
@@ -54,6 +54,38 @@ func TestRegister_MaxSlots(t *testing.T) {
 	expected := errors.New("unable to register driver, all slots have been taken")
 
 	assert.Empty(t, driverName)
+	assert.Equal(t, expected, err)
+}
+
+func TestRegister_OpenError(t *testing.T) {
+	t.Parallel()
+
+	sql.Register("open-error", struct {
+		driver.Driver
+		driver.DriverContext
+	}{
+		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+			return struct {
+				driverDriverFunc
+				driverConnectFunc
+				driverCloseFunc
+			}{
+				driverDriverFunc: func() driver.Driver {
+					return nil
+				},
+				driverCloseFunc: func() error {
+					return errors.New("close error")
+				},
+			}, nil
+		}),
+	})
+
+	driverName, err := otelsql.Register("open-error")
+
+	assert.Empty(t, driverName)
+
+	expected := errors.New("close error")
+
 	assert.Equal(t, expected, err)
 }
 

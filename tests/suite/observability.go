@@ -3,19 +3,14 @@ package suite
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/cucumber/godog"
 	prom "github.com/prometheus/client_golang/prometheus"
 	"go.opentelemetry.io/otel/exporters/prometheus"
 	"go.opentelemetry.io/otel/metric/global"
-	"go.opentelemetry.io/otel/sdk/metric/aggregator/histogram"
-	controller "go.opentelemetry.io/otel/sdk/metric/controller/basic"
-	"go.opentelemetry.io/otel/sdk/metric/export/aggregation"
-	processor "go.opentelemetry.io/otel/sdk/metric/processor/basic"
-	selector "go.opentelemetry.io/otel/sdk/metric/selector/simple"
+	metricsdk "go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/resource"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 )
 
 type observabilityTests struct {
@@ -40,31 +35,24 @@ func newObservabilityTests() *observabilityTests {
 	return &observabilityTests{}
 }
 
-var defaultHistogramBoundaries = []float64{1, 2, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40, 50, 65, 80, 100, 130, 160, 200, 250, 300, 400, 500, 650, 800, 1000, 2000, 5000, 10000, 20000, 50000, 100000}
+// var defaultHistogramBoundaries = []float64{1, 2, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40, 50, 65, 80, 100, 130, 160, 200, 250, 300, 400, 500, 650, 800, 1000, 2000, 5000, 10000, 20000, 50000, 100000}
 
 func newPrometheusExporter() (*prometheus.Exporter, error) {
-	ctrl := controller.New(
-		processor.NewFactory(
-			selector.NewWithHistogramDistribution(
-				histogram.WithExplicitBoundaries(defaultHistogramBoundaries),
-			),
-			aggregation.CumulativeTemporalitySelector(),
-			processor.WithMemory(true),
-		),
-		controller.WithResource(resource.NewSchemaless(
+	e := prometheus.New()
+	provider := metricsdk.NewMeterProvider(
+		metricsdk.WithReader(e),
+		metricsdk.WithResource(resource.NewSchemaless(
 			semconv.ServiceNameKey.String("otelsqltest"),
 		)),
-		controller.WithCollectPeriod(50*time.Millisecond),
 	)
 
-	e, err := prometheus.New(prometheus.Config{
-		Registry: prom.NewRegistry(),
-	}, ctrl)
-	if err != nil {
-		return nil, fmt.Errorf("failed to init prometheus exporter: %w", err)
+	registry := prom.NewRegistry()
+
+	if err := registry.Register(e.Collector); err != nil {
+		return nil, fmt.Errorf("could not register prometheus collector: %w", err)
 	}
 
-	global.SetMeterProvider(e.MeterProvider())
+	global.SetMeterProvider(provider)
 
-	return e, nil
+	return &e, nil
 }

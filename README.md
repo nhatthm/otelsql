@@ -35,7 +35,7 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 
 ## Prerequisites
 
-- `Go >= 1.17`
+- `Go >= 1.18`
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -49,8 +49,9 @@ Compatibility
 
 |         `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/sdk/metric` |
 |:--------------------------:|:--------------------------------:|:-------------------------------------:|
-| `v0.5.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |         `v0.31.0` ~> `latest`         |
-|   `v0.4.*` <sup>1</sup>    |       `v1.9.0` ~> `latest`       |         `v0.31.0` ~> `latest`         |
+| `v0.6.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |         `v0.32.0` ~> `latest`         |
+| `v0.5.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |               `v0.31.0`               |
+|   `v0.4.*` <sup>1</sup>    |       `v1.9.0` ~> `latest`       |               `v0.31.0`               |
 |   `v0.3.*` <sup>1</sup>    |       `v1.7.0` ~> `latest`       |        `v0.28.0` ~> `v0.30.0`         |
 |   `v0.2.*` <sup>1</sup>    |       `v1.6.2` ~> `latest`       |        `v0.28.0` ~> `v0.30.0`         |
 |   `v0.1.*` <sup>1</sup>    |       `v1.4.1` ~> `latest`       |        `v0.26.0` ~> `v0.27.0`         |
@@ -71,7 +72,7 @@ import (
 	"database/sql"
 
 	"go.nhat.io/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -104,7 +105,7 @@ import (
 	"database/sql"
 
 	"go.nhat.io/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -141,38 +142,38 @@ func openDB(dsn string) (*sql.DB, error) {
 
 **Driver Options**
 
-| Option                                         | Description                                                                                                                                                                                                                                                                                     |
-|:-----------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `WithMeterProvider(metric.MeterProvider)`      | Specify a meter provider                                                                                                                                                                                                                                                                        |
-| `WithTracerProvider(trace.TracerProvider)`     | Specify a tracer provider                                                                                                                                                                                                                                                                       |
-| `WithDefaultAttributes(...attribute.KeyValue)` | Add extra attributes for the recorded spans and metrics                                                                                                                                                                                                                                         |
-| `WithInstanceName(string)`                     | Add an extra attribute for annotating the instance name                                                                                                                                                                                                                                         |
-| `WithSystem(attribute.KeyValue)`               | Add an extra attribute for annotating the type of database server.<br/> The value is set by using the well-known identifiers in `semconv`. For example: `semconv.DBSystemPostgreSQL`. See [more](https://github.com/open-telemetry/opentelemetry-go/blob/main/semconv/v1.10.0/trace.go#L37-L43) |
-| `WithDatabaseName(string)`                     | Add an extra attribute for annotating the database name                                                                                                                                                                                                                                         |
-| `WithSpanNameFormatter(spanNameFormatter)`     | Set a custom [span name formatter](#span-name-formatter)                                                                                                                                                                                                                                        |
-| `ConvertErrorToSpanStatus(errorToSpanStatus)`  | Set a custom [converter for span status](#convert-error-to-span-status)                                                                                                                                                                                                                         |
-| `DisableErrSkip()`                             | `sql.ErrSkip` is considered as `OK` in span status                                                                                                                                                                                                                                              |
-| `TraceQuery()`                                 | Set a custom function for [tracing query](#trace-query)                                                                                                                                                                                                                                         |
-| `TraceQueryWithArgs()`                         | [Trace query](#trace-query) and all arguments                                                                                                                                                                                                                                                   |
-| `TraceQueryWithoutArgs()`                      | [Trace query](#trace-query) without the arguments                                                                                                                                                                                                                                               |
-| `AllowRoot()`                                  | Create root spans in absence of existing spans or even context                                                                                                                                                                                                                                  |
-| `TracePing()`                                  | Enable the creation of spans on Ping requests                                                                                                                                                                                                                                                   |
-| `TraceRowsNext()`                              | Enable the creation of spans on RowsNext calls. (This can result in many spans)                                                                                                                                                                                                                 |
-| `TraceRowsClose()`                             | Enable the creation of spans on RowsClose calls                                                                                                                                                                                                                                                 |
-| `TraceRowsAffected()`                          | Enable the creation of spans on RowsAffected calls                                                                                                                                                                                                                                              |
-| `TraceLastInsertID()`                          | Enable the creation of spans on LastInsertId call                                                                                                                                                                                                                                               |
-| `TraceAll()`                                   | Turn on all tracing options, including `AllowRoot()` and `TraceQueryWithArgs()`                                                                                                                                                                                                                 |
+| Option                                         | Description                                                                                                                                                                                                                                                                                       |
+|:-----------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `WithMeterProvider(metric.MeterProvider)`      | Specify a meter provider                                                                                                                                                                                                                                                                          |
+| `WithTracerProvider(trace.TracerProvider)`     | Specify a tracer provider                                                                                                                                                                                                                                                                         |
+| `WithDefaultAttributes(...attribute.KeyValue)` | Add extra attributes for the recorded spans and metrics                                                                                                                                                                                                                                           |
+| `WithInstanceName(string)`                     | Add an extra attribute for annotating the instance name                                                                                                                                                                                                                                           |
+| `WithSystem(attribute.KeyValue)`               | Add an extra attribute for annotating the type of database server.<br/> The value is set by using the well-known identifiers in `semconv`. For example: `semconv.DBSystemPostgreSQL`. See [more](https://github.com/open-telemetry/opentelemetry-go/blob/main/semconv/v1.12.0/trace.go#L102-L107) |
+| `WithDatabaseName(string)`                     | Add an extra attribute for annotating the database name                                                                                                                                                                                                                                           |
+| `WithSpanNameFormatter(spanNameFormatter)`     | Set a custom [span name formatter](#span-name-formatter)                                                                                                                                                                                                                                          |
+| `ConvertErrorToSpanStatus(errorToSpanStatus)`  | Set a custom [converter for span status](#convert-error-to-span-status)                                                                                                                                                                                                                           |
+| `DisableErrSkip()`                             | `sql.ErrSkip` is considered as `OK` in span status                                                                                                                                                                                                                                                |
+| `TraceQuery()`                                 | Set a custom function for [tracing query](#trace-query)                                                                                                                                                                                                                                           |
+| `TraceQueryWithArgs()`                         | [Trace query](#trace-query) and all arguments                                                                                                                                                                                                                                                     |
+| `TraceQueryWithoutArgs()`                      | [Trace query](#trace-query) without the arguments                                                                                                                                                                                                                                                 |
+| `AllowRoot()`                                  | Create root spans in absence of existing spans or even context                                                                                                                                                                                                                                    |
+| `TracePing()`                                  | Enable the creation of spans on Ping requests                                                                                                                                                                                                                                                     |
+| `TraceRowsNext()`                              | Enable the creation of spans on RowsNext calls. (This can result in many spans)                                                                                                                                                                                                                   |
+| `TraceRowsClose()`                             | Enable the creation of spans on RowsClose calls                                                                                                                                                                                                                                                   |
+| `TraceRowsAffected()`                          | Enable the creation of spans on RowsAffected calls                                                                                                                                                                                                                                                |
+| `TraceLastInsertID()`                          | Enable the creation of spans on LastInsertId call                                                                                                                                                                                                                                                 |
+| `TraceAll()`                                   | Turn on all tracing options, including `AllowRoot()` and `TraceQueryWithArgs()`                                                                                                                                                                                                                   |
 
 **Record Stats Options**
 
-| Option                                          | Description                                                                                                                                                                                                                                                                                     |
-|:------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `WithMeterProvider(metric.MeterProvider)`       | Specify a meter provider                                                                                                                                                                                                                                                                        |
-| `WithMinimumReadDBStatsInterval(time.Duration)` | The minimum interval between calls to db.Stats(). Negative values are ignored.                                                                                                                                                                                                                  |
-| `WithDefaultAttributes(...attribute.KeyValue)`  | Add extra attributes for the recorded metrics                                                                                                                                                                                                                                                   |
-| `WithInstanceName(string)`                      | Add an extra attribute for annotating the instance name                                                                                                                                                                                                                                         |
-| `WithSystem(attribute.KeyValue)`                | Add an extra attribute for annotating the type of database server.<br/> The value is set by using the well-known identifiers in `semconv`. For example: `semconv.DBSystemPostgreSQL`. See [more](https://github.com/open-telemetry/opentelemetry-go/blob/main/semconv/v1.10.0/trace.go#L37-L43) |
-| `WithDatabaseName(string)`                      | Add an extra attribute for annotating the database name                                                                                                                                                                                                                                         |
+| Option                                          | Description                                                                                                                                                                                                                                                                                       |
+|:------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `WithMeterProvider(metric.MeterProvider)`       | Specify a meter provider                                                                                                                                                                                                                                                                          |
+| `WithMinimumReadDBStatsInterval(time.Duration)` | The minimum interval between calls to db.Stats(). Negative values are ignored.                                                                                                                                                                                                                    |
+| `WithDefaultAttributes(...attribute.KeyValue)`  | Add extra attributes for the recorded metrics                                                                                                                                                                                                                                                     |
+| `WithInstanceName(string)`                      | Add an extra attribute for annotating the instance name                                                                                                                                                                                                                                           |
+| `WithSystem(attribute.KeyValue)`                | Add an extra attribute for annotating the type of database server.<br/> The value is set by using the well-known identifiers in `semconv`. For example: `semconv.DBSystemPostgreSQL`. See [more](https://github.com/open-telemetry/opentelemetry-go/blob/main/semconv/v1.12.0/trace.go#L102-L107) |
+| `WithDatabaseName(string)`                      | Add an extra attribute for annotating the database name                                                                                                                                                                                                                                           |
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -329,7 +330,7 @@ import (
 	"go.nhat.io/otelsql"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -589,12 +590,12 @@ The traces are almost identical with some minor changes:
             <th colspan="2">Windows</th>
         </tr>
         <tr>
-            <th>go 1.17</th>
             <th>go 1.18</th>
-            <th>go 1.17</th>
+            <th>go 1.19</th>
             <th>go 1.18</th>
-            <th>go 1.17</th>
+            <th>go 1.19</th>
             <th>go 1.18</th>
+            <th>go 1.19</th>
         </tr>
     </thead>
     <tbody>

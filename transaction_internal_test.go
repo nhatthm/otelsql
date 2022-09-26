@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 
 	"go.nhat.io/otelsql/internal/test/oteltest"
 )
@@ -81,7 +81,8 @@ func TestTxStats(t *testing.T) {
 				},
 				{
 					"Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=tx_test,db.instance=test,db.operation=go.sql.commit,db.sql.error=error,db.sql.status=ERROR,db.system=other_sql}",
-					"Sum": "<ignore-diff>"
+					"Sum": "<ignore-diff>",
+					"Count": 1
 				}
 			]`,
 		},
@@ -95,7 +96,9 @@ func TestTxStats(t *testing.T) {
 				},
 				{
 					"Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=tx_test,db.instance=test,db.operation=go.sql.commit,db.sql.status=OK,db.system=other_sql}",
-					"Sum": "<ignore-diff>"
+					"Sum": "<ignore-diff>",
+					"Count": 1,
+					"Count": 1
 				}
 			]`,
 		},

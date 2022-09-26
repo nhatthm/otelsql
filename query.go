@@ -10,7 +10,7 @@ const (
 	traceMethodQuery  = "query"
 )
 
-type queryContextFuncMiddleware func(next queryContextFunc) queryContextFunc
+type queryContextFuncMiddleware = middleware[queryContextFunc]
 
 type queryContextFunc func(ctx context.Context, query string, args []driver.NamedValue) (driver.Rows, error)
 
@@ -22,23 +22,6 @@ func nopQueryContext(_ context.Context, _ string, _ []driver.NamedValue) (driver
 // skippedQueryContext always returns driver.ErrSkip.
 func skippedQueryContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Rows, error) {
 	return nil, driver.ErrSkip
-}
-
-// chainQueryContextFuncMiddlewares builds a queryContextFunc composed of an inline middleware stack and the end pinger in the order they are passed.
-func chainQueryContextFuncMiddlewares(middlewares []queryContextFuncMiddleware, query queryContextFunc) queryContextFunc {
-	// Return ahead of time if there are not any middlewares for the chain.
-	if len(middlewares) == 0 {
-		return query
-	}
-
-	// Wrap the end queryer with the middleware chain.
-	h := middlewares[len(middlewares)-1](query)
-
-	for i := len(middlewares) - 2; i >= 0; i-- {
-		h = middlewares[i](h)
-	}
-
-	return h
 }
 
 // queryStats records metrics for query.

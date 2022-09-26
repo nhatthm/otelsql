@@ -10,7 +10,7 @@ const (
 	traceMethodPrepare  = "prepare"
 )
 
-type prepareContextFuncMiddleware func(next prepareContextFunc) prepareContextFunc
+type prepareContextFuncMiddleware = middleware[prepareContextFunc]
 
 type prepareContextFunc func(ctx context.Context, query string) (driver.Stmt, error)
 
@@ -27,23 +27,6 @@ func ensurePrepareContext(conn driver.Conn) prepareContextFunc {
 	return func(_ context.Context, query string) (driver.Stmt, error) {
 		return conn.Prepare(query)
 	}
-}
-
-// chainPrepareContextFuncMiddlewares builds a prepareContextFunc composed of an inline middleware stack and the end pinger in the order they are passed.
-func chainPrepareContextFuncMiddlewares(middlewares []prepareContextFuncMiddleware, prepare prepareContextFunc) prepareContextFunc {
-	// Return ahead of time if there are not any middlewares for the chain.
-	if len(middlewares) == 0 {
-		return prepare
-	}
-
-	// Wrap the end prepare with the middleware chain.
-	h := middlewares[len(middlewares)-1](prepare)
-
-	for i := len(middlewares) - 2; i >= 0; i-- {
-		h = middlewares[i](h)
-	}
-
-	return h
 }
 
 // prepareStats records metrics for prepare.

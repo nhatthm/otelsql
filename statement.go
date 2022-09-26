@@ -202,36 +202,36 @@ func makeStmt(parent driver.Stmt, cfg stmtConfig) stmt {
 	}
 }
 
-func makeStmtExecFunc(parent driver.Stmt, execContextFuncMiddlewares []execContextFuncMiddleware) execContextFunc {
-	return chainExecContextFuncMiddlewares(execContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
+func makeStmtExecFunc(parent driver.Stmt, execContextFuncMiddlewares []middleware[execContextFunc]) execContextFunc {
+	return chainMiddlewares(execContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
 		return parent.Exec(namedValuesToValues(args)) // nolint: staticcheck
 	})
 }
 
-func makeStmtExecContextFunc(parent driver.Stmt, execContextFuncMiddlewares []execContextFuncMiddleware) execContextFunc {
+func makeStmtExecContextFunc(parent driver.Stmt, execContextFuncMiddlewares []middleware[execContextFunc]) execContextFunc {
 	execer, ok := parent.(driver.StmtExecContext)
 	if !ok {
 		return nopExecContext
 	}
 
-	return chainExecContextFuncMiddlewares(execContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
+	return chainMiddlewares(execContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
 		return execer.ExecContext(ctx, args)
 	})
 }
 
-func makeStmtQueryFunc(parent driver.Stmt, queryContextFuncMiddlewares []queryContextFuncMiddleware) queryContextFunc {
-	return chainQueryContextFuncMiddlewares(queryContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {
+func makeStmtQueryFunc(parent driver.Stmt, queryContextFuncMiddlewares []middleware[queryContextFunc]) queryContextFunc {
+	return chainMiddlewares(queryContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {
 		return parent.Query(namedValuesToValues(args)) // nolint: staticcheck
 	})
 }
 
-func makeStmtQueryContextFunc(parent driver.Stmt, queryContextFuncMiddlewares []queryContextFuncMiddleware) queryContextFunc {
+func makeStmtQueryContextFunc(parent driver.Stmt, queryContextFuncMiddlewares []middleware[queryContextFunc]) queryContextFunc {
 	queryer, ok := parent.(driver.StmtQueryContext)
 	if !ok {
 		return nopQueryContext
 	}
 
-	return chainQueryContextFuncMiddlewares(queryContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {
+	return chainMiddlewares(queryContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {
 		return queryer.QueryContext(ctx, args)
 	})
 }

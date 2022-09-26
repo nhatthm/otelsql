@@ -27,7 +27,7 @@ func BenchmarkPingStats(b *testing.B) {
 		dbInstance.String("test"),
 	)
 
-	ping := chainPingFuncMiddlewares([]pingFuncMiddleware{
+	ping := chainMiddlewares([]pingFuncMiddleware{
 		pingStats(r),
 	}, nopPing)
 
@@ -47,7 +47,7 @@ func TestNopPing(t *testing.T) {
 func TestChainPingFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	f := chainPingFuncMiddlewares(nil, nopPing)
+	f := chainMiddlewares(nil, nopPing)
 
 	err := f(context.Background())
 
@@ -77,7 +77,7 @@ func TestChainPingFuncMiddlewares(t *testing.T) {
 		}
 	}
 
-	ping := chainPingFuncMiddlewares(
+	ping := chainMiddlewares(
 		[]pingFuncMiddleware{
 			pushPingFuncMiddleware("outer"),
 			pushPingFuncMiddleware("inner"),
@@ -155,7 +155,7 @@ func TestPingStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
-					ping := chainPingFuncMiddlewares([]pingFuncMiddleware{
+					ping := chainMiddlewares([]pingFuncMiddleware{
 						pingStats(r),
 					}, tc.ping)
 

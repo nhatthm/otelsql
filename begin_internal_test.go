@@ -28,7 +28,7 @@ func BenchmarkBeginStats(b *testing.B) {
 		dbInstance.String("test"),
 	)
 
-	begin := chainBeginFuncMiddlewares([]beginFuncMiddleware{
+	begin := chainMiddlewares([]beginFuncMiddleware{
 		beginStats(r),
 	}, nopBegin)
 
@@ -84,7 +84,7 @@ func TestEnsureBegin(t *testing.T) {
 func TestChainBeginFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	begin := chainBeginFuncMiddlewares(nil, nopBegin)
+	begin := chainMiddlewares(nil, nopBegin)
 
 	result, err := begin(context.Background(), driver.TxOptions{})
 
@@ -115,7 +115,7 @@ func TestChainBeginFuncMiddlewares(t *testing.T) {
 		}
 	}
 
-	begin := chainBeginFuncMiddlewares(
+	begin := chainMiddlewares(
 		[]beginFuncMiddleware{
 			pushBeginFuncMiddleware("outer"),
 			pushBeginFuncMiddleware("inner"),
@@ -194,7 +194,7 @@ func TestBeginStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
-					begin := chainBeginFuncMiddlewares([]beginFuncMiddleware{
+					begin := chainMiddlewares([]beginFuncMiddleware{
 						beginStats(r),
 					}, tc.begin)
 

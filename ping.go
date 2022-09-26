@@ -10,7 +10,7 @@ const (
 )
 
 // pingFuncMiddleware is a type for pingFunc middleware.
-type pingFuncMiddleware func(next pingFunc) pingFunc
+type pingFuncMiddleware = middleware[pingFunc]
 
 // pingFunc is a callback for pingFunc.
 type pingFunc func(ctx context.Context) error
@@ -18,24 +18,6 @@ type pingFunc func(ctx context.Context) error
 // nopPing pings nothing.
 func nopPing(_ context.Context) error {
 	return nil
-}
-
-// chainPingFuncMiddlewares builds a pingFunc composed of an inline middleware stack and the end pinger in the order they are
-// passed.
-func chainPingFuncMiddlewares(middlewares []pingFuncMiddleware, pinger pingFunc) pingFunc {
-	// Return ahead of time if there are not any middlewares for the chain.
-	if len(middlewares) == 0 {
-		return pinger
-	}
-
-	// Wrap the end pinger with the middleware chain.
-	h := middlewares[len(middlewares)-1](pinger)
-
-	for i := len(middlewares) - 2; i >= 0; i-- {
-		h = middlewares[i](h)
-	}
-
-	return h
 }
 
 // pingStats records ping stats.

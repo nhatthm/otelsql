@@ -21,16 +21,17 @@ linters:
   enable-all: true
   disable:
     - contextcheck
+    - deadcode
     - exhaustivestruct
     - exhaustruct
     - forbidigo
     - forcetypeassert
     - gci
     - gochecknoglobals
-    - golint
-    - gomoddirectives
-    - gomnd
     - goerr113
+    - golint
+    - gomnd
+    - gomoddirectives
     - ifshort
     - interfacer
     - ireturn
@@ -40,11 +41,16 @@ linters:
     - nonamedreturns
     - nosnakecase
     - paralleltest
+    - rowserrcheck # https://github.com/golangci/golangci-lint/issues/2649
     - scopelint
+    - sqlclosecheck # https://github.com/golangci/golangci-lint/issues/2649
+    - structcheck
     - tagliatelle
     - testpackage
-    - wrapcheck
+    - varcheck
     - varnamelen
+    - wastedassign # https://github.com/golangci/golangci-lint/issues/2649
+    - wrapcheck
 
 issues:
   exclude-use-default: false

@@ -15,7 +15,7 @@ import (
 func TestChainTxFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	f := chainTxFuncMiddlewares(nil, nopTxFunc)
+	f := chainMiddlewares(nil, nopTxFunc)
 
 	err := f()
 
@@ -45,7 +45,7 @@ func TestChainTxFuncMiddlewares(t *testing.T) {
 		}
 	}
 
-	f := chainTxFuncMiddlewares(
+	f := chainMiddlewares(
 		[]txFuncMiddleware{
 			pushTxFuncMiddleware("outer"),
 			pushTxFuncMiddleware("inner"),
@@ -124,7 +124,7 @@ func TestTxStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
-					f := chainTxFuncMiddlewares([]txFuncMiddleware{
+					f := chainMiddlewares([]txFuncMiddleware{
 						txStats(context.Background(), r, metricMethodCommit),
 					}, tc.beginner)
 

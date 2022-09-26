@@ -28,7 +28,7 @@ func BenchmarkPrepareStats(b *testing.B) {
 		dbInstance.String("test"),
 	)
 
-	prepare := chainPrepareContextFuncMiddlewares([]prepareContextFuncMiddleware{
+	prepare := chainMiddlewares([]prepareContextFuncMiddleware{
 		prepareStats(r),
 	}, nopPrepareContext)
 
@@ -84,7 +84,7 @@ func TestEnsurePrepareContext(t *testing.T) {
 func TestChainPrepareContextFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	prepare := chainPrepareContextFuncMiddlewares(nil, nopPrepareContext)
+	prepare := chainMiddlewares(nil, nopPrepareContext)
 
 	result, err := prepare(context.Background(), "")
 
@@ -115,7 +115,7 @@ func TestChainPrepareContextFuncMiddlewares(t *testing.T) {
 		}
 	}
 
-	prepare := chainPrepareContextFuncMiddlewares(
+	prepare := chainMiddlewares(
 		[]prepareContextFuncMiddleware{
 			pushPrepareContextFuncMiddleware("outer"),
 			pushPrepareContextFuncMiddleware("inner"),
@@ -194,7 +194,7 @@ func TestPrepareStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
-					prepare := chainPrepareContextFuncMiddlewares([]prepareContextFuncMiddleware{
+					prepare := chainMiddlewares([]prepareContextFuncMiddleware{
 						prepareStats(r),
 					}, tc.prepare)
 

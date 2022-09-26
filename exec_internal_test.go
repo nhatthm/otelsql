@@ -28,7 +28,7 @@ func BenchmarkExecStats(b *testing.B) {
 		dbInstance.String("test"),
 	)
 
-	exec := chainExecContextFuncMiddlewares([]execContextFuncMiddleware{
+	exec := chainMiddlewares([]execContextFuncMiddleware{
 		execStats(r, metricMethodExec),
 	}, nopExecContext)
 
@@ -58,7 +58,7 @@ func TestSkippedExecContext(t *testing.T) {
 func TestChainExecContextFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	exec := chainExecContextFuncMiddlewares(nil, nopExecContext)
+	exec := chainMiddlewares(nil, nopExecContext)
 
 	result, err := exec(context.Background(), "", nil)
 
@@ -89,7 +89,7 @@ func TestChainExecContextFuncMiddlewares(t *testing.T) {
 		}
 	}
 
-	f := chainExecContextFuncMiddlewares(
+	f := chainMiddlewares(
 		[]execContextFuncMiddleware{
 			pushExecContextMiddleware("outer"),
 			pushExecContextMiddleware("inner"),
@@ -168,7 +168,7 @@ func TestExecStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
-					exec := chainExecContextFuncMiddlewares([]execContextFuncMiddleware{
+					exec := chainMiddlewares([]execContextFuncMiddleware{
 						execStats(r, metricMethodExec),
 					}, tc.execer)
 

@@ -11,7 +11,7 @@ const (
 )
 
 // beginFuncMiddleware is a type for beginFunc middleware.
-type beginFuncMiddleware func(next beginFunc) beginFunc
+type beginFuncMiddleware = middleware[beginFunc]
 
 // beginFunc is a callback for beginFunc.
 type beginFunc func(ctx context.Context, opts driver.TxOptions) (driver.Tx, error)
@@ -29,23 +29,6 @@ func ensureBegin(conn driver.Conn) beginFunc {
 	return func(_ context.Context, _ driver.TxOptions) (driver.Tx, error) {
 		return conn.Begin() // nolint: staticcheck
 	}
-}
-
-// chainBeginFuncMiddlewares builds a beginFunc composed of an inline middleware stack and the end beginner in the order they are passed.
-func chainBeginFuncMiddlewares(middlewares []beginFuncMiddleware, begin beginFunc) beginFunc {
-	// Return ahead of time if there are not any middlewares for the chain.
-	if len(middlewares) == 0 {
-		return begin
-	}
-
-	// Wrap the end beginner with the middleware chain.
-	h := middlewares[len(middlewares)-1](begin)
-
-	for i := len(middlewares) - 2; i >= 0; i-- {
-		h = middlewares[i](h)
-	}
-
-	return h
 }
 
 // beginStats records begin stats.

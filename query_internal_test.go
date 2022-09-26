@@ -28,7 +28,7 @@ func BenchmarkQueryStats(b *testing.B) {
 		dbInstance.String("test"),
 	)
 
-	query := chainQueryContextFuncMiddlewares([]queryContextFuncMiddleware{
+	query := chainMiddlewares([]queryContextFuncMiddleware{
 		queryStats(r, metricMethodQuery),
 	}, nopQueryContext)
 
@@ -58,7 +58,7 @@ func TestSkippedQueryContext(t *testing.T) {
 func TestChainQueryContextFuncMiddlewares_NoMiddleware(t *testing.T) {
 	t.Parallel()
 
-	query := chainQueryContextFuncMiddlewares(nil, nopQueryContext)
+	query := chainMiddlewares(nil, nopQueryContext)
 
 	result, err := query(context.Background(), "", nil)
 
@@ -89,7 +89,7 @@ func TestChainQueryContextFuncMiddlewares(t *testing.T) {
 		}
 	}
 
-	query := chainQueryContextFuncMiddlewares(
+	query := chainMiddlewares(
 		[]queryContextFuncMiddleware{
 			pushQueryContextMiddleware("outer"),
 			pushQueryContextMiddleware("inner"),
@@ -168,7 +168,7 @@ func TestQueryStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
-					query := chainQueryContextFuncMiddlewares([]queryContextFuncMiddleware{
+					query := chainMiddlewares([]queryContextFuncMiddleware{
 						queryStats(r, metricMethodQuery),
 					}, tc.query)
 

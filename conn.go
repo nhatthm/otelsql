@@ -109,19 +109,19 @@ func makeConn(parent driver.Conn, cfg connConfig) conn {
 	}
 
 	if p, ok := parent.(driver.Pinger); ok {
-		c.ping = chainPingFuncMiddlewares(cfg.pingFuncMiddlewares, p.Ping)
+		c.ping = chainMiddlewares(cfg.pingFuncMiddlewares, p.Ping)
 	}
 
 	if p, ok := parent.(driver.ExecerContext); ok {
-		c.exec = chainExecContextFuncMiddlewares(cfg.execContextFuncMiddlewares, p.ExecContext)
+		c.exec = chainMiddlewares(cfg.execContextFuncMiddlewares, p.ExecContext)
 	}
 
 	if p, ok := parent.(driver.QueryerContext); ok {
-		c.query = chainQueryContextFuncMiddlewares(cfg.queryContextFuncMiddlewares, p.QueryContext)
+		c.query = chainMiddlewares(cfg.queryContextFuncMiddlewares, p.QueryContext)
 	}
 
-	c.begin = chainBeginFuncMiddlewares(cfg.beginFuncMiddlewares, ensureBegin(parent))
-	c.prepare = chainPrepareContextFuncMiddlewares(cfg.prepareFuncMiddlewares, ensurePrepareContext(parent))
+	c.begin = chainMiddlewares(cfg.beginFuncMiddlewares, ensureBegin(parent))
+	c.prepare = chainMiddlewares(cfg.prepareFuncMiddlewares, ensurePrepareContext(parent))
 
 	return c
 }

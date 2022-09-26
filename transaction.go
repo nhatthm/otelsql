@@ -16,7 +16,7 @@ const (
 
 var _ driver.Tx = (*tx)(nil)
 
-type txFuncMiddleware func(next txFunc) txFunc
+type txFuncMiddleware = middleware[txFunc]
 
 type txFunc func() error
 
@@ -37,8 +37,8 @@ func wrapTx(ctx context.Context, parent driver.Tx, r methodRecorder, t methodTra
 	ctx = trace.ContextWithSpanContext(context.Background(), trace.SpanContextFromContext(ctx))
 
 	return &tx{
-		commit:   chainTxFuncMiddlewares(makeTxFuncMiddlewares(ctx, r, t, metricMethodCommit, traceMethodCommit), parent.Commit),
-		rollback: chainTxFuncMiddlewares(makeTxFuncMiddlewares(ctx, r, t, metricMethodRollback, traceMethodRollback), parent.Rollback),
+		commit:   chainMiddlewares(makeTxFuncMiddlewares(ctx, r, t, metricMethodCommit, traceMethodCommit), parent.Commit),
+		rollback: chainMiddlewares(makeTxFuncMiddlewares(ctx, r, t, metricMethodRollback, traceMethodRollback), parent.Rollback),
 	}
 }
 
@@ -72,23 +72,6 @@ func txTrace(ctx context.Context, t methodTracer, method string) txFuncMiddlewar
 			return next()
 		}
 	}
-}
-
-// chainTxFuncMiddlewares builds a txFunc composed of an inline middleware stack and the end beginner in the order they are passed.
-func chainTxFuncMiddlewares(middlewares []txFuncMiddleware, f txFunc) txFunc {
-	// Return ahead of time if there are not any middlewares for the chain.
-	if len(middlewares) == 0 {
-		return f
-	}
-
-	// Wrap the end func with the middleware chain.
-	h := middlewares[len(middlewares)-1](f)
-
-	for i := len(middlewares) - 2; i >= 0; i-- {
-		h = middlewares[i](h)
-	}
-
-	return h
 }
 
 func makeTxFuncMiddlewares(ctx context.Context, r methodRecorder, t methodTracer, metricMethod string, traceMethod string) []txFuncMiddleware {

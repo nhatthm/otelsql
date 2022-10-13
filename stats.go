@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
@@ -17,6 +18,16 @@ import (
 
 // defaultMinimumReadDBStatsInterval is the default minimum interval between calls to db.Stats().
 const defaultMinimumReadDBStatsInterval = time.Second
+
+const (
+	dbSQLConnectionsOpen           = "db.sql.connections.open"
+	dbSQLConnectionsIdle           = "db.sql.connections.idle"
+	dbSQLConnectionsActive         = "db.sql.connections.active"
+	dbSQLConnectionsWaitCount      = "db.sql.connections.wait_count"
+	dbSQLConnectionsWaitDuration   = "db.sql.connections.wait_duration"
+	dbSQLConnectionsIdleClosed     = "db.sql.connections.idle_closed"
+	dbSQLConnectionsLifetimeClosed = "db.sql.connections.lifetime_closed"
+)
 
 // RecordStats records database statistics for provided sql.DB at the provided interval.
 func RecordStats(db *sql.DB, opts ...StatsOption) error {
@@ -62,61 +73,54 @@ func recordStats(
 	lock.Lock()
 	defer lock.Unlock()
 
-	if openConnections, err = meter.AsyncInt64().Gauge(
+	openConnections, err = meter.AsyncInt64().Gauge(
 		dbSQLConnectionsOpen,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("Count of open connections in the pool"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
-	if idleConnections, err = meter.AsyncInt64().Gauge(
+	idleConnections, err = meter.AsyncInt64().Gauge(
 		dbSQLConnectionsIdle,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("Count of idle connections in the pool"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
-	if activeConnections, err = meter.AsyncInt64().Gauge(
+	activeConnections, err = meter.AsyncInt64().Gauge(
 		dbSQLConnectionsActive,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("Count of active connections in the pool"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
-	if waitCount, err = meter.AsyncInt64().Gauge(
+	waitCount, err = meter.AsyncInt64().Gauge(
 		dbSQLConnectionsWaitCount,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("The total number of connections waited for"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
-	if waitDuration, err = meter.AsyncFloat64().Gauge(
+	waitDuration, err = meter.AsyncFloat64().Gauge(
 		dbSQLConnectionsWaitDuration,
 		instrument.WithUnit(unit.Milliseconds),
 		instrument.WithDescription("The total time blocked waiting for a new connection"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
-	if idleClosed, err = meter.AsyncInt64().Gauge(
+	idleClosed, err = meter.AsyncInt64().Gauge(
 		dbSQLConnectionsIdleClosed,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
-	if lifetimeClosed, err = meter.AsyncInt64().Gauge(
+	lifetimeClosed, err = meter.AsyncInt64().Gauge(
 		dbSQLConnectionsLifetimeClosed,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
-	); err != nil {
-		return err
-	}
+	)
+	otel.Handle(err)
 
 	return meter.RegisterCallback([]instrument.Asynchronous{
 		openConnections,

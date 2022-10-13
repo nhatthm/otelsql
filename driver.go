@@ -21,6 +21,11 @@ const _maxDriver = 150
 
 const instrumentationName = "go.nhat.io/otelsql"
 
+const (
+	dbSQLClientLatencyMs = "db.sql.client.latency"
+	dbSQLClientCalls     = "db.sql.client.calls"
+)
+
 var regMu sync.Mutex
 
 // Register initializes and registers our otelsql wrapped database driver identified by its driverName and using provided

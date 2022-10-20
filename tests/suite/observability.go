@@ -38,7 +38,13 @@ func newObservabilityTests() *observabilityTests {
 // var defaultHistogramBoundaries = []float64{1, 2, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40, 50, 65, 80, 100, 130, 160, 200, 250, 300, 400, 500, 650, 800, 1000, 2000, 5000, 10000, 20000, 50000, 100000}
 
 func newPrometheusExporter() (*prometheus.Exporter, error) {
-	e := prometheus.New()
+	e, err := prometheus.New(
+		prometheus.WithRegisterer(prom.NewRegistry()),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("could not init prometheus exporter: %w", err)
+	}
+
 	provider := metricsdk.NewMeterProvider(
 		metricsdk.WithReader(e),
 		metricsdk.WithResource(resource.NewSchemaless(
@@ -46,13 +52,7 @@ func newPrometheusExporter() (*prometheus.Exporter, error) {
 		)),
 	)
 
-	registry := prom.NewRegistry()
-
-	if err := registry.Register(e.Collector); err != nil {
-		return nil, fmt.Errorf("could not register prometheus collector: %w", err)
-	}
-
 	global.SetMeterProvider(provider)
 
-	return &e, nil
+	return e, nil
 }

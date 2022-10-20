@@ -655,7 +655,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">jackc/pgx/stdlib</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 12, 13, 14
+                Postgres 12, 13, 14, 15
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
@@ -670,7 +670,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">lib/pq</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 12, 13, 14
+                Postgres 12, 13, 14, 15
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml">

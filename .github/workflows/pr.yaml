@@ -223,7 +223,7 @@ jobs:
       matrix:
         go-version: [ 1.18.x, 1.19.x ]
         arch: [ "386", amd64 ]
-        postgres-version: [ "12", "13", "14" ]
+        postgres-version: [ "12", "13", "14", "15" ]
         postgres-driver: [ "postgres", "pgx" ]
     runs-on: ubuntu-latest
     needs: test-unit

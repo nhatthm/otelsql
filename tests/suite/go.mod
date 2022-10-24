@@ -9,7 +9,7 @@ require (
 	github.com/godogx/clocksteps v0.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/prometheus/client_golang v1.13.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	github.com/swaggest/assertjson v1.7.0
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql v0.1.0

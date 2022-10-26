@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.3
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql/tests/suite v0.0.0-20220127125055-5da30ca2778a
-	go.nhat.io/testcontainers-extra v0.6.0
+	go.nhat.io/testcontainers-extra v0.7.0
 	go.nhat.io/testcontainers-registry/mssql v0.3.0
 )
 
@@ -26,7 +26,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/containerd/cgroups v1.0.4 // indirect
-	github.com/containerd/containerd v1.6.8 // indirect
+	github.com/containerd/containerd v1.6.9 // indirect
 	github.com/cucumber/gherkin-go/v19 v19.0.3 // indirect
 	github.com/cucumber/godog v0.12.5 // indirect
 	github.com/cucumber/messages-go/v16 v16.0.1 // indirect
@@ -80,7 +80,7 @@ require (
 	github.com/stretchr/testify v1.8.1 // indirect
 	github.com/swaggest/assertjson v1.7.0 // indirect
 	github.com/swaggest/form/v5 v5.0.1 // indirect
-	github.com/testcontainers/testcontainers-go v0.14.0 // indirect
+	github.com/testcontainers/testcontainers-go v0.15.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.nhat.io/otelsql v0.1.0 // indirect
@@ -98,8 +98,8 @@ require (
 	golang.org/x/mod v0.6.0 // indirect
 	golang.org/x/net v0.1.0 // indirect
 	golang.org/x/sys v0.1.0 // indirect
-	golang.org/x/tools v0.1.12 // indirect
-	google.golang.org/genproto v0.0.0-20221018160656-63c7b68cfc55 // indirect
+	golang.org/x/tools v0.2.0 // indirect
+	google.golang.org/genproto v0.0.0-20221025140454-527a21cfbd71 // indirect
 	google.golang.org/grpc v1.50.1 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

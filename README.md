@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/nhatthm/otelsql/branch/master/graph/badge.svg?token=eTdAgDE2vR)](https://codecov.io/gh/nhatthm/otelsql)
 [![Go Report Card](https://goreportcard.com/badge/go.nhat.io/otelsql)](https://goreportcard.com/report/go.nhat.io/otelsql)
 [![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/go.nhat.io/otelsql)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=PJZSGJN57TDJY)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](http://donate.nhat.me)
 
 Add a OpenTelemetry wrapper to your existing database code to instrument the interactions with the database. The wrapper supports both traces and metrics.
 
@@ -49,7 +49,7 @@ Compatibility
 
 |         `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/sdk/metric` |
 |:--------------------------:|:--------------------------------:|:-------------------------------------:|
-| `v0.7.*` <sup>&nbsp;</sup> |      `v1.11.1` ~> `latest`       |               `v0.33.0`               |
+| `v0.7.*` <sup>&nbsp;</sup> |      `v1.11.1` ~> `latest`       |        `v0.33.0` ~> `latest`          |
 | `v0.6.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |               `v0.32.x`               |
 | `v0.5.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |               `v0.31.x`               |
 |   `v0.4.*` <sup>1</sup>    |       `v1.9.0` ~> `latest`       |               `v0.31.x`               |
@@ -695,7 +695,7 @@ If this project help you reduce time to develop, you can give me a cup of coffee
 
 ### Paypal donation
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=PJZSGJN57TDJY)
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](http://donate.nhat.me)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or scan this
 

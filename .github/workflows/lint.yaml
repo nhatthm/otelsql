@@ -31,13 +31,14 @@ jobs:
 
       - id: vars
         run: |
-          make gha-vars
+          make $GITHUB_OUTPUT
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
           version: ${{ steps.vars.outputs.GOLANGCI_LINT_VERSION }}
           working-directory: ${{ matrix.module }}
+          args: --timeout=5m
 
   lint-gherkin:
     name: lint

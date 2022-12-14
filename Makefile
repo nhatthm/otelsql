@@ -2,7 +2,7 @@ MODULE_NAME=otelsql
 
 VENDOR_DIR = vendor
 
-GOLANGCI_LINT_VERSION ?= v1.50.0
+GOLANGCI_LINT_VERSION ?= v1.50.1
 
 GO ?= go
 GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
@@ -10,6 +10,8 @@ GHERKIN_LINT ?= gherkin-lint
 
 TEST_FLAGS = -race
 COMPATIBILITY_TEST ?= postgres
+
+GITHUB_OUTPUT ?= /dev/null
 
 ifeq ($(GOARCH), 386)
 	TEST_FLAGS =
@@ -81,10 +83,10 @@ test-compatibility: $(compatibilityTests)
 .PHONY: test
 test: test-unit test-compatibility
 
-.PHONY: gha-vars
-gha-vars:
-	@echo "::set-output name=MODULE_NAME::$(MODULE_NAME)"
-	@echo "::set-output name=GOLANGCI_LINT_VERSION::$(GOLANGCI_LINT_VERSION)"
+.PHONY: $(GITHUB_OUTPUT)
+$(GITHUB_OUTPUT):
+	@echo "MODULE_NAME=$(MODULE_NAME)" >> "$@"
+	@echo "GOLANGCI_LINT_VERSION=$(GOLANGCI_LINT_VERSION)" >> "$@"
 
 $(GOLANGCI_LINT):
 	@echo "$(OK_COLOR)==> Installing golangci-lint $(GOLANGCI_LINT_VERSION)$(NO_COLOR)"; \

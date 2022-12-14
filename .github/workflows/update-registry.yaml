@@ -20,7 +20,7 @@ jobs:
 
       - id: vars
         run: |
-          make gha-vars
+          make $GITHUB_OUTPUT
 
       - name: notify ${{ matrix.registry }}
         uses: benc-uk/workflow-dispatch@v121

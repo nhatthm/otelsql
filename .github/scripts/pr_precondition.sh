@@ -11,4 +11,4 @@ if [[ $(git ls-files --modified | wc -l | xargs) -gt 0 ]]; then
     EXECUTE="false"
 fi
 
-echo "::set-output name=passed::$EXECUTE"
+echo "passed=$EXECUTE" >> "$GITHUB_OUTPUT"

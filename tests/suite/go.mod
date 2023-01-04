@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/squirrel v1.5.3
-	github.com/bool64/sqluct v0.1.10
+	github.com/bool64/sqluct v0.1.12
 	github.com/cucumber/godog v0.12.5
 	github.com/godogx/clocksteps v0.3.0
 	github.com/jmoiron/sqlx v1.3.5

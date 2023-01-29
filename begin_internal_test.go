@@ -17,10 +17,10 @@ import (
 func BenchmarkBeginStats(b *testing.B) {
 	meter := metric.NewNoopMeter()
 
-	histogram, err := meter.SyncFloat64().Histogram("latency_ms")
+	histogram, err := meter.Float64Histogram("latency_ms")
 	require.NoError(b, err)
 
-	count, err := meter.SyncInt64().Counter("calls")
+	count, err := meter.Int64Counter("calls")
 	require.NoError(b, err)
 
 	r := newMethodRecorder(histogram.Record, count.Add,
@@ -183,10 +183,10 @@ func TestBeginStats(t *testing.T) {
 				Run(t, func(s oteltest.SuiteContext) {
 					meter := s.MeterProvider().Meter("begin_test")
 
-					histogram, err := meter.SyncFloat64().Histogram(dbSQLClientLatencyMs)
+					histogram, err := meter.Float64Histogram(dbSQLClientLatencyMs)
 					require.NoError(t, err)
 
-					count, err := meter.SyncInt64().Counter(dbSQLClientCalls)
+					count, err := meter.Int64Counter(dbSQLClientCalls)
 					require.NoError(t, err)
 
 					r := newMethodRecorder(histogram.Record, count.Add,

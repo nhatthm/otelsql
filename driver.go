@@ -132,13 +132,13 @@ func newConnConfig(opts driverOptions) connConfig {
 		traceWithSpanNameFormatter(opts.trace.spanNameFormatter),
 	)
 
-	latencyMsHistogram, err := meter.SyncFloat64().Histogram(dbSQLClientLatencyMs,
+	latencyMsHistogram, err := meter.Float64Histogram(dbSQLClientLatencyMs,
 		instrument.WithUnit(unit.Milliseconds),
 		instrument.WithDescription(`The distribution of latencies of various calls in milliseconds`),
 	)
 	handleErr(err)
 
-	callsCounter, err := meter.SyncInt64().Counter(dbSQLClientCalls,
+	callsCounter, err := meter.Int64Counter(dbSQLClientCalls,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription(`The number of various calls of methods`),
 	)

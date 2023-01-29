@@ -11,8 +11,6 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/metric/instrument/asyncfloat64"
-	"go.opentelemetry.io/otel/metric/instrument/asyncint64"
 	"go.opentelemetry.io/otel/metric/unit"
 )
 
@@ -55,13 +53,13 @@ func recordStats(
 	var (
 		err error
 
-		openConnections   asyncint64.Gauge
-		idleConnections   asyncint64.Gauge
-		activeConnections asyncint64.Gauge
-		waitCount         asyncint64.Gauge
-		waitDuration      asyncfloat64.Gauge
-		idleClosed        asyncint64.Gauge
-		lifetimeClosed    asyncint64.Gauge
+		openConnections   instrument.Int64ObservableGauge
+		idleConnections   instrument.Int64ObservableGauge
+		activeConnections instrument.Int64ObservableGauge
+		waitCount         instrument.Int64ObservableGauge
+		waitDuration      instrument.Float64ObservableGauge
+		idleClosed        instrument.Int64ObservableGauge
+		lifetimeClosed    instrument.Int64ObservableGauge
 
 		dbStats     sql.DBStats
 		lastDBStats time.Time
@@ -73,64 +71,56 @@ func recordStats(
 	lock.Lock()
 	defer lock.Unlock()
 
-	openConnections, err = meter.AsyncInt64().Gauge(
+	openConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsOpen,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("Count of open connections in the pool"),
 	)
 	otel.Handle(err)
 
-	idleConnections, err = meter.AsyncInt64().Gauge(
+	idleConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdle,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("Count of idle connections in the pool"),
 	)
 	otel.Handle(err)
 
-	activeConnections, err = meter.AsyncInt64().Gauge(
+	activeConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsActive,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("Count of active connections in the pool"),
 	)
 	otel.Handle(err)
 
-	waitCount, err = meter.AsyncInt64().Gauge(
+	waitCount, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsWaitCount,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("The total number of connections waited for"),
 	)
 	otel.Handle(err)
 
-	waitDuration, err = meter.AsyncFloat64().Gauge(
+	waitDuration, err = meter.Float64ObservableGauge(
 		dbSQLConnectionsWaitDuration,
 		instrument.WithUnit(unit.Milliseconds),
 		instrument.WithDescription("The total time blocked waiting for a new connection"),
 	)
 	otel.Handle(err)
 
-	idleClosed, err = meter.AsyncInt64().Gauge(
+	idleClosed, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdleClosed,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
 	)
 	otel.Handle(err)
 
-	lifetimeClosed, err = meter.AsyncInt64().Gauge(
+	lifetimeClosed, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsLifetimeClosed,
 		instrument.WithUnit(unit.Dimensionless),
 		instrument.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
 	)
 	otel.Handle(err)
 
-	return meter.RegisterCallback([]instrument.Asynchronous{
-		openConnections,
-		idleConnections,
-		activeConnections,
-		waitCount,
-		waitDuration,
-		idleClosed,
-		lifetimeClosed,
-	}, func(ctx context.Context) {
+	_, err = meter.RegisterCallback(func(ctx context.Context, obs metric.Observer) error {
 		lock.Lock()
 		defer lock.Unlock()
 
@@ -140,12 +130,24 @@ func recordStats(
 			lastDBStats = now
 		}
 
-		openConnections.Observe(ctx, int64(dbStats.OpenConnections), attrs...)
-		idleConnections.Observe(ctx, int64(dbStats.Idle), attrs...)
-		activeConnections.Observe(ctx, int64(dbStats.InUse), attrs...)
-		waitCount.Observe(ctx, dbStats.WaitCount, attrs...)
-		waitDuration.Observe(ctx, float64(dbStats.WaitDuration.Nanoseconds())/1e6, attrs...)
-		idleClosed.Observe(ctx, dbStats.MaxIdleClosed, attrs...)
-		lifetimeClosed.Observe(ctx, dbStats.MaxLifetimeClosed, attrs...)
-	})
+		obs.ObserveInt64(openConnections, int64(dbStats.OpenConnections), attrs...)
+		obs.ObserveInt64(idleConnections, int64(dbStats.Idle), attrs...)
+		obs.ObserveInt64(activeConnections, int64(dbStats.InUse), attrs...)
+		obs.ObserveInt64(waitCount, dbStats.WaitCount, attrs...)
+		obs.ObserveFloat64(waitDuration, float64(dbStats.WaitDuration.Nanoseconds())/1e6, attrs...)
+		obs.ObserveInt64(idleClosed, dbStats.MaxIdleClosed, attrs...)
+		obs.ObserveInt64(lifetimeClosed, dbStats.MaxLifetimeClosed, attrs...)
+
+		return nil
+	},
+		openConnections,
+		idleConnections,
+		activeConnections,
+		waitCount,
+		waitDuration,
+		idleClosed,
+		lifetimeClosed,
+	)
+
+	return err
 }

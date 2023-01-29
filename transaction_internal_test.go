@@ -113,10 +113,10 @@ func TestTxStats(t *testing.T) {
 				Run(t, func(s oteltest.SuiteContext) {
 					meter := s.MeterProvider().Meter("tx_test")
 
-					histogram, err := meter.SyncFloat64().Histogram(dbSQLClientLatencyMs)
+					histogram, err := meter.Float64Histogram(dbSQLClientLatencyMs)
 					require.NoError(t, err)
 
-					count, err := meter.SyncInt64().Counter(dbSQLClientCalls)
+					count, err := meter.Int64Counter(dbSQLClientCalls)
 					require.NoError(t, err)
 
 					r := newMethodRecorder(histogram.Record, count.Add,

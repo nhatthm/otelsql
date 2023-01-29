@@ -4,7 +4,7 @@ package otelsql
 
 // Version is the current release version of the otelsql instrumentation.
 func Version() string {
-	return "0.7.0"
+	return "0.8.0"
 }
 
 // SemVersion is the semantic version to be supplied to tracer/meter creation.

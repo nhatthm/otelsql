@@ -22,7 +22,7 @@ on:
     - cron: '33 10 * * 6'
 
 env:
-    GO_VERSION: 1.18
+    GO_VERSION: 1.20.x
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}

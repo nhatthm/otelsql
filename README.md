@@ -592,12 +592,12 @@ The traces are almost identical with some minor changes:
             <th colspan="2">Windows</th>
         </tr>
         <tr>
-            <th>go 1.18</th>
             <th>go 1.19</th>
-            <th>go 1.18</th>
+            <th>go 1.20</th>
             <th>go 1.19</th>
-            <th>go 1.18</th>
+            <th>go 1.20</th>
             <th>go 1.19</th>
+            <th>go 1.20</th>
         </tr>
     </thead>
     <tbody>

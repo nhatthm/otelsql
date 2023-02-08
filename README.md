@@ -74,7 +74,7 @@ import (
 	"database/sql"
 
 	"go.nhat.io/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -107,7 +107,7 @@ import (
 	"database/sql"
 
 	"go.nhat.io/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -332,7 +332,7 @@ import (
 	"go.nhat.io/otelsql"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
-	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {

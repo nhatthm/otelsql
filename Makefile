@@ -8,7 +8,7 @@ GO ?= go
 GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
 GHERKIN_LINT ?= gherkin-lint
 
-TEST_FLAGS = -race
+TEST_FLAGS ?= -race
 COMPATIBILITY_TEST ?= postgres
 
 GITHUB_OUTPUT ?= /dev/null
@@ -74,7 +74,7 @@ test-unit:
 $(compatibilityTests):
 	$(eval COMPATIBILITY_TEST := "$(subst test-compatibility-,,$@)")
 	@echo ">> compatibility test: $(COMPATIBILITY_TEST)"
-	@cd "tests/$(COMPATIBILITY_TEST)"; $(GO) test -gcflags=-l -v ./...
+	@cd "tests/$(COMPATIBILITY_TEST)"; $(GO) test -gcflags=-l -v $(TEST_FLAGS) ./...
 	@echo
 
 .PHONY: test-compatibility

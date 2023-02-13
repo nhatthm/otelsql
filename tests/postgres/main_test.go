@@ -6,6 +6,7 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	_ "github.com/jackc/pgx/v4/stdlib" // Database driver
+	_ "github.com/jackc/pgx/v5/stdlib" // Database driver
 	_ "github.com/lib/pq"              // Database driver
 	"go.nhat.io/testcontainers-extra"
 	pg "go.nhat.io/testcontainers-registry/postgres"
@@ -15,7 +16,7 @@ import (
 
 const (
 	defaultVersion = "12-alpine"
-	defaultDriver  = "pgx"
+	defaultDriver  = "pgx/v4"
 
 	databaseName     = "otelsql"
 	databaseUsername = "otelsql"

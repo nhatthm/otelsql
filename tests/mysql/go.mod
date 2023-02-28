@@ -20,7 +20,7 @@ require (
 	github.com/bool64/sqluct v0.1.12 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/containerd/containerd v1.6.16 // indirect
+	github.com/containerd/containerd v1.6.18 // indirect
 	github.com/cucumber/gherkin-go/v19 v19.0.3 // indirect
 	github.com/cucumber/godog v0.12.6 // indirect
 	github.com/cucumber/messages-go/v16 v16.0.1 // indirect
@@ -67,7 +67,7 @@ require (
 	github.com/sergi/go-diff v1.3.1 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.8.1 // indirect
+	github.com/stretchr/testify v1.8.2 // indirect
 	github.com/swaggest/assertjson v1.7.0 // indirect
 	github.com/swaggest/form/v5 v5.0.2 // indirect
 	github.com/testcontainers/testcontainers-go v0.17.0 // indirect
@@ -84,7 +84,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.13.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/net v0.5.0 // indirect
+	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/tools v0.5.0 // indirect
 	google.golang.org/genproto v0.0.0-20230202175211-008b39050e57 // indirect

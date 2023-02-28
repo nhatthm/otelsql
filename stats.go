@@ -11,7 +11,6 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/metric/unit"
 )
 
 // defaultMinimumReadDBStatsInterval is the default minimum interval between calls to db.Stats().
@@ -73,49 +72,49 @@ func recordStats(
 
 	openConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsOpen,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription("Count of open connections in the pool"),
 	)
 	otel.Handle(err)
 
 	idleConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdle,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription("Count of idle connections in the pool"),
 	)
 	otel.Handle(err)
 
 	activeConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsActive,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription("Count of active connections in the pool"),
 	)
 	otel.Handle(err)
 
 	waitCount, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsWaitCount,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription("The total number of connections waited for"),
 	)
 	otel.Handle(err)
 
 	waitDuration, err = meter.Float64ObservableGauge(
 		dbSQLConnectionsWaitDuration,
-		instrument.WithUnit(unit.Milliseconds),
+		instrument.WithUnit(unitMilliseconds),
 		instrument.WithDescription("The total time blocked waiting for a new connection"),
 	)
 	otel.Handle(err)
 
 	idleClosed, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdleClosed,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
 	)
 	otel.Handle(err)
 
 	lifetimeClosed, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsLifetimeClosed,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
 	)
 	otel.Handle(err)

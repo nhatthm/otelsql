@@ -17,12 +17,12 @@ type metricReader struct {
 }
 
 func (r *metricReader) Shutdown(ctx context.Context) error {
-	metrics, err := r.Reader.Collect(ctx)
-	if err != nil {
+	rm := metricdata.ResourceMetrics{}
+	if err := r.Reader.Collect(ctx, &rm); err != nil {
 		return err
 	}
 
-	if err := r.exporter.Export(ctx, metrics); err != nil {
+	if err := r.exporter.Export(ctx, rm); err != nil {
 		return err
 	}
 

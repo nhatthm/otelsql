@@ -50,6 +50,6 @@ jobs:
         env:
           GOARCH: ${{ matrix.arch }}
           POSTGRES_VERSION: ${{ matrix.postgres-version }}-alpine
-          POSTGRES_DRIVER: pgx-${{ matrix.pgx-version }}
+          POSTGRES_DRIVER: pgx/${{ matrix.pgx-version }}
         run: |
           make test-compatibility-postgres

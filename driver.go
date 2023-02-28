@@ -12,7 +12,6 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/metric/unit"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -24,6 +23,10 @@ const instrumentationName = "go.nhat.io/otelsql"
 const (
 	dbSQLClientLatencyMs = "db.sql.client.latency"
 	dbSQLClientCalls     = "db.sql.client.calls"
+
+	unitDimensionless = "1"
+	unitBytes         = "By"
+	unitMilliseconds  = "ms"
 )
 
 var regMu sync.Mutex
@@ -133,13 +136,13 @@ func newConnConfig(opts driverOptions) connConfig {
 	)
 
 	latencyMsHistogram, err := meter.Float64Histogram(dbSQLClientLatencyMs,
-		instrument.WithUnit(unit.Milliseconds),
+		instrument.WithUnit(unitMilliseconds),
 		instrument.WithDescription(`The distribution of latencies of various calls in milliseconds`),
 	)
 	handleErr(err)
 
 	callsCounter, err := meter.Int64Counter(dbSQLClientCalls,
-		instrument.WithUnit(unit.Dimensionless),
+		instrument.WithUnit(unitDimensionless),
 		instrument.WithDescription(`The number of various calls of methods`),
 	)
 	handleErr(err)

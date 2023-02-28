@@ -47,16 +47,17 @@ go get go.nhat.io/otelsql
 
 Compatibility
 
-|         `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/sdk/metric` |
-|:--------------------------:|:--------------------------------:|:-------------------------------------:|
-| `v0.8.*` <sup>&nbsp;</sup> |      `v1.12.0` ~> `latest`       |         `v0.35.0` ~> `latest`         |
-| `v0.7.*` <sup>&nbsp;</sup> |      `v1.11.1` ~> `latest`       |        `v0.33.0` ~> `v0.34.x`         |
-| `v0.6.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |               `v0.32.x`               |
-| `v0.5.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |               `v0.31.x`               |
-|   `v0.4.*` <sup>1</sup>    |       `v1.9.0` ~> `latest`       |               `v0.31.x`               |
-|   `v0.3.*` <sup>1</sup>    |       `v1.7.0` ~> `latest`       |        `v0.28.0` ~> `v0.30.x`         |
-|   `v0.2.*` <sup>1</sup>    |       `v1.6.2` ~> `latest`       |        `v0.28.0` ~> `v0.30.x`         |
-|   `v0.1.*` <sup>1</sup>    |       `v1.4.1` ~> `latest`       |        `v0.26.0` ~> `v0.27.x`         |
+|         `otelsql`          | `go.opentelemetry.io/otel/trace` |  `go.opentelemetry.io/otel/metric`   |
+|:--------------------------:|:--------------------------------:|:------------------------------------:|
+| `v0.9.*` <sup>&nbsp;</sup> |      `v1.14.0` ~> `latest`       |        `v0.37.0` ~> `latest`         |
+| `v0.8.*` <sup>&nbsp;</sup> |      `v1.12.0` ~> `latest`       |        `v0.35.0` ~> `v0.36.*`        |
+| `v0.7.*` <sup>&nbsp;</sup> |      `v1.11.1` ~> `latest`       |        `v0.33.0` ~> `v0.34.*`        |
+| `v0.6.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |              `v0.32.*`               |
+| `v0.5.*` <sup>&nbsp;</sup> |      `v1.10.0` ~> `latest`       |              `v0.31.*`               |
+|   `v0.4.*` <sup>1</sup>    |       `v1.9.0` ~> `latest`       |              `v0.31.*`               |
+|   `v0.3.*` <sup>1</sup>    |       `v1.7.0` ~> `latest`       |        `v0.28.0` ~> `v0.30.*`        |
+|   `v0.2.*` <sup>1</sup>    |       `v1.6.2` ~> `latest`       |        `v0.28.0` ~> `v0.30.*`        |
+|   `v0.1.*` <sup>1</sup>    |       `v1.4.1` ~> `latest`       |        `v0.26.0` ~> `v0.27.*`        |
 
 <sup>1</sup> Old versions were shipped under `github.com/nhatthm/otelsql`. Use `go get github.com/nhatthm/otelsql` instead.
 

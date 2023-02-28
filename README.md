@@ -654,7 +654,22 @@ The traces are almost identical with some minor changes:
         </tr>
         <tr>
             <td>
-                <code style="white-space: nowrap">jackc/pgx/stdlib</code>
+                <code style="white-space: nowrap">jackc/pgx/v4/stdlib</code>
+            </td>
+            <td style="white-space: nowrap">
+                Postgres 12, 13, 14, 15
+            </td>
+            <td colspan="6" align="center">
+                <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
+                    <img
+                        src="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml/badge.svg?branch=master" alt="Build Status"
+                        style="max-width: 100%;">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code style="white-space: nowrap">jackc/pgx/v5/stdlib</code>
             </td>
             <td style="white-space: nowrap">
                 Postgres 12, 13, 14, 15

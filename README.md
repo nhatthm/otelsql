@@ -1,5 +1,3 @@
-> ⚠️ From `v0.5.0`, the project is rebranded to `go.nhat.io/otelsql`. `v0.4.x` is the last version with `github.com/nhatthm/otelsql`.
-
 # OpenTelemetry SQL database driver wrapper for Go
 
 [![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/otelsql)](https://github.com/nhatthm/otelsql/releases/latest)
@@ -40,6 +38,8 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
 ## Install
+
+> ⚠️ From `v0.5.0`, the project is rebranded to `go.nhat.io/otelsql`. `v0.4.x` is the last version with `github.com/nhatthm/otelsql`.
 
 ```bash
 go get go.nhat.io/otelsql

@@ -3,7 +3,7 @@ module go.nhat.io/otelsql/tests/mssql
 go 1.18
 
 require (
-	github.com/Masterminds/squirrel v1.5.3
+	github.com/Masterminds/squirrel v1.5.4
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql/tests/suite v0.0.0-20220127125055-5da30ca2778a
 	go.nhat.io/testcontainers-extra v0.9.0

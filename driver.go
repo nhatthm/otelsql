@@ -10,9 +10,9 @@ import (
 	"sync"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
-	"go.opentelemetry.io/otel/metric/instrument"
-	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -136,14 +136,14 @@ func newConnConfig(opts driverOptions) connConfig {
 	)
 
 	latencyMsHistogram, err := meter.Float64Histogram(dbSQLClientLatencyMs,
-		instrument.WithUnit(unitMilliseconds),
-		instrument.WithDescription(`The distribution of latencies of various calls in milliseconds`),
+		metric.WithUnit(unitMilliseconds),
+		metric.WithDescription(`The distribution of latencies of various calls in milliseconds`),
 	)
 	handleErr(err)
 
 	callsCounter, err := meter.Int64Counter(dbSQLClientCalls,
-		instrument.WithUnit(unitDimensionless),
-		instrument.WithDescription(`The number of various calls of methods`),
+		metric.WithUnit(unitDimensionless),
+		metric.WithDescription(`The number of various calls of methods`),
 	)
 	handleErr(err)
 

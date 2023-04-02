@@ -22,7 +22,7 @@ func (r *metricReader) Shutdown(ctx context.Context) error {
 		return err
 	}
 
-	if err := r.exporter.Export(ctx, rm); err != nil {
+	if err := r.exporter.Export(ctx, &rm); err != nil {
 		return err
 	}
 
@@ -41,7 +41,7 @@ type metricEncoder struct {
 }
 
 func (e *metricEncoder) Encode(v any) error {
-	resMetrics, ok := v.(metricdata.ResourceMetrics)
+	resMetrics, ok := v.(*metricdata.ResourceMetrics)
 	if !ok {
 		return e.Encoder.Encode(v)
 	}
@@ -66,7 +66,10 @@ func (e *metricEncoder) Encode(v any) error {
 			case metricdata.Sum[float64]:
 				metrics = append(metrics, metricDataFromSum(scopedMetric.Name, smd, attrs)...)
 
-			case metricdata.Histogram:
+			case metricdata.Histogram[int64]:
+				metrics = append(metrics, metricDataFromHistogram(scopedMetric.Name, smd, attrs)...)
+
+			case metricdata.Histogram[float64]:
 				metrics = append(metrics, metricDataFromHistogram(scopedMetric.Name, smd, attrs)...)
 			}
 		}
@@ -101,7 +104,7 @@ func metricDataFromSum[N int64 | float64](name string, g metricdata.Sum[N], attr
 	return result
 }
 
-func metricDataFromHistogram(name string, g metricdata.Histogram, attrs []attribute.KeyValue) []metricData {
+func metricDataFromHistogram[N int64 | float64](name string, g metricdata.Histogram[N], attrs []attribute.KeyValue) []metricData {
 	result := make([]metricData, 0, len(g.DataPoints))
 
 	for _, dp := range g.DataPoints {

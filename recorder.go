@@ -5,14 +5,15 @@ import (
 	"time"
 
 	"go.opentelemetry.io/otel/attribute"
-	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	"go.opentelemetry.io/otel/metric"
+	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 )
 
 // float64Recorder adds a new value to the list of Histogram's records.
-type float64Recorder = func(ctx context.Context, value float64, labels ...attribute.KeyValue)
+type float64Recorder = func(ctx context.Context, value float64, opts ...metric.RecordOption)
 
 // int64Counter adds the value to the counter's sum.
-type int64Counter = func(ctx context.Context, value int64, labels ...attribute.KeyValue)
+type int64Counter = func(ctx context.Context, value int64, opts ...metric.AddOption)
 
 // methodRecorder records metrics about a sql method.
 type methodRecorder interface {
@@ -46,8 +47,8 @@ func (r methodRecorderImpl) Record(ctx context.Context, method string, labels ..
 			)
 		}
 
-		r.countCalls(ctx, 1, attrs...)
-		r.recordLatency(ctx, elapsedTime, attrs...)
+		r.countCalls(ctx, 1, metric.WithAttributes(attrs...))
+		r.recordLatency(ctx, elapsedTime, metric.WithAttributes(attrs...))
 	}
 }
 

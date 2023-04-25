@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
-	github.com/go-sql-driver/mysql v1.7.0
+	github.com/go-sql-driver/mysql v1.7.1
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql/tests/suite v0.0.0
 	go.nhat.io/testcontainers-extra v0.10.0

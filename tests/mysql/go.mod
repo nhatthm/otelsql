@@ -69,7 +69,7 @@ require (
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.8.2 // indirect
-	github.com/swaggest/assertjson v1.8.0 // indirect
+	github.com/swaggest/assertjson v1.8.1 // indirect
 	github.com/swaggest/form/v5 v5.0.4 // indirect
 	github.com/testcontainers/testcontainers-go v0.19.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect

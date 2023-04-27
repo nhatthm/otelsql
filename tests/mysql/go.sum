@@ -1136,8 +1136,8 @@ github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO
 github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=
 github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
-github.com/swaggest/assertjson v1.8.0 h1:XSg4p6iOZMjtpV2tW2SXfD1GsOOTsWcm+sOADODu/DU=
-github.com/swaggest/assertjson v1.8.0/go.mod h1:/8kNRmDZAZfavS5VeWYtCimLGebn0Ak1/iErFUi+DEM=
+github.com/swaggest/assertjson v1.8.1 h1:Be2EHY9S2qwKWV+xWZB747Cd7Y79YK6JLdeyrgFvyMo=
+github.com/swaggest/assertjson v1.8.1/go.mod h1:/8kNRmDZAZfavS5VeWYtCimLGebn0Ak1/iErFUi+DEM=
 github.com/swaggest/form/v5 v5.0.4 h1:hTg+gjUEZG0vgsDdXOPi7I0Xu5OowXKoLZIGYZsoddg=
 github.com/swaggest/form/v5 v5.0.4/go.mod h1:X1hraaoONee20PMnGNLQpO32f9zbQ0Czfm7iZThuEKg=
 github.com/swaggest/usecase v1.2.0 h1:cHVFqxIbHfyTXp02JmWXk+ZADaSa87UZP+b3qL5Nz90=

@@ -8,14 +8,14 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.opentelemetry.io/otel/metric"
-	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	"go.opentelemetry.io/otel/metric/noop"
+	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 
 	"go.nhat.io/otelsql/internal/test/oteltest"
 )
 
 func BenchmarkPrepareStats(b *testing.B) {
-	meter := metric.NewNoopMeter()
+	meter := noop.NewMeterProvider().Meter("prepare_test")
 
 	histogram, err := meter.Float64Histogram("latency_ms")
 	require.NoError(b, err)

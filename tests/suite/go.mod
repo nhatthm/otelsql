@@ -8,7 +8,7 @@ require (
 	github.com/cucumber/godog v0.12.6
 	github.com/godogx/clocksteps v0.3.0
 	github.com/jmoiron/sqlx v1.3.5
-	github.com/prometheus/client_golang v1.15.0
+	github.com/prometheus/client_golang v1.15.1
 	github.com/stretchr/testify v1.8.2
 	github.com/swaggest/assertjson v1.8.1
 	go.nhat.io/clock v0.7.0
@@ -16,10 +16,10 @@ require (
 	go.nhat.io/testcontainers-extra v0.10.0
 	go.nhat.io/testcontainers-registry v0.12.0
 	go.opentelemetry.io/otel v1.15.1
-	go.opentelemetry.io/otel/exporters/prometheus v0.38.0
+	go.opentelemetry.io/otel/exporters/prometheus v0.38.1
 	go.opentelemetry.io/otel/metric v0.38.1
-	go.opentelemetry.io/otel/sdk v1.15.0
-	go.opentelemetry.io/otel/sdk/metric v0.38.0
+	go.opentelemetry.io/otel/sdk v1.15.1
+	go.opentelemetry.io/otel/sdk/metric v0.38.1
 	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/tools v0.8.0 // indirect
 )
@@ -56,14 +56,14 @@ require (
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
-	github.com/moby/term v0.0.0-20221205130635-1aeaba878587 // indirect
+	github.com/moby/term v0.5.0 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/opencontainers/image-spec v1.1.0-rc2.0.20221005185240-3a7f492d3f1b // indirect
+	github.com/opencontainers/image-spec v1.1.0-rc3 // indirect
 	github.com/opencontainers/runc v1.1.7 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/prometheus/client_model v0.3.0 // indirect
+	github.com/prometheus/client_model v0.4.0 // indirect
 	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/sergi/go-diff v1.3.1 // indirect

@@ -17,7 +17,7 @@ require (
 	go.nhat.io/testcontainers-registry v0.12.0
 	go.opentelemetry.io/otel v1.15.1
 	go.opentelemetry.io/otel/exporters/prometheus v0.38.0
-	go.opentelemetry.io/otel/metric v0.38.0
+	go.opentelemetry.io/otel/metric v0.38.1
 	go.opentelemetry.io/otel/sdk v1.15.0
 	go.opentelemetry.io/otel/sdk/metric v0.38.0
 	golang.org/x/mod v0.10.0 // indirect

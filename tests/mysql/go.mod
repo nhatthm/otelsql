@@ -79,7 +79,7 @@ require (
 	go.nhat.io/timeparser v0.3.0 // indirect
 	go.opentelemetry.io/otel v1.15.1 // indirect
 	go.opentelemetry.io/otel/exporters/prometheus v0.38.0 // indirect
-	go.opentelemetry.io/otel/metric v0.38.0 // indirect
+	go.opentelemetry.io/otel/metric v0.38.1 // indirect
 	go.opentelemetry.io/otel/sdk v1.15.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v0.38.0 // indirect
 	go.opentelemetry.io/otel/trace v1.15.1 // indirect

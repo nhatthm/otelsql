@@ -14,7 +14,7 @@ require (
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql v0.1.0
 	go.nhat.io/testcontainers-extra v0.11.0
-	go.nhat.io/testcontainers-registry v0.12.0
+	go.nhat.io/testcontainers-registry v0.13.0
 	go.opentelemetry.io/otel v1.15.1
 	go.opentelemetry.io/otel/exporters/prometheus v0.38.1
 	go.opentelemetry.io/otel/metric v0.38.1

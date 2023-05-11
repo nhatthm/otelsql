@@ -13,7 +13,7 @@ require (
 	github.com/swaggest/assertjson v1.8.1
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql v0.1.0
-	go.nhat.io/testcontainers-extra v0.10.0
+	go.nhat.io/testcontainers-extra v0.11.0
 	go.nhat.io/testcontainers-registry v0.12.0
 	go.opentelemetry.io/otel v1.15.1
 	go.opentelemetry.io/otel/exporters/prometheus v0.38.1
@@ -21,7 +21,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.15.1
 	go.opentelemetry.io/otel/sdk/metric v0.38.1
 	golang.org/x/mod v0.10.0 // indirect
-	golang.org/x/tools v0.8.0 // indirect
+	golang.org/x/tools v0.9.1 // indirect
 )
 
 require (
@@ -32,12 +32,12 @@ require (
 	github.com/bool64/shared v0.1.5 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/containerd/containerd v1.7.0 // indirect
+	github.com/containerd/containerd v1.7.1 // indirect
 	github.com/cucumber/gherkin-go/v19 v19.0.3 // indirect
 	github.com/cucumber/messages-go/v16 v16.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
-	github.com/docker/docker v23.0.5+incompatible // indirect
+	github.com/docker/docker v23.0.6+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
@@ -70,21 +70,22 @@ require (
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/swaggest/form/v5 v5.0.4 // indirect
-	github.com/testcontainers/testcontainers-go v0.19.0 // indirect
+	github.com/testcontainers/testcontainers-go v0.20.1 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.nhat.io/timeparser v0.3.0 // indirect
 	go.opentelemetry.io/otel/trace v1.15.1 // indirect
-	golang.org/x/net v0.9.0 // indirect
-	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/sys v0.8.0 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
-	google.golang.org/grpc v1.54.0 // indirect
+	google.golang.org/grpc v1.55.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (
 	github.com/cpuguy83/dockercfg v0.3.1 // indirect
+	github.com/imdario/mergo v0.3.15 // indirect
 	github.com/klauspost/compress v1.16.5 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect

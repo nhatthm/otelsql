@@ -6,7 +6,6 @@ import (
 	"sync"
 	"time"
 
-	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
@@ -74,49 +73,49 @@ func recordStats(
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("Count of open connections in the pool"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	idleConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdle,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("Count of idle connections in the pool"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	activeConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsActive,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("Count of active connections in the pool"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	waitCount, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsWaitCount,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections waited for"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	waitDuration, err = meter.Float64ObservableGauge(
 		dbSQLConnectionsWaitDuration,
 		metric.WithUnit(unitMilliseconds),
 		metric.WithDescription("The total time blocked waiting for a new connection"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	idleClosed, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdleClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	lifetimeClosed, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsLifetimeClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
 	)
-	otel.Handle(err)
+	handleErr(err)
 
 	_, err = meter.RegisterCallback(func(ctx context.Context, obs metric.Observer) error {
 		lock.Lock()

@@ -139,13 +139,13 @@ func newConnConfig(opts driverOptions) connConfig {
 		metric.WithUnit(unitMilliseconds),
 		metric.WithDescription(`The distribution of latencies of various calls in milliseconds`),
 	)
-	handleErr(err)
+	mustNoError(err)
 
 	callsCounter, err := meter.Int64Counter(dbSQLClientCalls,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription(`The number of various calls of methods`),
 	)
-	handleErr(err)
+	mustNoError(err)
 
 	latencyRecorder := newMethodRecorder(latencyMsHistogram.Record, callsCounter.Add, opts.defaultAttributes...)
 
@@ -213,10 +213,4 @@ func (d otDriver) Connect(ctx context.Context) (driver.Conn, error) {
 
 func (d otDriver) Driver() driver.Driver {
 	return d
-}
-
-func handleErr(err error) {
-	if err != nil {
-		panic(err)
-	}
 }

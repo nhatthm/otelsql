@@ -8,7 +8,7 @@ func handleErr(err error) {
 	}
 }
 
-func mustHandleErr(err error) {
+func mustNoError(err error) {
 	if err != nil {
 		panic(err)
 	}

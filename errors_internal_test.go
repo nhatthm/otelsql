@@ -11,11 +11,11 @@ func TestHandleError(t *testing.T) {
 	t.Parallel()
 
 	assert.Panics(t, func() {
-		mustHandleErr(errors.New("error"))
+		mustNoError(errors.New("error"))
 	})
 
 	assert.NotPanics(t, func() {
-		mustHandleErr(nil)
+		mustNoError(nil)
 	})
 
 	assert.NotPanics(t, func() {

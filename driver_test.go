@@ -373,6 +373,34 @@ func Test_Ping_Error(t *testing.T) {
 		})
 }
 
+func Test_ErrSkip_Error(t *testing.T) {
+	t.Parallel()
+
+	oteltest.New(
+		oteltest.MockDatabase(func(m sqlmock.Sqlmock) {
+			m.ExpectPing().
+				WillReturnError(driver.ErrSkip)
+		}),
+		// with DisableErrSkip(), should not create error spans.
+		oteltest.TracesEqualJSON(expectedPingTrace(noParentSpanIDs())),
+	).
+		Run(t, func(sc oteltest.SuiteContext) {
+			db, err := newDB(sc.DatabaseDSN(),
+				otelsql.WithTracerProvider(sc.TracerProvider()),
+				otelsql.TracePing(),
+				otelsql.AllowRoot(),
+				otelsql.DisableErrSkip(),
+			)
+			require.NoError(t, err)
+
+			defer db.Close() // nolint: errcheck
+
+			err = db.PingContext(context.Background())
+
+			assert.Error(t, err)
+		})
+}
+
 func Test_ExecContext(t *testing.T) {
 	t.Parallel()
 

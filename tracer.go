@@ -23,7 +23,7 @@ type queryTracer func(ctx context.Context, query string, args []driver.NamedValu
 
 // methodTracer traces a sql method.
 type methodTracer interface {
-	// ShouldTrace checks whether it should trace a method and the given context has a parent span
+	// ShouldTrace checks whether it should trace a method and the given context has a parent span.
 	ShouldTrace(ctx context.Context) (bool, bool)
 	MustTrace(ctx context.Context, method string, labels ...attribute.KeyValue) (context.Context, func(err error, attrs ...attribute.KeyValue))
 	Trace(ctx context.Context, method string, labels ...attribute.KeyValue) (context.Context, func(err error, attrs ...attribute.KeyValue))
@@ -127,6 +127,12 @@ func traceWithDefaultAttributes(attrs ...attribute.KeyValue) func(t *methodTrace
 func traceWithSpanNameFormatter(f spanNameFormatter) func(t *methodTracerImpl) {
 	return func(t *methodTracerImpl) {
 		t.formatSpanName = f
+	}
+}
+
+func traceWithErrorToSpanStatus(f errorToSpanStatus) func(t *methodTracerImpl) {
+	return func(t *methodTracerImpl) {
+		t.errorToStatus = f
 	}
 }
 

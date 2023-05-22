@@ -133,6 +133,7 @@ func newConnConfig(opts driverOptions) connConfig {
 		traceWithAllowRoot(opts.trace.AllowRoot),
 		traceWithDefaultAttributes(opts.defaultAttributes...),
 		traceWithSpanNameFormatter(opts.trace.spanNameFormatter),
+		traceWithErrorToSpanStatus(opts.trace.errorToSpanStatus),
 	)
 
 	latencyMsHistogram, err := meter.Float64Histogram(dbSQLClientLatencyMs,

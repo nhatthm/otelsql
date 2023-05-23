@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
-	"go.opentelemetry.io/otel/metric/global"
 )
 
 // defaultMinimumReadDBStatsInterval is the default minimum interval between calls to db.Stats().
@@ -27,7 +27,7 @@ const (
 // RecordStats records database statistics for provided sql.DB at the provided interval.
 func RecordStats(db *sql.DB, opts ...StatsOption) error {
 	o := statsOptions{
-		meterProvider:              global.MeterProvider(),
+		meterProvider:              otel.GetMeterProvider(),
 		minimumReadDBStatsInterval: defaultMinimumReadDBStatsInterval,
 	}
 

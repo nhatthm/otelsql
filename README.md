@@ -49,8 +49,9 @@ Compatibility
 
 |          `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/metric` |
 |:---------------------------:|:--------------------------------:|:---------------------------------:|
-| `v0.10.*` <sup>&nbsp;</sup> |      `v1.15.0` ~> `latest`       |       `v0.38.0` ~> `latest`       |
-| `v0.9.*` <sup>&nbsp;</sup>  |      `v1.14.0` ~> `latest`       |      `v0.37.0` ~> `v0.37.*`       |
+| `v0.11.*` <sup>&nbsp;</sup> |      `v1.16.0` ~> `latest`       |       `v0.39.0` ~> `latest`       |
+| `v0.10.*` <sup>&nbsp;</sup> |      `v1.15.0` ~> `latest`       |             `v0.38.*`             |
+| `v0.9.*` <sup>&nbsp;</sup>  |      `v1.14.0` ~> `latest`       |             `v0.37.*`             |
 | `v0.8.*` <sup>&nbsp;</sup>  |      `v1.12.0` ~> `latest`       |      `v0.35.0` ~> `v0.36.*`       |
 | `v0.7.*` <sup>&nbsp;</sup>  |      `v1.11.1` ~> `latest`       |      `v0.33.0` ~> `v0.34.*`       |
 | `v0.6.*` <sup>&nbsp;</sup>  |      `v1.10.0` ~> `latest`       |             `v0.32.*`             |
@@ -76,7 +77,7 @@ import (
 	"database/sql"
 
 	"go.nhat.io/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -109,7 +110,7 @@ import (
 	"database/sql"
 
 	"go.nhat.io/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -334,7 +335,7 @@ import (
 	"go.nhat.io/otelsql"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
-	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 )
 
 func openDB(dsn string) (*sql.DB, error) {

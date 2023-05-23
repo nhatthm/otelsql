@@ -11,8 +11,7 @@ import (
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/metric"
-	"go.opentelemetry.io/otel/metric/global"
-	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -91,7 +90,7 @@ func RegisterWithSource(driverName string, source string, options ...DriverOptio
 // Wrap takes a SQL driver and wraps it with OpenTelemetry instrumentation.
 func Wrap(d driver.Driver, opts ...DriverOption) driver.Driver {
 	o := driverOptions{
-		meterProvider:  global.MeterProvider(),
+		meterProvider:  otel.GetMeterProvider(),
 		tracerProvider: otel.GetTracerProvider(),
 	}
 

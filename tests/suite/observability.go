@@ -6,11 +6,11 @@ import (
 
 	"github.com/cucumber/godog"
 	prom "github.com/prometheus/client_golang/prometheus"
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/prometheus"
-	"go.opentelemetry.io/otel/metric/global"
 	metricsdk "go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/resource"
-	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 )
 
 type observabilityTests struct {
@@ -52,7 +52,7 @@ func newPrometheusExporter() (*prometheus.Exporter, error) {
 		)),
 	)
 
-	global.SetMeterProvider(provider)
+	otel.SetMeterProvider(provider)
 
 	return e, nil
 }

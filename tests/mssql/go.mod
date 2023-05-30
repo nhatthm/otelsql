@@ -77,7 +77,7 @@ require (
 	github.com/sergi/go-diff v1.3.1 // indirect
 	github.com/sirupsen/logrus v1.9.2 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.8.3 // indirect
+	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/swaggest/assertjson v1.8.1 // indirect
 	github.com/swaggest/form/v5 v5.0.4 // indirect
 	github.com/testcontainers/testcontainers-go v0.20.1 // indirect

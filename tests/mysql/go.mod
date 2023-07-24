@@ -45,7 +45,7 @@ require (
 	github.com/hashicorp/go-memdb v1.3.4 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/iancoleman/orderedmap v0.2.0 // indirect
+	github.com/iancoleman/orderedmap v0.3.0 // indirect
 	github.com/imdario/mergo v0.3.15 // indirect
 	github.com/jmoiron/sqlx v1.3.5 // indirect
 	github.com/klauspost/compress v1.16.5 // indirect
@@ -70,7 +70,7 @@ require (
 	github.com/sirupsen/logrus v1.9.2 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
-	github.com/swaggest/assertjson v1.8.1 // indirect
+	github.com/swaggest/assertjson v1.9.0 // indirect
 	github.com/swaggest/form/v5 v5.0.4 // indirect
 	github.com/testcontainers/testcontainers-go v0.20.1 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect

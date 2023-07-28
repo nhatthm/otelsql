@@ -162,6 +162,41 @@ func TestWrap_DriverContext_ConnectError(t *testing.T) {
 	assert.Equal(t, expectedError, err)
 }
 
+func TestWrap_DriverContext_ConnectNamedValueChecker(t *testing.T) {
+	t.Parallel()
+
+	_, m, err := sqlmock.New()
+	require.NoError(t, err)
+
+	parent := struct {
+		driver.Driver
+		driver.DriverContext
+	}{
+		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+			return struct {
+				driverDriverFunc
+				driverConnectFunc
+				driverNamedValueCheckerFunc
+			}{
+				driverConnectFunc: func(ctx context.Context) (driver.Conn, error) {
+					return m.(driver.Conn), nil
+				},
+			}, nil
+		}),
+	}
+
+	drv := otelsql.Wrap(parent).(driver.DriverContext) // nolint: errcheck
+	connector, err := drv.OpenConnector("")
+
+	assert.NoError(t, err)
+
+	conn, err := connector.Connect(context.Background())
+	assert.NoError(t, err)
+
+	assert.Implements(t, (*driver.NamedValueChecker)(nil), conn)
+
+}
+
 func TestWrap_DriverContext_CloseBeforeOpenConnector(t *testing.T) {
 	t.Parallel()
 
@@ -2756,6 +2791,12 @@ type driverDriverFunc func() driver.Driver
 
 func (f driverDriverFunc) Driver() driver.Driver {
 	return f()
+}
+
+type driverNamedValueCheckerFunc func(*driver.NamedValue) error
+
+func (f driverNamedValueCheckerFunc) CheckNamedValue(nv *driver.NamedValue) error {
+	return f(nv)
 }
 
 type testError string

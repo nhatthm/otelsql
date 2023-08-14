@@ -208,7 +208,7 @@ func (d otDriver) Connect(ctx context.Context) (driver.Conn, error) {
 		return nil, err
 	}
 
-	return makeConn(c, d.connConfig), nil
+	return wrapConn(c, d.connConfig), nil
 }
 
 func (d otDriver) Driver() driver.Driver {

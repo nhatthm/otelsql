@@ -186,15 +186,14 @@ func TestWrap_DriverContext_ConnectNamedValueChecker(t *testing.T) {
 	}
 
 	drv := otelsql.Wrap(parent).(driver.DriverContext) // nolint: errcheck
-	connector, err := drv.OpenConnector("")
 
-	assert.NoError(t, err)
+	connector, err := drv.OpenConnector("")
+	require.NoError(t, err)
 
 	conn, err := connector.Connect(context.Background())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Implements(t, (*driver.NamedValueChecker)(nil), conn)
-
 }
 
 func TestWrap_DriverContext_CloseBeforeOpenConnector(t *testing.T) {

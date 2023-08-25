@@ -79,7 +79,7 @@ func makeQueryerContextMiddlewares(r methodRecorder, t methodTracer, cfg queryCo
 
 	middlewares = append(middlewares, queryStats(r, cfg.metricMethod))
 
-	if t != nil {
+	if t == nil {
 		return middlewares
 	}
 

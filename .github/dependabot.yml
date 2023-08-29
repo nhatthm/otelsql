@@ -9,10 +9,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    ignore:
-      - dependency-name: "go.opentelemetry.io/otel"
-      - dependency-name: "go.opentelemetry.io/otel/exporters*"
-      - dependency-name: "go.opentelemetry.io/otel/sdk*"
+    groups:
+      otel:
+        patterns:
+          - "go.opentelemetry.io/*"
 
   - package-ecosystem: "gomod"
     directory: "/tests/suite"

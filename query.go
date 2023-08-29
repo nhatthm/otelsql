@@ -77,10 +77,13 @@ func queryWrapRows(t methodTracer, traceLastInsertID bool, traceRowsAffected boo
 func makeQueryerContextMiddlewares(r methodRecorder, t methodTracer, cfg queryConfig) []queryContextFuncMiddleware {
 	middlewares := make([]queryContextFuncMiddleware, 0, 3)
 
-	middlewares = append(middlewares,
-		queryStats(r, cfg.metricMethod),
-		queryTrace(t, cfg.traceQuery, cfg.traceMethod),
-	)
+	middlewares = append(middlewares, queryStats(r, cfg.metricMethod))
+
+	if t == nil {
+		return middlewares
+	}
+
+	middlewares = append(middlewares, queryTrace(t, cfg.traceQuery, cfg.traceMethod))
 
 	if cfg.traceRowsNext || cfg.traceRowsClose {
 		middlewares = append(middlewares, queryWrapRows(t, cfg.traceRowsNext, cfg.traceRowsClose))

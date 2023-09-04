@@ -22,7 +22,7 @@ jobs:
         module: [ ".", "tests/suite", "tests/mssql", "tests/mysql", "tests/postgres" ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Go
         uses: actions/setup-go@v4
@@ -44,7 +44,7 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: gherkin-lint
         uses: nhatthm/gherkin-lint-action@v1.0.0

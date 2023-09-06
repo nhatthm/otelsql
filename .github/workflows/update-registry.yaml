@@ -16,7 +16,7 @@ jobs:
       matrix:
         registry: [ go.nhat.io, go-staging.nhat.io ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: vars
         run: |

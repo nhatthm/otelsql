@@ -22,7 +22,7 @@ jobs:
     env:
       IS_DEPENDABOT_PR: ${{ startsWith(github.head_ref, 'dependabot/go_modules/') && 'true' || 'false' }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
 
       - name: Install Go
@@ -59,7 +59,7 @@ jobs:
     needs: precondition
     if: ${{ needs.precondition.outputs.passed == 'true' }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Go
         uses: actions/setup-go@v4
@@ -83,7 +83,7 @@ jobs:
     needs: precondition
     if: ${{ needs.precondition.outputs.passed == 'true' }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: gherkin-lint
         uses: nhatthm/gherkin-lint-action@v1.0.0
@@ -111,7 +111,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Go cache
         uses: actions/cache@v3
@@ -156,7 +156,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Go cache
         uses: actions/cache@v3
@@ -195,7 +195,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Go cache
         uses: actions/cache@v3
@@ -235,7 +235,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Go cache
         uses: actions/cache@v3

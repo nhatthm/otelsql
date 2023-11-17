@@ -8,7 +8,7 @@ on:
 
 env:
   GO111MODULE: "on"
-  GO_LATEST_VERSION: "1.19.x"
+  GO_LATEST_VERSION: "1.21.x"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
-        go-version: [ 1.19.x, 1.20.x ]
+        go-version: [ 1.20.x, 1.21.x ]
         arch: [ "386", amd64 ]
         exclude:
           - os: macos-latest

@@ -33,7 +33,7 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 
 ## Prerequisites
 
-- `Go >= 1.18`
+- `Go >= 1.20`
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 

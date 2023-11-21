@@ -105,10 +105,10 @@ func (s suite) runTests(tb testing.TB, sc suiteContext) error {
 	suite := godog.TestSuite{
 		Name: "Integration",
 		ScenarioInitializer: func(sc *godog.ScenarioContext) {
-			clock.RegisterContext(sc)
+			clock.RegisterSteps(sc)
 			dbm.RegisterSteps(sc)
-			otelsqlTests.RegisterContext(sc)
-			customerTests.RegisterContext(sc)
+			otelsqlTests.RegisterSteps(sc)
+			customerTests.RegisterSteps(sc)
 		},
 		Options: &godog.Options{
 			Format:    "pretty",

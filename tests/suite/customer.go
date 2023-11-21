@@ -35,7 +35,7 @@ func (t *customerTests) constructRepository() {
 	t.repository = t.construct(newDatabaseExecer(t.runner, t.usePreparer), t.clock)
 }
 
-func (t *customerTests) RegisterContext(sc *godog.ScenarioContext) {
+func (t *customerTests) RegisterSteps(sc *godog.ScenarioContext) {
 	sc.Before(func(ctx context.Context, _ *godog.Scenario) (context.Context, error) {
 		db, err := openDB(t.databaseDriver, t.databaseDSN)
 		if err != nil {

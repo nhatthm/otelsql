@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/bool64/sqluct v0.2.1
 	github.com/cucumber/godog v0.13.0
-	github.com/godogx/clocksteps v0.3.0
+	github.com/godogx/clocksteps v0.4.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/prometheus/client_golang v1.17.0
 	github.com/stretchr/testify v1.8.4

@@ -17,7 +17,7 @@ type observabilityTests struct {
 	promExporter *prometheus.Exporter
 }
 
-func (t *observabilityTests) RegisterContext(sc *godog.ScenarioContext) {
+func (t *observabilityTests) RegisterSteps(sc *godog.ScenarioContext) {
 	// Reset prometheus exporter for every test.
 	sc.Before(func(ctx context.Context, _ *godog.Scenario) (context.Context, error) {
 		promExporter, err := newPrometheusExporter()

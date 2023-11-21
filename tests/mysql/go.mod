@@ -37,7 +37,7 @@ require (
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
-	github.com/godogx/clocksteps v0.3.0 // indirect
+	github.com/godogx/clocksteps v0.4.0 // indirect
 	github.com/godogx/dbsteps v0.1.2 // indirect
 	github.com/godogx/resource v0.1.1 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect

@@ -3,7 +3,7 @@ module go.nhat.io/otelsql
 go 1.20
 
 require (
-	github.com/DATA-DOG/go-sqlmock v1.5.0
+	github.com/DATA-DOG/go-sqlmock v1.5.1
 	github.com/stretchr/testify v1.8.4
 	github.com/swaggest/assertjson v1.9.0
 	go.opentelemetry.io/otel v1.21.0

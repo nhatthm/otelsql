@@ -596,12 +596,12 @@ The traces are almost identical with some minor changes:
             <th colspan="2">Windows</th>
         </tr>
         <tr>
-            <th>go 1.19</th>
             <th>go 1.20</th>
-            <th>go 1.19</th>
+            <th>go 1.21</th>
             <th>go 1.20</th>
-            <th>go 1.19</th>
+            <th>go 1.21</th>
             <th>go 1.20</th>
+            <th>go 1.21</th>
         </tr>
     </thead>
     <tbody>
@@ -660,7 +660,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">jackc/pgx/v4/stdlib</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 12, 13, 14, 15
+                Postgres 12, 13, 14, 15, 16
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
@@ -675,7 +675,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">jackc/pgx/v5/stdlib</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 12, 13, 14, 15
+                Postgres 12, 13, 14, 15, 16
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
@@ -690,7 +690,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">lib/pq</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 12, 13, 14, 15
+                Postgres 12, 13, 14, 15, 16
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml">

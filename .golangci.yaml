@@ -22,6 +22,7 @@ linters:
   disable:
     - contextcheck
     - deadcode
+    - depguard
     - exhaustivestruct
     - exhaustruct
     - forbidigo
@@ -45,7 +46,9 @@ linters:
     - scopelint
     - sqlclosecheck # https://github.com/golangci/golangci-lint/issues/2649
     - structcheck
+    - tagalign
     - tagliatelle
+    - testifylint
     - testpackage
     - varcheck
     - varnamelen

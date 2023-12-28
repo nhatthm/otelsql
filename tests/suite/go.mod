@@ -8,7 +8,7 @@ require (
 	github.com/cucumber/godog v0.13.0
 	github.com/godogx/clocksteps v0.4.0
 	github.com/jmoiron/sqlx v1.3.5
-	github.com/prometheus/client_golang v1.17.0
+	github.com/prometheus/client_golang v1.18.0
 	github.com/stretchr/testify v1.8.4
 	github.com/swaggest/assertjson v1.9.0
 	go.nhat.io/clock v0.7.0

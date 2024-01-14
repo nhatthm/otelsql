@@ -6,7 +6,7 @@ on:
 
 env:
   GO111MODULE: "on"
-  GO_VERSION: 1.21.x
+  GO_VERSION: 1.22.x
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}

@@ -1,6 +1,6 @@
 module go.nhat.io/otelsql/tests/suite
 
-go 1.20
+go 1.21
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
@@ -38,7 +38,7 @@ require (
 	github.com/docker/docker v24.0.7+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
-	github.com/go-logr/logr v1.3.0 // indirect
+	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/godogx/dbsteps v0.1.2
 	github.com/godogx/resource v0.1.1 // indirect
@@ -73,7 +73,7 @@ require (
 	go.nhat.io/timeparser v0.3.0 // indirect
 	go.opentelemetry.io/otel/trace v1.21.0 // indirect
 	golang.org/x/net v0.19.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	google.golang.org/grpc v1.60.1 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

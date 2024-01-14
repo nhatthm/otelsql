@@ -33,7 +33,7 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 
 ## Prerequisites
 
-- `Go >= 1.20`
+- `Go >= 1.22`
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -375,11 +375,11 @@ missing.
 | `*DB.Prepare`    | `*DB.PrepareContext`    |
 | `*DB.Query`      | `*DB.QueryContext`      |
 | `*DB.QueryRow`   | `*DB.QueryRowContext`   |
-|||
+|                  |                         |
 | `*Stmt.Exec`     | `*Stmt.ExecContext`     |
 | `*Stmt.Query`    | `*Stmt.QueryContext`    |
 | `*Stmt.QueryRow` | `*Stmt.QueryRowContext` |
-|||
+|                  |                         |
 | `*Tx.Exec`       | `*Tx.ExecContext`       |
 | `*Tx.Prepare`    | `*Tx.PrepareContext`    |
 | `*Tx.Query`      | `*Tx.QueryContext`      |
@@ -480,19 +480,19 @@ func openDB(dsn string) (*sql.DB, error) {
 | `*DB.PrepareContext`    | Always                                        |
 | `*DB.QueryContext`      | Always                                        |
 | `*DB.QueryRowContext`   | Always                                        |
-|||
+|                         |                                               |
 | `*Stmt.ExecContext`     | Always                                        |
 | `*Stmt.QueryContext`    | Always                                        |
 | `*Stmt.QueryRowContext` | Always                                        |
-|||
+|                         |                                               |
 | `*Tx.ExecContext`       | Always                                        |
 | `*Tx.PrepareContext`    | Always                                        |
 | `*Tx.QueryContext`      | Always                                        |
 | `*Tx.QueryRowContext`   | Always                                        |
-|||
+|                         |                                               |
 | `*Rows.Next`            | Disabled. Use `TraceRowsNext()` to enable     |
 | `*Rows.Close`           | Disabled. Use `TraceRowsClose()` to enable    |
-|||
+|                         |                                               |
 | `*Result.LastInsertID`  | Disabled. Use `TraceLastInsertID()` to enable |
 | `*Result.RowsAffected`  | Disabled. Use `TraceRowsAffected()` to enable |
 
@@ -596,12 +596,12 @@ The traces are almost identical with some minor changes:
             <th colspan="2">Windows</th>
         </tr>
         <tr>
-            <th>go 1.20</th>
             <th>go 1.21</th>
-            <th>go 1.20</th>
+            <th>go 1.22</th>
             <th>go 1.21</th>
-            <th>go 1.20</th>
+            <th>go 1.22</th>
             <th>go 1.21</th>
+            <th>go 1.22</th>
         </tr>
     </thead>
     <tbody>

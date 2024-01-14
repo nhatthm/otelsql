@@ -29,6 +29,7 @@ type methodRecorderImpl struct {
 
 func (r methodRecorderImpl) Record(ctx context.Context, method string, labels ...attribute.KeyValue) func(err error) {
 	startTime := time.Now()
+	ctx = context.WithoutCancel(ctx)
 
 	attrs := make([]attribute.KeyValue, 0, len(r.attributes)+len(labels)+2)
 

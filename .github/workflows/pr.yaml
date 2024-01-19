@@ -6,44 +6,46 @@ on:
 
 env:
   GO111MODULE: "on"
-  GO_VERSION: 1.20.x
-  GO_LATEST_VERSION: "1.21.x"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      go-version: ${{ steps.find-go-version.outputs.go-version }}
+      go-latest-version: ${{ steps.find-go-version.outputs.go-latest-version }}
+      go-supported-versions: ${{ steps.find-go-version.outputs.go-supported-versions }}
+    steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
+      - id: find-go-version
+        name: Find Go version
+        uses: nhatthm/gh-actions/find-go-version@master
+
   precondition:
     name: precondition
+    needs: [setup]
     outputs:
       passed: ${{ steps.check.outputs.passed == '' && 'true' || steps.check.outputs.passed }}
     runs-on: ubuntu-latest
     env:
       IS_DEPENDABOT_PR: ${{ startsWith(github.head_ref, 'dependabot/go_modules/') && 'true' || 'false' }}
+      GO_VERSION: ${{ needs.setup.outputs.go-version }}
+      GO_LATEST_VERSION: ${{ needs.setup.outputs.go-latest-version }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
         if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
 
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
         with:
           go-version: ${{ env.GO_VERSION }}
-
-      - name: Go cache
-        uses: actions/cache@v4
-        if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache
 
       - id: check
         if: ${{ env.IS_DEPENDABOT_PR == 'true' }}
@@ -56,24 +58,23 @@ jobs:
       matrix:
         module: [ ".", "tests/suite", "tests/mssql", "tests/mysql", "tests/postgres" ]
     runs-on: ubuntu-latest
-    needs: precondition
+    needs: [setup, precondition]
+    env:
+      GO_VERSION: ${{ needs.setup.outputs.go-version }}
+      GO_LATEST_VERSION: ${{ needs.setup.outputs.go-latest-version }}
     if: ${{ needs.precondition.outputs.passed == 'true' }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
 
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
-          go-version: ${{ env.GO_VERSION }}
+          go-version: ${{ env.GO_LATEST_VERSION }}
 
-      - id: vars
-        run: |
-          make $GITHUB_OUTPUT
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
+      - name: Lint
+        uses: nhatthm/gh-actions/golangci-lint@master
         with:
-          version: ${{ steps.vars.outputs.GOLANGCI_LINT_VERSION }}
           working-directory: ${{ matrix.module }}
           args: --timeout=5m
 
@@ -83,10 +84,11 @@ jobs:
     needs: precondition
     if: ${{ needs.precondition.outputs.passed == 'true' }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
 
-      - name: gherkin-lint
-        uses: nhatthm/gherkin-lint-action@v1.0.0
+      - name: Lint
+        uses: nhatthm/gh-actions/gherkin-lint@master
         with:
           feature_files: tests/features/*
           config_file: tests/.gherkin-lintrc
@@ -96,35 +98,22 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
-        go-version: [ 1.20.x, 1.21.x ]
+        go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
         exclude:
           - os: macos-latest
             arch: "386"
     runs-on: ${{ matrix.os }}
-    needs: precondition
+    needs: [setup, precondition]
     if: ${{ needs.precondition.outputs.passed == 'true' }}
     steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
           go-version: ${{ matrix.go-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Go cache
-        uses: actions/cache@v4
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
 
       - name: Test
         id: test
@@ -135,7 +124,7 @@ jobs:
 
       - name: Upload code coverage (unit)
         if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
-        uses: codecov/codecov-action@v3
+        uses: nhatthm/gh-actions/codecov@master
         with:
           files: ./unit.coverprofile
           flags: unittests-${{ runner.os }}-${{ runner.arch }}
@@ -144,32 +133,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go-version: [ 1.20.x, 1.21.x ]
+        go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
         mssql-version: [ "2019" ]
     runs-on: ubuntu-latest
-    needs: test-unit
+    needs: [setup, test-unit]
     steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
           go-version: ${{ matrix.go-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Go cache
-        uses: actions/cache@v4
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache
+          cache-key: ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache-${{ hashFiles('**/go.sum') }}
+          cache-restore-keys: ${{ runner.os }}-go-${{ matrix.go-version }}-mssql-cache
 
       - name: Test
         id: test
@@ -183,32 +161,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go-version: [ 1.20.x, 1.21.x ]
+        go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
         mysql-version: [ "8" ]
     runs-on: ubuntu-latest
-    needs: test-unit
+    needs: [setup, test-unit]
     steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
           go-version: ${{ matrix.go-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Go cache
-        uses: actions/cache@v4
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache
+          cache-key: ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache-${{ hashFiles('**/go.sum') }}
+          cache-restore-keys: ${{ runner.os }}-go-${{ matrix.go-version }}-mysql-cache
 
       - name: Test
         id: test
@@ -222,33 +189,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go-version: [ 1.20.x, 1.21.x ]
+        go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
         postgres-version: [ "12", "13", "14", "15", "16" ]
         postgres-driver: [ "postgres", "pgx/v4", "pgx/v5" ]
     runs-on: ubuntu-latest
-    needs: test-unit
+    needs: [setup, test-unit]
     steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
           go-version: ${{ matrix.go-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Go cache
-        uses: actions/cache@v4
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache
+          cache-key: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache-${{ hashFiles('**/go.sum') }}
+          cache-restore-keys: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache
 
       - name: Test
         id: test

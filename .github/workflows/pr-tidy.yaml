@@ -17,37 +17,27 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.head_ref, 'dependabot/go_modules/')  }}
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ env.GO_VERSION }}
-
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: nhatthm/gh-actions/checkout@master
         with:
           token: ${{ secrets.PUSH_TOKEN }}
           ref: ${{ github.head_ref }}
 
-      - name: Go cache
-        uses: actions/cache@v4
+      - name: Find Go version
+        uses: nhatthm/gh-actions/find-go-version@master
+
+      - name: Install Go
+        uses: nhatthm/gh-actions/setup-go@master
         with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ env.GO_VERSION }}-cache
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Tidy
         run: |
           make tidy
 
-      - name: setup-gpg
+      - name: Setup GPG
         id: setup-gpg
-        uses: crazy-max/ghaction-import-gpg@v6
+        uses: nhatthm/gh-actions/import-gpg@master
         with:
           gpg_private_key: ${{ secrets.PUSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.PUSH_SECRET }}
@@ -56,7 +46,8 @@ jobs:
           git_commit_gpgsign: true
           git_tag_gpgsign: false
 
-      - uses: EndBug/add-and-commit@v9
+      - name: Add and Commit
+        uses: nhatthm/gh-actions/git-add-and-commit@master
         with:
           message: "go mod tidy"
           push: true

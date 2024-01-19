@@ -14,36 +14,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      go-version: ${{ steps.find-go-version.outputs.go-version }}
+      go-latest-version: ${{ steps.find-go-version.outputs.go-latest-version }}
+      go-supported-versions: ${{ steps.find-go-version.outputs.go-supported-versions }}
+    steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
+      - id: find-go-version
+        name: Find Go version
+        uses: nhatthm/gh-actions/find-go-version@master
+
   test:
     strategy:
       fail-fast: false
       matrix:
-        go-version: [ 1.20.x, 1.21.x ]
+        go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
         postgres-version: [ "12", "13", "14", "15", "16" ]
         pgx-version: [ "v4", "v5"]
     runs-on: ubuntu-latest
+    needs: [setup]
     steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
           go-version: ${{ matrix.go-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Go cache
-        uses: actions/cache@v4
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache
+          cache-key: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache-${{ hashFiles('**/go.sum') }}
+          cache-restore-keys: ${{ runner.os }}-go-${{ matrix.go-version }}-postgres-cache
 
       - name: Test
         id: test

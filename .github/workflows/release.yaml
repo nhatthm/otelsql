@@ -15,7 +15,8 @@ jobs:
     name: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
           ref: master
@@ -24,9 +25,9 @@ jobs:
       - name: set-version
         run: .github/scripts/set_version.sh "${{ github.event.inputs.version }}"
 
-      - name: setup-gpg
+      - name: Setup GPG
         id: setup-gpg
-        uses: crazy-max/ghaction-import-gpg@v6
+        uses: nhatthm/gh-actions/import-gpg@master
         with:
           gpg_private_key: ${{ secrets.RELEASE_PRIVATE_KEY }}
           passphrase: ${{ secrets.RELEASE_SECRET }}
@@ -35,7 +36,8 @@ jobs:
           git_commit_gpgsign: true
           git_tag_gpgsign: false
 
-      - uses: EndBug/add-and-commit@v9
+      - name: Add and Commit
+        uses: nhatthm/gh-actions/git-add-and-commit@master
         with:
           add: version.go
           message: "Release ${{ env.VERSION }}"
@@ -46,7 +48,7 @@ jobs:
           committer_name: ${{ steps.setup-gpg.outputs.name }}
           committer_email: ${{ steps.setup-gpg.outputs.email }}
 
-      - uses: softprops/action-gh-release@v1
+      - uses: nhatthm/gh-actions/github-release@master
         with:
           name: "${{ env.VERSION }}"
           tag_name: "${{ env.VERSION }}"

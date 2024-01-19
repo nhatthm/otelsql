@@ -8,45 +8,48 @@ on:
 
 env:
   GO111MODULE: "on"
-  GO_LATEST_VERSION: "1.21.x"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      go-version: ${{ steps.find-go-version.outputs.go-version }}
+      go-latest-version: ${{ steps.find-go-version.outputs.go-latest-version }}
+      go-supported-versions: ${{ steps.find-go-version.outputs.go-supported-versions }}
+    steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
+      - id: find-go-version
+        name: Find Go version
+        uses: nhatthm/gh-actions/find-go-version@master
+
   test:
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
-        go-version: [ 1.20.x, 1.21.x ]
+        go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
         exclude:
           - os: macos-latest
             arch: "386"
     runs-on: ${{ matrix.os }}
+    needs: [setup]
+    env:
+      GO_LATEST_VERSION: ${{ needs.setup.outputs.go-latest-version }}
     steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: nhatthm/gh-actions/setup-go@master
         with:
           go-version: ${{ matrix.go-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Go cache
-        uses: actions/cache@v4
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-cache-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-cache
 
       - name: Test
         id: test
@@ -57,7 +60,7 @@ jobs:
 
       - name: Upload code coverage (unit)
         if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
-        uses: codecov/codecov-action@v3
+        uses: nhatthm/gh-actions/codecov@master
         with:
           files: ./unit.coverprofile
           flags: unittests-${{ runner.os }}-${{ runner.arch }}

@@ -12,21 +12,11 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        registry: [ go.nhat.io, go-staging.nhat.io ]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
 
-      - id: vars
-        run: |
-          make $GITHUB_OUTPUT
-
-      - name: notify ${{ matrix.registry }}
-        uses: benc-uk/workflow-dispatch@v121
+      - name: Notify registries
+        uses: nhatthm/gh-actions/notify-go-registries@master
         with:
-          workflow: build
-          repo: nhatthm/${{ matrix.registry }}
           token: ${{ secrets.REGISTRY_TOKEN }}
-          inputs: '{"modules": "${{ steps.vars.outputs.MODULE_NAME }}"}'
-          ref: 'master'

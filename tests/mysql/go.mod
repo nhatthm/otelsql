@@ -26,7 +26,7 @@ require (
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/cpuguy83/dockercfg v0.3.1 // indirect
 	github.com/cucumber/gherkin/go/v26 v26.2.0 // indirect
-	github.com/cucumber/godog v0.13.0 // indirect
+	github.com/cucumber/godog v0.14.0 // indirect
 	github.com/cucumber/messages/go/v21 v21.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/distribution/reference v0.5.0 // indirect

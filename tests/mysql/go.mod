@@ -90,12 +90,12 @@ require (
 	go.nhat.io/testcontainers-registry v0.14.0 // indirect
 	go.nhat.io/timeparser v0.3.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.47.0 // indirect
-	go.opentelemetry.io/otel v1.22.0 // indirect
+	go.opentelemetry.io/otel v1.23.0 // indirect
 	go.opentelemetry.io/otel/exporters/prometheus v0.44.0 // indirect
-	go.opentelemetry.io/otel/metric v1.22.0 // indirect
-	go.opentelemetry.io/otel/sdk v1.22.0 // indirect
-	go.opentelemetry.io/otel/sdk/metric v1.22.0 // indirect
-	go.opentelemetry.io/otel/trace v1.22.0 // indirect
+	go.opentelemetry.io/otel/metric v1.23.0 // indirect
+	go.opentelemetry.io/otel/sdk v1.23.0 // indirect
+	go.opentelemetry.io/otel/sdk/metric v1.23.0 // indirect
+	go.opentelemetry.io/otel/trace v1.23.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a // indirect
 	golang.org/x/mod v0.14.0 // indirect

@@ -67,14 +67,14 @@ update: $(updateGoModules)
 .PHONY: test-unit
 test-unit:
 	@echo ">> unit test"
-	@$(GO) test -gcflags=-l -coverprofile=unit.coverprofile -covermode=atomic $(TEST_FLAGS) ./...
+	@$(GO) test -coverprofile=unit.coverprofile -covermode=atomic $(TEST_FLAGS) ./...
 	@echo
 
 .PHONY: $(compatibilityTests)
 $(compatibilityTests):
 	$(eval COMPATIBILITY_TEST := "$(subst test-compatibility-,,$@)")
 	@echo ">> compatibility test: $(COMPATIBILITY_TEST)"
-	@cd "tests/$(COMPATIBILITY_TEST)"; $(GO) test -gcflags=-l -v $(TEST_FLAGS) ./...
+	@cd "tests/$(COMPATIBILITY_TEST)"; $(GO) test -v $(TEST_FLAGS) ./...
 	@echo
 
 .PHONY: test-compatibility

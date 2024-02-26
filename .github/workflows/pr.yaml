@@ -106,6 +106,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: [setup, precondition]
     if: ${{ needs.precondition.outputs.passed == 'true' }}
+    env:
+      GO_LATEST_VERSION: ${{ needs.setup.outputs.go-latest-version }}
     steps:
       - name: Checkout code
         uses: nhatthm/gh-actions/checkout@master

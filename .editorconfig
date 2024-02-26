@@ -15,5 +15,8 @@ indent_style = space
 [*.feature]
 indent_style = space
 
-[.github/*/*.yaml]
+[.golangci.yaml]
+indent_size = 2
+
+[{.github/**/*.yaml,.github/**/*.yml}]
 indent_size = 2

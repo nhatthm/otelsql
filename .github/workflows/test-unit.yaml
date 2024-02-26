@@ -62,5 +62,6 @@ jobs:
         if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
         uses: nhatthm/gh-actions/codecov@master
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./unit.coverprofile
           flags: unittests-${{ runner.os }}-${{ runner.arch }}

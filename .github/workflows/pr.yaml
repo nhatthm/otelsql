@@ -106,6 +106,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: [setup, precondition]
     if: ${{ needs.precondition.outputs.passed == 'true' }}
+    env:
+      GO_LATEST_VERSION: ${{ needs.setup.outputs.go-latest-version }}
     steps:
       - name: Checkout code
         uses: nhatthm/gh-actions/checkout@master
@@ -126,6 +128,7 @@ jobs:
         if: ${{ matrix.go-version == env.GO_LATEST_VERSION }}
         uses: nhatthm/gh-actions/codecov@master
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./unit.coverprofile
           flags: unittests-${{ runner.os }}-${{ runner.arch }}
 

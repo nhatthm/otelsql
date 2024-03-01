@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/swaggest/assertjson v1.9.0
 	go.opentelemetry.io/otel v1.24.0
 	go.opentelemetry.io/otel/exporters/stdout/stdoutmetric v1.24.0

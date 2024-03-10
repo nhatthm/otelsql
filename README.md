@@ -33,7 +33,7 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 
 ## Prerequisites
 
-- `Go >= 1.20`
+- `Go >= 1.21`
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -49,6 +49,7 @@ Compatibility
 
 |          `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/metric` |
 |:---------------------------:|:--------------------------------:|:---------------------------------:|
+| `v0.13.*` <sup>&nbsp;</sup> |      `v1.24.0` ~> `latest`       |       `v1.24.0` ~> `latest`       |
 | `v0.12.*` <sup>&nbsp;</sup> |      `v1.17.0` ~> `latest`       |       `v0.40.0` ~> `latest`       |
 | `v0.11.*` <sup>&nbsp;</sup> |      `v1.16.0` ~> `latest`       |       `v0.39.0` ~> `latest`       |
 | `v0.10.*` <sup>&nbsp;</sup> |      `v1.15.0` ~> `latest`       |             `v0.38.*`             |

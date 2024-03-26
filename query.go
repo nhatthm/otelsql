@@ -3,6 +3,8 @@ package otelsql
 import (
 	"context"
 	"database/sql/driver"
+
+	"go.opentelemetry.io/otel/attribute"
 )
 
 const (
@@ -24,11 +26,41 @@ func skippedQueryContext(_ context.Context, _ string, _ []driver.NamedValue) (dr
 	return nil, driver.ErrSkip
 }
 
+// add custome labels to metrics and traces
+type ctxKey string
+
+const (
+	meterCtxKey  ctxKey = "meterCtxKey"
+	tracerCtxKey ctxKey = "traceCtxKey"
+)
+
+func getLabels(ctx context.Context, key ctxKey) []attribute.KeyValue {
+	labels, ok := ctx.Value(key).([]attribute.KeyValue)
+	if !ok || labels == nil {
+		labels = make([]attribute.KeyValue, 0)
+	}
+	return labels
+}
+
+func addLabels(ctx context.Context, key ctxKey, labels ...attribute.KeyValue) context.Context {
+	new := append(getLabels(ctx, key), labels...)
+	return context.WithValue(ctx, key, new)
+}
+
+func AddMeterLabels(ctx context.Context, labels ...attribute.KeyValue) context.Context {
+	return addLabels(ctx, meterCtxKey, labels...)
+}
+
+func AddTracerLabels(ctx context.Context, labels ...attribute.KeyValue) context.Context {
+	return addLabels(ctx, tracerCtxKey, labels...)
+}
+
 // queryStats records metrics for query.
 func queryStats(r methodRecorder, method string) queryContextFuncMiddleware {
 	return func(next queryContextFunc) queryContextFunc {
 		return func(ctx context.Context, query string, args []driver.NamedValue) (result driver.Rows, err error) {
-			end := r.Record(ctx, method)
+			labels := getLabels(ctx, meterCtxKey)
+			end := r.Record(ctx, method, labels...)
 
 			defer func() {
 				end(err)
@@ -49,7 +81,11 @@ func queryTrace(t methodTracer, traceQuery queryTracer, method string) queryCont
 			ctx, end := t.Trace(ctx, method)
 
 			defer func() {
-				end(err, traceQuery(ctx, query, args)...)
+				labels := append(
+					getLabels(ctx, tracerCtxKey),
+					traceQuery(ctx, query, args)...,
+				)
+				end(err, labels...)
 			}()
 
 			result, err = next(ctx, query, args)

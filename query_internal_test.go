@@ -8,6 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric/noop"
 	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 
@@ -110,9 +111,10 @@ func TestQueryStats(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
-		scenario string
-		query    queryContextFunc
-		expected string
+		scenario  string
+		query     queryContextFunc
+		ctxLabels []attribute.KeyValue
+		expected  string
 	}{
 		{
 			scenario: "error",
@@ -146,6 +148,24 @@ func TestQueryStats(t *testing.T) {
 				}
 			]`,
 		},
+		{
+			scenario: "extra labels",
+			query:    nopQueryContext,
+			ctxLabels: []attribute.KeyValue{
+				attribute.String("extra", "label"),
+			},
+			expected: `[
+				{
+					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=query_test,db.instance=test,db.operation=go.sql.query,db.sql.status=OK,db.system=other_sql,extra=label}",
+					"Sum": 1
+				},
+				{
+					"Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=query_test,db.instance=test,db.operation=go.sql.query,db.sql.status=OK,db.system=other_sql,extra=label}",
+					"Sum": "<ignore-diff>",
+					"Count": 1
+				}
+			]`,
+		},
 	}
 
 	for _, tc := range testCases {
@@ -172,7 +192,9 @@ func TestQueryStats(t *testing.T) {
 						queryStats(r, metricMethodQuery),
 					}, tc.query)
 
-					_, _ = query(context.Background(), "", nil) // nolint: errcheck
+					ctx := ContextWithMetricsLabels(context.Background(), tc.ctxLabels...)
+
+					_, _ = query(ctx, "", nil) // nolint: errcheck
 				})
 		})
 	}

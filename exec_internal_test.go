@@ -8,6 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric/noop"
 	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 
@@ -112,6 +113,7 @@ func TestExecStats(t *testing.T) {
 	testCases := []struct {
 		scenario string
 		execer   execContextFunc
+		ctxLabel []attribute.KeyValue
 		expected string
 	}{
 		{
@@ -146,6 +148,24 @@ func TestExecStats(t *testing.T) {
 				}
 			]`,
 		},
+		{
+			scenario: "extra labels",
+			execer:   nopExecContext,
+			ctxLabel: []attribute.KeyValue{
+				attribute.String("extra", "label"),
+			},
+			expected: `[
+				{
+					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=exec_test,db.instance=test,db.operation=go.sql.exec,db.sql.status=OK,db.system=other_sql,extra=label}",
+					"Sum": 1
+				},
+				{
+					"Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=exec_test,db.instance=test,db.operation=go.sql.exec,db.sql.status=OK,db.system=other_sql,extra=label}",
+					"Sum": "<ignore-diff>",
+					"Count": 1
+				}
+			]`,
+		},
 	}
 
 	for _, tc := range testCases {
@@ -172,7 +192,9 @@ func TestExecStats(t *testing.T) {
 						execStats(r, metricMethodExec),
 					}, tc.execer)
 
-					_, _ = exec(context.Background(), "", nil) // nolint: errcheck
+					ctx := ContextWithMetricsLabels(context.Background(), tc.ctxLabel...)
+
+					_, _ = exec(ctx, "", nil) // nolint: errcheck
 				})
 		})
 	}

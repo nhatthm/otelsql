@@ -66,10 +66,12 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 		trace.WithSpanKind(trace.SpanKindClient),
 	)
 
-	attrs := make([]attribute.KeyValue, 0, len(t.attributes)+len(labels)+1)
+	ctxLabels := TraceLabelsFromContext(ctx)
+	attrs := make([]attribute.KeyValue, 0, len(t.attributes)+len(labels)+len(ctxLabels)+1)
 
 	attrs = append(attrs, t.attributes...)
 	attrs = append(attrs, labels...)
+	attrs = append(attrs, ctxLabels...)
 	attrs = append(attrs, semconv.DBOperationKey.String(method))
 
 	return ctx, func(err error, labels ...attribute.KeyValue) {

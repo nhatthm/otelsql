@@ -7,6 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.opentelemetry.io/otel/attribute"
 	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 
 	"go.nhat.io/otelsql/internal/test/oteltest"
@@ -67,6 +68,7 @@ func TestTxStats(t *testing.T) {
 	testCases := []struct {
 		scenario string
 		beginner txFunc
+		ctxLabel []attribute.KeyValue
 		expected string
 	}{
 		{
@@ -102,6 +104,25 @@ func TestTxStats(t *testing.T) {
 				}
 			]`,
 		},
+		{
+			scenario: "extra labels",
+			beginner: nopTxFunc,
+			ctxLabel: []attribute.KeyValue{
+				attribute.String("extra", "label"),
+			},
+			expected: `[
+				{
+					"Name": "db.sql.client.calls{service.name=otelsql,instrumentation.name=tx_test,db.instance=test,db.operation=go.sql.commit,db.sql.status=OK,db.system=other_sql,extra=label}",
+					"Sum": 1
+				},
+				{
+					"Name": "db.sql.client.latency{service.name=otelsql,instrumentation.name=tx_test,db.instance=test,db.operation=go.sql.commit,db.sql.status=OK,db.system=other_sql,extra=label}",
+					"Sum": "<ignore-diff>",
+					"Count": 1,
+					"Count": 1
+				}
+			]`,
+		},
 	}
 
 	for _, tc := range testCases {
@@ -124,8 +145,10 @@ func TestTxStats(t *testing.T) {
 						dbInstance.String("test"),
 					)
 
+					ctx := ContextWithMetricsLabels(context.Background(), tc.ctxLabel...)
+
 					f := chainMiddlewares([]txFuncMiddleware{
-						txStats(context.Background(), r, metricMethodCommit),
+						txStats(ctx, r, metricMethodCommit),
 					}, tc.beginner)
 
 					_ = f() // nolint: errcheck

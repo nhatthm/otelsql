@@ -6,7 +6,7 @@ toolchain go1.21.6
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
-	github.com/bool64/sqluct v0.2.1
+	github.com/bool64/sqluct v0.2.2
 	github.com/cucumber/godog v0.14.0
 	github.com/godogx/clocksteps v0.4.0
 	github.com/jmoiron/sqlx v1.3.5

@@ -30,10 +30,12 @@ type methodRecorderImpl struct {
 func (r methodRecorderImpl) Record(ctx context.Context, method string, labels ...attribute.KeyValue) func(err error) {
 	startTime := time.Now()
 
-	attrs := make([]attribute.KeyValue, 0, len(r.attributes)+len(labels)+2)
+	ctxLabels := MetricsLabelsFromContext(ctx)
+	attrs := make([]attribute.KeyValue, 0, len(r.attributes)+len(labels)+len(ctxLabels)+2)
 
 	attrs = append(attrs, r.attributes...)
 	attrs = append(attrs, labels...)
+	attrs = append(attrs, ctxLabels...)
 	attrs = append(attrs, semconv.DBOperationKey.String(method))
 
 	return func(err error) {

@@ -38,7 +38,7 @@ func KeyFromNamedValue(arg driver.NamedValue) attribute.Key {
 
 // KeyValue returns an attribute.KeyValue from a given value.
 // nolint: cyclop
-func KeyValue(key attribute.Key, val interface{}) attribute.KeyValue {
+func KeyValue(key attribute.Key, val any) attribute.KeyValue {
 	switch v := val.(type) {
 	case nil:
 		return key.String("")

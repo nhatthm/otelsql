@@ -83,7 +83,7 @@ func TestWrapConn(t *testing.T) {
 		connCloseFunc
 		connBeginFunc
 	}{
-		connPrepareFunc: func(query string) (driver.Stmt, error) {
+		connPrepareFunc: func(string) (driver.Stmt, error) {
 			return nil, expectedPrepareError
 		},
 		connCloseFunc: func() error {
@@ -119,7 +119,7 @@ func TestWrapConn(t *testing.T) {
 	testCases := []struct {
 		scenario     string
 		parent       driver.Conn
-		expectedType interface{}
+		expectedType any
 		assert       func(t *testing.T, conn driver.Conn)
 	}{
 		{

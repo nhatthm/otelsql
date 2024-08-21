@@ -16,7 +16,7 @@ type execContextFunc func(ctx context.Context, query string, args []driver.Named
 
 // nopExecContext executes nothing.
 func nopExecContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Result, error) {
-	return nil, nil
+	return nil, nil //nolint: nilnil
 }
 
 // skippedExecContext always returns driver.ErrSkip.

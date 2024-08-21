@@ -64,7 +64,7 @@ func TestRegister_OpenError(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return struct {
 				driverDriverFunc
 				driverConnectFunc
@@ -96,7 +96,7 @@ func TestWrap_DriverContext_Driver(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return nil, nil
 		}),
 	}
@@ -117,7 +117,7 @@ func TestWrap_DriverContext_OpenConnectorError(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return nil, errors.New("open connector error")
 		}),
 	}
@@ -138,12 +138,12 @@ func TestWrap_DriverContext_ConnectError(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return struct {
 				driverDriverFunc
 				driverConnectFunc
 			}{
-				driverConnectFunc: func(ctx context.Context) (driver.Conn, error) {
+				driverConnectFunc: func(context.Context) (driver.Conn, error) {
 					return nil, errors.New("connect error")
 				},
 			}, nil
@@ -172,13 +172,13 @@ func TestWrap_DriverContext_ConnectNamedValueChecker(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return struct {
 				driverDriverFunc
 				driverConnectFunc
 				driverNamedValueCheckerFunc
 			}{
-				driverConnectFunc: func(ctx context.Context) (driver.Conn, error) {
+				driverConnectFunc: func(context.Context) (driver.Conn, error) {
 					return m.(driver.Conn), nil
 				},
 			}, nil
@@ -203,7 +203,7 @@ func TestWrap_DriverContext_CloseBeforeOpenConnector(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return struct {
 				driverDriverFunc
 				driverConnectFunc
@@ -232,13 +232,13 @@ func TestWrap_DriverContext_CloseError(t *testing.T) {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: driverOpenConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: driverOpenConnectorFunc(func(string) (driver.Connector, error) {
 			return struct {
 				driverDriverFunc
 				driverConnectFunc
 				driverCloseFunc
 			}{
-				driverConnectFunc: func(ctx context.Context) (driver.Conn, error) {
+				driverConnectFunc: func(context.Context) (driver.Conn, error) {
 					return nil, nil
 				},
 				driverCloseFunc: func() error {
@@ -2841,7 +2841,7 @@ func contextWithSampleSpan() context.Context {
 	return oteltest.BackgroundWithSpanContext(sampleParentSpanIDs())
 }
 
-func assertSpanIsRoot(t assert.TestingT, span oteltest.Span, msgAndArgs ...interface{}) bool {
+func assertSpanIsRoot(t assert.TestingT, span oteltest.Span, msgAndArgs ...any) bool {
 	return assert.Equal(t, span.Parent.TraceID, oteltest.NilTraceID.String(), msgAndArgs...) &&
 		assert.Equal(t, span.Parent.SpanID, oteltest.NilSpanID.String(), msgAndArgs...)
 }
@@ -2918,14 +2918,14 @@ func assertSpansHaveSameRoot(t assert.TestingT, actual []oteltest.Span) bool {
 	return result
 }
 
-func getFixture(file string, args ...interface{}) string {
+func getFixture(file string, args ...any) string {
 	data, err := os.ReadFile(filepath.Clean(file))
 	mustNotFail(err)
 
 	return fmt.Sprintf(string(data), args...)
 }
 
-func expectedMetricsFromFile(file string, args ...interface{}) string { // nolint: unparam
+func expectedMetricsFromFile(file string, args ...any) string { // nolint: unparam
 	return getFixture("resources/fixtures/metrics/"+file, args...)
 }
 
@@ -2961,7 +2961,7 @@ func expectedCustomMetricOK() string {
 	return expectedMetricsFromFile("custom_ok.json")
 }
 
-func expectedTracesFromFile(file string, args ...interface{}) string {
+func expectedTracesFromFile(file string, args ...any) string {
 	return getFixture("resources/fixtures/traces/"+file, args...)
 }
 

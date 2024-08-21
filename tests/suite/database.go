@@ -29,13 +29,13 @@ type PreparerContext interface {
 
 // ExecerContext executes a query without returning any rows.
 type ExecerContext interface {
-	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
+	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 }
 
 // QueryerContext executes a query that returns rows, typically a SELECT.
 type QueryerContext interface {
-	QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error)
-	QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row
+	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
+	QueryRowContext(ctx context.Context, query string, args ...any) *sql.Row
 }
 
 func openDB(driver, dsn string) (*sql.DB, error) {
@@ -77,7 +77,7 @@ func makeDBManager(db *sqlx.DB, placeholderFormat squirrel.PlaceholderFormat) *d
 	dbm.Instances = map[string]dbsteps.Instance{
 		"default": {
 			Storage: storage,
-			Tables: map[string]interface{}{
+			Tables: map[string]any{
 				"customer": new(customer.Customer),
 			},
 		},
@@ -88,9 +88,9 @@ func makeDBManager(db *sqlx.DB, placeholderFormat squirrel.PlaceholderFormat) *d
 
 // DatabaseExecer executes query depends on what it has.
 type DatabaseExecer interface {
-	Exec(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
-	Query(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error)
-	QueryRow(ctx context.Context, query string, args ...interface{}) (*sql.Row, error)
+	Exec(ctx context.Context, query string, args ...any) (sql.Result, error)
+	Query(ctx context.Context, query string, args ...any) (*sql.Rows, error)
+	QueryRow(ctx context.Context, query string, args ...any) (*sql.Row, error)
 }
 
 type databaseExecer struct {
@@ -110,7 +110,7 @@ func (e *databaseExecer) closeStmt(stmt *sql.Stmt) {
 }
 
 // Exec executes a query.
-func (e *databaseExecer) Exec(ctx context.Context, query string, args ...interface{}) (sql.Result, error) {
+func (e *databaseExecer) Exec(ctx context.Context, query string, args ...any) (sql.Result, error) {
 	if !e.usePreparer {
 		return e.db.ExecContext(ctx, query, args...)
 	}
@@ -126,7 +126,7 @@ func (e *databaseExecer) Exec(ctx context.Context, query string, args ...interfa
 }
 
 // Query executes a query and returns rows.
-func (e *databaseExecer) Query(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error) {
+func (e *databaseExecer) Query(ctx context.Context, query string, args ...any) (*sql.Rows, error) {
 	if !e.usePreparer {
 		return e.db.QueryContext(ctx, query, args...)
 	}
@@ -142,7 +142,7 @@ func (e *databaseExecer) Query(ctx context.Context, query string, args ...interf
 }
 
 // QueryRow executes a query and returns a row.
-func (e *databaseExecer) QueryRow(ctx context.Context, query string, args ...interface{}) (*sql.Row, error) {
+func (e *databaseExecer) QueryRow(ctx context.Context, query string, args ...any) (*sql.Row, error) {
 	if !e.usePreparer {
 		return e.db.QueryRowContext(ctx, query, args...), nil
 	}

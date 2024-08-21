@@ -21,36 +21,29 @@ linters:
   enable-all: true
   disable:
     - contextcheck
-    - deadcode
     - depguard
-    - exhaustivestruct
     - exhaustruct
+    - execinquery
     - forbidigo
     - forcetypeassert
     - gci
     - gochecknoglobals
-    - goerr113
-    - golint
+    - err113
     - gomnd
     - gomoddirectives
-    - ifshort
-    - interfacer
     - ireturn
     - lll
-    - maligned
+    - mnd
     - nolintlint # https://github.com/golangci/golangci-lint/issues/3063
     - nonamedreturns
-    - nosnakecase
     - paralleltest
+    - perfsprint
     - rowserrcheck # https://github.com/golangci/golangci-lint/issues/2649
-    - scopelint
     - sqlclosecheck # https://github.com/golangci/golangci-lint/issues/2649
-    - structcheck
     - tagalign
     - tagliatelle
     - testifylint
     - testpackage
-    - varcheck
     - varnamelen
     - wastedassign # https://github.com/golangci/golangci-lint/issues/2649
     - wrapcheck
@@ -67,6 +60,8 @@ issues:
         - goerr113
         - gomnd
         - maintidx
+        - mnd
+        - nilnil
         - noctx
         - rowserrcheck
       path: "_test.go"

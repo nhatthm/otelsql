@@ -17,7 +17,7 @@ import (
 	_ "go.nhat.io/testcontainers-registry" // Let dependabot manage the update.
 )
 
-type logger func(format string, args ...interface{})
+type logger func(format string, args ...any)
 
 // Suite is a test suite.
 type Suite interface {
@@ -64,7 +64,7 @@ func (s suite) stopContainers(tb testing.TB, containers ...testcontainers.Contai
 	}
 }
 
-func (s suite) getFeatureFiles(location string, log func(format string, args ...interface{})) ([]string, error) {
+func (s suite) getFeatureFiles(location string, log func(format string, args ...any)) ([]string, error) {
 	entries, err := os.ReadDir(location)
 	if err != nil {
 		log("could not read feature files location: %s", err.Error())

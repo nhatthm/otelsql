@@ -22,7 +22,7 @@ func BenchmarkFromNamedValue(b *testing.B) {
 
 	longString := strings.Repeat(pattern, 17)
 
-	data := []interface{}{
+	data := []any{
 		nil,
 		10,
 		int64(42),
@@ -45,8 +45,7 @@ func BenchmarkFromNamedValue(b *testing.B) {
 		map[string]string{"hello": "world"},
 	}
 
-	max := len(data)
-	namedValues := make([]driver.NamedValue, max)
+	namedValues := make([]driver.NamedValue, len(data))
 
 	for i, v := range data {
 		namedValues[i] = driver.NamedValue{
@@ -119,7 +118,7 @@ func TestKeyValue(t *testing.T) {
 
 	testCases := []struct {
 		scenario string
-		value    interface{}
+		value    any
 		expected attribute.KeyValue
 	}{
 		{
@@ -316,7 +315,7 @@ func TestKeyValueDuration(t *testing.T) {
 	}
 }
 
-func ptrOf(v interface{}) interface{} {
+func ptrOf(v any) any {
 	val := reflect.ValueOf(v)
 	p := reflect.New(val.Type())
 

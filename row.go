@@ -96,10 +96,10 @@ func wrapRows(ctx context.Context, parent driver.Rows, t methodTracer, traceRows
 		nextFunc:                       parent.Next,
 		hasNextResultSetFunc:           func() bool { return false },
 		nextResultSetFunc:              func() error { return io.EOF },
-		columnTypeDatabaseTypeNameFunc: func(_ int) string { return "" },
-		columnTypeLengthFunc:           func(_ int) (int64, bool) { return 0, false },
-		columnTypeNullableFunc:         func(_ int) (bool, bool) { return false, false },
-		columnTypePrecisionScaleFunc:   func(_ int) (int64, int64, bool) { return 0, 0, false },
+		columnTypeDatabaseTypeNameFunc: func(int) string { return "" },
+		columnTypeLengthFunc:           func(int) (int64, bool) { return 0, false },
+		columnTypeNullableFunc:         func(int) (bool, bool) { return false, false },
+		columnTypePrecisionScaleFunc:   func(int) (int64, int64, bool) { return 0, 0, false },
 	}
 
 	if traceRowsClose {

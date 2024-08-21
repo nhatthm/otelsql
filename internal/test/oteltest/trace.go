@@ -49,7 +49,7 @@ type SpanContext struct {
 type SpanAttribute struct {
 	Key   string `json:"Key"`
 	Value struct {
-		Type  string      `json:"Type"`
-		Value interface{} `json:"Value"`
+		Type  string `json:"Type"`
+		Value any    `json:"Value"`
 	} `json:"Value"`
 }

@@ -27,7 +27,7 @@ type customerTests struct {
 	clock      clock.Clock
 
 	usePreparer bool
-	lastResult  interface{}
+	lastResult  any
 	lastError   error
 }
 
@@ -51,7 +51,7 @@ func (t *customerTests) RegisterSteps(sc *godog.ScenarioContext) {
 		return ctx, err
 	})
 
-	sc.After(func(ctx context.Context, _ *godog.Scenario, err error) (context.Context, error) {
+	sc.After(func(ctx context.Context, _ *godog.Scenario, _ error) (context.Context, error) {
 		if t.db != nil {
 			_ = t.db.Close() // nolint: errcheck
 		}

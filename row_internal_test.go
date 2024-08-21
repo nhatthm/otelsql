@@ -117,7 +117,7 @@ func TestWrapRows_RowsColumnTypeDatabaseTypeName(t *testing.T) {
 				rowsCloseFunc
 				rowsColumnTypeDatabaseTypeNameFunc
 			}{
-				rowsColumnTypeDatabaseTypeNameFunc: func(index int) string {
+				rowsColumnTypeDatabaseTypeNameFunc: func(int) string {
 					return "foobar"
 				},
 			},
@@ -166,7 +166,7 @@ func TestWrapRows_RowsColumnTypeLength(t *testing.T) {
 				rowsCloseFunc
 				rowsColumnTypeLengthFunc
 			}{
-				rowsColumnTypeLengthFunc: func(index int) (int64, bool) {
+				rowsColumnTypeLengthFunc: func(int) (int64, bool) {
 					return 42, true
 				},
 			},
@@ -270,7 +270,7 @@ func TestWrapRows_RowsColumnTypePrecisionScale(t *testing.T) {
 				rowsCloseFunc
 				rowsColumnTypePrecisionScaleFunc
 			}{
-				rowsColumnTypePrecisionScaleFunc: func(index int) (precision, scale int64, ok bool) {
+				rowsColumnTypePrecisionScaleFunc: func(int) (precision, scale int64, ok bool) {
 					return 10, 42, true
 				},
 			},

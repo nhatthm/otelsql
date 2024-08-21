@@ -321,7 +321,7 @@ func fixTracesOutput(out string) string {
 }
 
 func chainAsserters(fs ...testassert.Func) testassert.Func {
-	return func(t assert.TestingT, actual string, msgAndArgs ...interface{}) bool {
+	return func(t assert.TestingT, actual string, msgAndArgs ...any) bool {
 		for _, f := range fs {
 			if !f(t, actual, msgAndArgs...) {
 				return false
@@ -333,7 +333,7 @@ func chainAsserters(fs ...testassert.Func) testassert.Func {
 }
 
 func matchTraces(f func(t assert.TestingT, actual []Span) bool) testassert.Func {
-	return func(t assert.TestingT, actual string, msgAndArgs ...interface{}) bool {
+	return func(t assert.TestingT, actual string, _ ...any) bool {
 		var spans []Span
 
 		if actual == "" {

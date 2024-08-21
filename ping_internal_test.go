@@ -60,7 +60,7 @@ func TestChainPingFuncMiddlewares(t *testing.T) {
 	stack := make([]string, 0)
 
 	pushPingFunc := func(s string) pingFunc {
-		return func(ctx context.Context) error {
+		return func(context.Context) error {
 			stack = append(stack, s)
 
 			return nil
@@ -103,7 +103,7 @@ func TestPingStats(t *testing.T) {
 	}{
 		{
 			scenario: "error",
-			ping: func(_ context.Context) error {
+			ping: func(context.Context) error {
 				return errors.New("error")
 			},
 			expected: `[

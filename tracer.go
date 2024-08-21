@@ -61,7 +61,7 @@ func (t *methodTracerImpl) Trace(ctx context.Context, method string, labels ...a
 }
 
 func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels ...attribute.KeyValue) (context.Context, func(err error, attrs ...attribute.KeyValue)) {
-	ctx, span := t.tracer.Start(ctx, t.formatSpanName(ctx, method),
+	ctx, span := t.tracer.Start(ctx, t.formatSpanName(ctx, method), //nolint: spancheck
 		trace.WithTimestamp(time.Now()),
 		trace.WithSpanKind(trace.SpanKindClient),
 	)
@@ -72,7 +72,7 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 	attrs = append(attrs, labels...)
 	attrs = append(attrs, semconv.DBOperationKey.String(method))
 
-	return ctx, func(err error, labels ...attribute.KeyValue) {
+	return ctx, func(err error, labels ...attribute.KeyValue) { //nolint: spancheck
 		code, desc := t.errorToStatus(err)
 
 		attrs = append(attrs, labels...)

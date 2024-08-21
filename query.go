@@ -16,7 +16,7 @@ type queryContextFunc func(ctx context.Context, query string, args []driver.Name
 
 // nopQueryContext queries nothing.
 func nopQueryContext(_ context.Context, _ string, _ []driver.NamedValue) (driver.Rows, error) {
-	return nil, nil
+	return nil, nil //nolint: nilnil
 }
 
 // skippedQueryContext always returns driver.ErrSkip.

@@ -226,10 +226,10 @@ github.com/yusufpapurcu/wmi v1.2.4 h1:zFUKzehAFReQwLys1b/iSMl+JQGSCSjtVqQn9bBrPo
 github.com/yusufpapurcu/wmi v1.2.4/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
 go.nhat.io/clock v0.7.0 h1:L3t8s+bOqqMXlGcv2qgKhIHBFqYS7rB84gYOHl4F7iA=
 go.nhat.io/clock v0.7.0/go.mod h1:95+ixhxejL/vGxvfiJnrEh19gr03GLyJcTZo7UDr6kA=
-go.nhat.io/testcontainers-extra v0.13.0 h1:kDbhkboyTW0c9mrqAlYHTGXWgeNe+p4pgL6Jp9Yc4ak=
-go.nhat.io/testcontainers-extra v0.13.0/go.mod h1:dXurSePsmx5Wt3GKZuFPJ7gxdBL7qD52zC+mbRrPWE0=
-go.nhat.io/testcontainers-registry v0.15.0 h1:KeiSWb+XCTyMQmYWuswar2YLCa3kawcC49jbP9C30+U=
-go.nhat.io/testcontainers-registry v0.15.0/go.mod h1:PaVdKOjEwGKorCvDOyRO1wMeLiOINyEuLf2DynGtvRM=
+go.nhat.io/testcontainers-extra v0.14.0 h1:pGBqazB5I2OOhXgjNrKEiXTzjjLReY9FPSLcYUrkYXY=
+go.nhat.io/testcontainers-extra v0.14.0/go.mod h1:e8uciPE6t4eihgNp6J4NwEJKkYMBIwCPEvwHyjdvAlw=
+go.nhat.io/testcontainers-registry v0.16.0 h1:aJe/coeB4B4ug/lS77265kvxGYnilTTIYKvoCxUwxUU=
+go.nhat.io/testcontainers-registry v0.16.0/go.mod h1:5lZHOIPgzcYhAS0zmob8xF+mmXyHFBqTcnzThnRhgKc=
 go.nhat.io/timeparser v0.3.0 h1:K29FOjYO9OVJUroSl/bb70I/FKT3CJt8APs25Npj5No=
 go.nhat.io/timeparser v0.3.0/go.mod h1:YdhOZNl64RWdHdNYIHxwDu9edleVBlnrREzddab0tO4=
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.53.0 h1:4K4tsIXefpVJtvA/8srF4V4y0akAoPHkIslgAkjixJA=

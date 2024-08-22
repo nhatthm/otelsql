@@ -203,7 +203,7 @@ func makeStmt(parent driver.Stmt, cfg stmtConfig) stmt {
 }
 
 func makeStmtExecFunc(parent driver.Stmt, execContextFuncMiddlewares []middleware[execContextFunc]) execContextFunc {
-	return chainMiddlewares(execContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
+	return chainMiddlewares(execContextFuncMiddlewares, func(_ context.Context, _ string, args []driver.NamedValue) (driver.Result, error) {
 		return parent.Exec(namedValuesToValues(args)) // nolint: staticcheck
 	})
 }
@@ -220,7 +220,7 @@ func makeStmtExecContextFunc(parent driver.Stmt, execContextFuncMiddlewares []mi
 }
 
 func makeStmtQueryFunc(parent driver.Stmt, queryContextFuncMiddlewares []middleware[queryContextFunc]) queryContextFunc {
-	return chainMiddlewares(queryContextFuncMiddlewares, func(ctx context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {
+	return chainMiddlewares(queryContextFuncMiddlewares, func(_ context.Context, _ string, args []driver.NamedValue) (driver.Rows, error) {
 		return parent.Query(namedValuesToValues(args)) // nolint: staticcheck
 	})
 }

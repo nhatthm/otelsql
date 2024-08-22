@@ -16,7 +16,7 @@ type prepareContextFunc func(ctx context.Context, query string) (driver.Stmt, er
 
 // nopPrepareContext prepares nothing.
 func nopPrepareContext(_ context.Context, _ string) (driver.Stmt, error) {
-	return nil, nil
+	return nil, nil //nolint: nilnil
 }
 
 func ensurePrepareContext(conn driver.Conn) prepareContextFunc {

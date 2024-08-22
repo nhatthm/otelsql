@@ -117,7 +117,7 @@ func recordStats(
 	)
 	handleErr(err)
 
-	_, err = meter.RegisterCallback(func(ctx context.Context, obs metric.Observer) error {
+	_, err = meter.RegisterCallback(func(_ context.Context, obs metric.Observer) error {
 		lock.Lock()
 		defer lock.Unlock()
 

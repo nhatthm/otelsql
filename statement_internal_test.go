@@ -89,24 +89,24 @@ func TestWrapStmt(t *testing.T) {
 		stmtNumInputFunc: func() int {
 			return expectedNumInput
 		},
-		stmtExecFunc: func(args []driver.Value) (driver.Result, error) {
+		stmtExecFunc: func([]driver.Value) (driver.Result, error) {
 			return nil, expectedExecError
 		},
-		stmtQueryFunc: func(args []driver.Value) (driver.Rows, error) {
+		stmtQueryFunc: func([]driver.Value) (driver.Rows, error) {
 			return nil, expectedQueryError
 		},
 	}
 
-	execContextFunc := stmtExecContextFunc(func(ctx context.Context, args []driver.NamedValue) (driver.Result, error) {
+	execContextFunc := stmtExecContextFunc(func(context.Context, []driver.NamedValue) (driver.Result, error) {
 		return nil, expectedExecContextError
 	})
 
-	queryContextFunc := stmtQueryContextFunc(func(ctx context.Context, args []driver.NamedValue) (driver.Rows, error) {
+	queryContextFunc := stmtQueryContextFunc(func(context.Context, []driver.NamedValue) (driver.Rows, error) {
 		return nil, expectedQueryContextError
 	})
 
 	columnConverterFunc := stmtColumnConverterFunc(func(int) driver.ValueConverter {
-		return valueConverterFunc(func(interface{}) (driver.Value, error) {
+		return valueConverterFunc(func(any) (driver.Value, error) {
 			return nil, expectedConvertValueError
 		})
 	})
@@ -146,7 +146,7 @@ func TestWrapStmt(t *testing.T) {
 	testCases := []struct {
 		scenario     string
 		parent       driver.Stmt
-		expectedType interface{}
+		expectedType any
 		assert       func(t *testing.T, stmt driver.Stmt)
 	}{
 		{
@@ -572,8 +572,8 @@ func (f stmtNamedValueChecker) CheckNamedValue(value *driver.NamedValue) error {
 	return f(value)
 }
 
-type valueConverterFunc func(v interface{}) (driver.Value, error)
+type valueConverterFunc func(v any) (driver.Value, error)
 
-func (f valueConverterFunc) ConvertValue(v interface{}) (driver.Value, error) {
+func (f valueConverterFunc) ConvertValue(v any) (driver.Value, error) {
 	return f(v)
 }

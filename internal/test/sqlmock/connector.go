@@ -20,7 +20,7 @@ func DriverContext(mocks ...func(Sqlmock)) driver.DriverContext {
 		driver.Driver
 		driver.DriverContext
 	}{
-		DriverContext: openConnectorFunc(func(name string) (driver.Connector, error) {
+		DriverContext: openConnectorFunc(func(string) (driver.Connector, error) {
 			if err != nil {
 				return nil, err
 			}
@@ -29,7 +29,7 @@ func DriverContext(mocks ...func(Sqlmock)) driver.DriverContext {
 				driverFunc
 				connectFunc
 			}{
-				connectFunc: func(ctx context.Context) (driver.Conn, error) {
+				connectFunc: func(context.Context) (driver.Conn, error) {
 					for _, mock := range mocks {
 						mock(m)
 					}

@@ -57,6 +57,11 @@
             "Name": "go.nhat.io/otelsql",
             "Version": "<ignore-diff>",
             "SchemaURL": "<ignore-diff>"
+        },
+        "InstrumentationScope": {
+            "Name": "go.nhat.io/otelsql",
+            "SchemaURL": "<ignore-diff>",
+            "Version": "<ignore-diff>"
         }
     },
     {
@@ -117,6 +122,11 @@
             "Name": "go.nhat.io/otelsql",
             "Version": "<ignore-diff>",
             "SchemaURL": "<ignore-diff>"
+        },
+        "InstrumentationScope": {
+            "Name": "go.nhat.io/otelsql",
+            "SchemaURL": "<ignore-diff>",
+            "Version": "<ignore-diff>"
         }
     }
 ]

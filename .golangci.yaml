@@ -21,6 +21,7 @@ linters:
   enable-all: true
   disable:
     - contextcheck
+    - copyloopvar
     - depguard
     - exhaustruct
     - execinquery
@@ -31,6 +32,7 @@ linters:
     - err113
     - gomnd
     - gomoddirectives
+    - intrange
     - ireturn
     - lll
     - mnd

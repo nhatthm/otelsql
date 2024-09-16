@@ -9,7 +9,7 @@ require (
 	github.com/go-sql-driver/mysql v1.8.1
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql/tests/suite v0.0.0
-	go.nhat.io/testcontainers-extra v0.14.0
+	go.nhat.io/testcontainers-extra v0.15.0
 	go.nhat.io/testcontainers-registry/mysql v0.12.0
 )
 
@@ -93,7 +93,7 @@ require (
 	go.nhat.io/otelsql v0.1.0 // indirect
 	go.nhat.io/testcontainers-registry v0.16.0 // indirect
 	go.nhat.io/timeparser v0.3.0 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.54.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.55.0 // indirect
 	go.opentelemetry.io/otel v1.30.0 // indirect
 	go.opentelemetry.io/otel/exporters/prometheus v0.52.0 // indirect
 	go.opentelemetry.io/otel/metric v1.30.0 // indirect

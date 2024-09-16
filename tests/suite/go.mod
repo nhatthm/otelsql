@@ -15,7 +15,7 @@ require (
 	github.com/swaggest/assertjson v1.9.0
 	go.nhat.io/clock v0.7.0
 	go.nhat.io/otelsql v0.1.0
-	go.nhat.io/testcontainers-extra v0.14.0
+	go.nhat.io/testcontainers-extra v0.15.0
 	go.nhat.io/testcontainers-registry v0.16.0
 	go.opentelemetry.io/otel v1.30.0
 	go.opentelemetry.io/otel/exporters/prometheus v0.52.0
@@ -99,7 +99,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.14 // indirect
 	github.com/tklauser/numcpus v0.8.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.54.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.55.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.19.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.0.0 // indirect
 	golang.org/x/crypto v0.27.0 // indirect

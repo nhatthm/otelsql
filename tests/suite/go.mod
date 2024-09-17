@@ -10,7 +10,7 @@ require (
 	github.com/cucumber/godog v0.14.1
 	github.com/godogx/clocksteps v0.4.0
 	github.com/jmoiron/sqlx v1.4.0
-	github.com/prometheus/client_golang v1.20.3
+	github.com/prometheus/client_golang v1.20.4
 	github.com/stretchr/testify v1.9.0
 	github.com/swaggest/assertjson v1.9.0
 	go.nhat.io/clock v0.7.0

@@ -17,8 +17,8 @@ github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6r
 github.com/bool64/ctxd v1.2.1 h1:hARFteq0zdn4bwfmxLhak3fXFuvtJVKDH2X29VV/2ls=
 github.com/bool64/ctxd v1.2.1/go.mod h1:ZG6QkeGVLTiUl2mxPpyHmFhDzFZCyocr9hluBV3LYuc=
 github.com/bool64/dev v0.2.25/go.mod h1:iJbh1y/HkunEPhgebWRNcs8wfGq7sjvJ6W5iabL8ACg=
-github.com/bool64/dev v0.2.34 h1:P9n315P8LdpxusnYQ0X7MP1CZXwBK5ae5RZrd+GdSZE=
-github.com/bool64/dev v0.2.34/go.mod h1:iJbh1y/HkunEPhgebWRNcs8wfGq7sjvJ6W5iabL8ACg=
+github.com/bool64/dev v0.2.36 h1:yU3bbOTujoxhWnt8ig8t94PVmZXIkCaRj9C57OtqJBY=
+github.com/bool64/dev v0.2.36/go.mod h1:iJbh1y/HkunEPhgebWRNcs8wfGq7sjvJ6W5iabL8ACg=
 github.com/bool64/shared v0.1.5 h1:fp3eUhBsrSjNCQPcSdQqZxxh9bBwrYiZ+zOKFkM0/2E=
 github.com/bool64/shared v0.1.5/go.mod h1:081yz68YC9jeFB3+Bbmno2RFWvGKv1lPKkMP6MHJlPs=
 github.com/bool64/sqluct v0.2.3 h1:fMF/5hwqbKOLcOeGGHWmbNBmU+UVtXaWVFD3+O0Z0Xk=
@@ -70,8 +70,8 @@ github.com/go-sql-driver/mysql v1.8.1 h1:LedoTUt/eveggdHS9qUFC1EFSa8bU2+1pZjSRpv
 github.com/go-sql-driver/mysql v1.8.1/go.mod h1:wEBSXgmK//2ZFJyE+qWnIsVGmvmEKlqwuVSjsCm7DZg=
 github.com/godogx/clocksteps v0.4.0 h1:vYyTph5tBi0dO0QTGSZUB2cYiih5SCZIXJ0RJjUxHYg=
 github.com/godogx/clocksteps v0.4.0/go.mod h1:LY6LrxLlnOBH/BTBGzGP9WbMtDiu6v8afDJL0UvuKHo=
-github.com/godogx/dbsteps v0.1.2 h1:MLpxpqCxXZrdvA/r8o8M+xKjrpmb+RTye1YWkvATFyk=
-github.com/godogx/dbsteps v0.1.2/go.mod h1:kY6x9odRDEfymsLJ/O3VnX4LJBa23PhTdKjJzJgnMJM=
+github.com/godogx/dbsteps v0.1.3 h1:rno+ArRmreckJE58JW8pNBupepcWXQQp9TtDV0s8PqE=
+github.com/godogx/dbsteps v0.1.3/go.mod h1:5GK1OK0nFqKUEoAn0lKbhXSZLGs9qnMJhAaO3WsCbW8=
 github.com/godogx/resource v0.1.1 h1:1vbznIn1mUCP+9TzJp9v8QKm54kAMTe38CBLnFBk0j8=
 github.com/godogx/resource v0.1.1/go.mod h1:OYaiyttuq2KaiJp2yOMekyOFjZJFz3w/D7WPioUVC4Y=
 github.com/gofrs/uuid v4.2.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=

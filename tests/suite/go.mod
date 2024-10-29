@@ -38,7 +38,7 @@ require (
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/godogx/dbsteps v0.1.2
+	github.com/godogx/dbsteps v0.1.3
 	github.com/godogx/resource v0.1.1 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect

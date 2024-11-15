@@ -63,12 +63,14 @@
         "InstrumentationLibrary": {
             "Name": "go.nhat.io/otelsql",
             "Version": "<ignore-diff>",
-            "SchemaURL": "<ignore-diff>"
+            "SchemaURL": "<ignore-diff>",
+            "Attributes": null
         },
         "InstrumentationScope": {
             "Name": "go.nhat.io/otelsql",
             "SchemaURL": "<ignore-diff>",
-            "Version": "<ignore-diff>"
+            "Version": "<ignore-diff>",
+            "Attributes": null
         }
     }
 ]

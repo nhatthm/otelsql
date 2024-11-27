@@ -24,7 +24,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bool64/ctxd v1.2.1 // indirect
 	github.com/bool64/shared v0.1.5 // indirect
-	github.com/bool64/sqluct v0.2.3 // indirect
+	github.com/bool64/sqluct v0.2.4 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/containerd/log v0.1.0 // indirect

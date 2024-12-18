@@ -8,6 +8,10 @@
         "Sum": 0
     },
     {
+        "Name": "db.sql.connections.idle_time_closed{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
+        "Sum": 0
+    },
+    {
         "Name": "db.sql.connections.idle{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
         "Last": 1
     },

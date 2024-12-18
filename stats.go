@@ -21,6 +21,7 @@ const (
 	dbSQLConnectionsWaitCount      = "db.sql.connections.wait_count"
 	dbSQLConnectionsWaitDuration   = "db.sql.connections.wait_duration"
 	dbSQLConnectionsIdleClosed     = "db.sql.connections.idle_closed"
+	dbSQLConnectionsIdleTimeClosed = "db.sql.connections.idle_time_closed"
 	dbSQLConnectionsLifetimeClosed = "db.sql.connections.lifetime_closed"
 )
 
@@ -56,6 +57,7 @@ func recordStats(
 		waitCount         metric.Int64ObservableCounter
 		waitDuration      metric.Float64ObservableCounter
 		idleClosed        metric.Int64ObservableCounter
+		idleTimeClosed    metric.Int64ObservableCounter
 		lifetimeClosed    metric.Int64ObservableCounter
 
 		dbStats     sql.DBStats
@@ -110,6 +112,13 @@ func recordStats(
 	)
 	handleErr(err)
 
+	idleTimeClosed, err = meter.Int64ObservableCounter(
+		dbSQLConnectionsIdleTimeClosed,
+		metric.WithUnit(unitDimensionless),
+		metric.WithDescription("The total number of connections closed due to SetConnMaxIdleTime"),
+	)
+	handleErr(err)
+
 	lifetimeClosed, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsLifetimeClosed,
 		metric.WithUnit(unitDimensionless),
@@ -133,6 +142,7 @@ func recordStats(
 		obs.ObserveInt64(waitCount, dbStats.WaitCount, metric.WithAttributes(attrs...))
 		obs.ObserveFloat64(waitDuration, float64(dbStats.WaitDuration.Nanoseconds())/1e6, metric.WithAttributes(attrs...))
 		obs.ObserveInt64(idleClosed, dbStats.MaxIdleClosed, metric.WithAttributes(attrs...))
+		obs.ObserveInt64(idleTimeClosed, dbStats.MaxIdleTimeClosed, metric.WithAttributes(attrs...))
 		obs.ObserveInt64(lifetimeClosed, dbStats.MaxLifetimeClosed, metric.WithAttributes(attrs...))
 
 		return nil
@@ -143,6 +153,7 @@ func recordStats(
 		waitCount,
 		waitDuration,
 		idleClosed,
+		idleTimeClosed,
 		lifetimeClosed,
 	)
 

@@ -53,10 +53,10 @@ func recordStats(
 		openConnections   metric.Int64ObservableGauge
 		idleConnections   metric.Int64ObservableGauge
 		activeConnections metric.Int64ObservableGauge
-		waitCount         metric.Int64ObservableGauge
-		waitDuration      metric.Float64ObservableGauge
-		idleClosed        metric.Int64ObservableGauge
-		lifetimeClosed    metric.Int64ObservableGauge
+		waitCount         metric.Int64ObservableCounter
+		waitDuration      metric.Float64ObservableCounter
+		idleClosed        metric.Int64ObservableCounter
+		lifetimeClosed    metric.Int64ObservableCounter
 
 		dbStats     sql.DBStats
 		lastDBStats time.Time
@@ -89,28 +89,28 @@ func recordStats(
 	)
 	handleErr(err)
 
-	waitCount, err = meter.Int64ObservableGauge(
+	waitCount, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsWaitCount,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections waited for"),
 	)
 	handleErr(err)
 
-	waitDuration, err = meter.Float64ObservableGauge(
+	waitDuration, err = meter.Float64ObservableCounter(
 		dbSQLConnectionsWaitDuration,
 		metric.WithUnit(unitMilliseconds),
 		metric.WithDescription("The total time blocked waiting for a new connection"),
 	)
 	handleErr(err)
 
-	idleClosed, err = meter.Int64ObservableGauge(
+	idleClosed, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsIdleClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
 	)
 	handleErr(err)
 
-	lifetimeClosed, err = meter.Int64ObservableGauge(
+	lifetimeClosed, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsLifetimeClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),

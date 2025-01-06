@@ -33,6 +33,6 @@ require (
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	golang.org/x/net v0.23.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

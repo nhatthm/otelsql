@@ -561,15 +561,15 @@ The `interval` in `RecordStats()` is replaced with `WithMinimumReadDBStatsInterv
 
 **Connection Metrics**
 
-| `ocsql`                                                        | `otelsql`                                                           |
-|:---------------------------------------------------------------|:--------------------------------------------------------------------|
-| `go_sql_db_connections_active{go_sql_instance}`                | `db_sql_connections_active{db_instance,db_system,db_name}`          |
-| `go_sql_db_connections_idle{go_sql_instance}`                  | `db_sql_connections_idle{db_instance,db_system,db_name}`            |
-| `go_sql_db_connections_idle_closed_count{go_sql_instance}`     | `db_sql_connections_idle_closed{db_instance,db_system,db_name}`     |
-| `go_sql_db_connections_lifetime_closed_count{go_sql_instance}` | `db_sql_connections_lifetime_closed{db_instance,db_system,db_name}` |
-| `go_sql_db_connections_open{go_sql_instance}`                  | `db_sql_connections_open{db_instance,db_system,db_name}`            |
-| `go_sql_db_connections_wait_count{go_sql_instance}`            | `db_sql_connections_wait_count{db_instance,db_system,db_name}`      |
-| `go_sql_db_connections_wait_duration{go_sql_instance}`         | `db_sql_connections_wait_duration{db_instance,db_system,db_name}`   |
+| `ocsql`                                                        | `otelsql`                                                                            |
+|:---------------------------------------------------------------|:-------------------------------------------------------------------------------------|
+| `go_sql_db_connections_active{go_sql_instance}`                | `db_sql_connections_active_ratio{db_instance,db_system,db_name}`                     |
+| `go_sql_db_connections_idle{go_sql_instance}`                  | `db_sql_connections_idle_ratio{db_instance,db_system,db_name}`                       |
+| `go_sql_db_connections_idle_closed_count{go_sql_instance}`     | `db_sql_connections_idle_closed_ratio_total{db_instance,db_system,db_name}`          |
+| `go_sql_db_connections_lifetime_closed_count{go_sql_instance}` | `db_sql_connections_lifetime_closed_ratio_total{db_instance,db_system,db_name}`      |
+| `go_sql_db_connections_open{go_sql_instance}`                  | `db_sql_connections_open_ratio{db_instance,db_system,db_name}`                       |
+| `go_sql_db_connections_wait_count{go_sql_instance}`            | `db_sql_connections_wait_count_ratio_total{db_instance,db_system,db_name}`           |
+| `go_sql_db_connections_wait_duration{go_sql_instance}`         | `db_sql_connections_wait_duration_milliseconds_total{db_instance,db_system,db_name}` |
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 

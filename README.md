@@ -49,6 +49,7 @@ Compatibility
 
 |          `otelsql`          | `go.opentelemetry.io/otel/trace` | `go.opentelemetry.io/otel/metric` |
 |:---------------------------:|:--------------------------------:|:---------------------------------:|
+| `v0.15.*` <sup>&nbsp;</sup> |      `v1.33.0` ~> `latest`       |       `v1.33.0` ~> `latest`       |
 | `v0.14.*` <sup>&nbsp;</sup> |      `v1.30.0` ~> `latest`       |       `v1.30.0` ~> `latest`       |
 | `v0.13.*` <sup>&nbsp;</sup> |      `v1.24.0` ~> `latest`       |       `v1.24.0` ~> `latest`       |
 | `v0.12.*` <sup>&nbsp;</sup> |      `v1.17.0` ~> `latest`       |       `v0.40.0` ~> `latest`       |

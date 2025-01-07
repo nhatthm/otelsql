@@ -5,7 +5,11 @@
     },
     {
         "Name": "db.sql.connections.idle_closed{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
-        "Last": 0
+        "Sum": 0
+    },
+    {
+        "Name": "db.sql.connections.idle_time_closed{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
+        "Sum": 0
     },
     {
         "Name": "db.sql.connections.idle{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
@@ -13,7 +17,7 @@
     },
     {
         "Name": "db.sql.connections.lifetime_closed{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
-        "Last": 0
+        "Sum": 0
     },
     {
         "Name": "db.sql.connections.open{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
@@ -21,10 +25,10 @@
     },
     {
         "Name": "db.sql.connections.wait_count{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
-        "Last": 0
+        "Sum": 0
     },
     {
         "Name": "db.sql.connections.wait_duration{service.name=otelsql,instrumentation.name=go.nhat.io/otelsql,db.instance=default,db.system=postgresql}",
-        "Last": 0
+        "Sum": 0
     }
 ]

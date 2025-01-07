@@ -34,7 +34,7 @@ jobs:
       matrix:
         go-version: ${{ fromJson(needs.setup.outputs.go-supported-versions) }}
         arch: [ "386", amd64 ]
-        postgres-version: [ "12", "13", "14", "15", "16" ]
+        postgres-version: [ "13", "14", "15", "16", "17" ]
     runs-on: ubuntu-latest
     needs: [setup]
     steps:

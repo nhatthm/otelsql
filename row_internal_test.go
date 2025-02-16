@@ -85,8 +85,8 @@ func TestWrapRows_RowsNextResultSet(t *testing.T) {
 
 			require.Implements(t, (*driver.RowsNextResultSet)(nil), rows)
 
-			hasNextResultSet := rows.(driver.RowsNextResultSet).HasNextResultSet()
-			nextResultSetError := rows.(driver.RowsNextResultSet).NextResultSet()
+			hasNextResultSet := rows.(driver.RowsNextResultSet).HasNextResultSet() //nolint: errcheck
+			nextResultSetError := rows.(driver.RowsNextResultSet).NextResultSet()  //nolint: errcheck
 
 			assert.Equal(t, tc.expectedHasNextResultSet, hasNextResultSet)
 			assert.Equal(t, tc.expectedNextResultSetError, nextResultSetError)
@@ -134,7 +134,7 @@ func TestWrapRows_RowsColumnTypeDatabaseTypeName(t *testing.T) {
 
 			require.Implements(t, (*driver.RowsColumnTypeDatabaseTypeName)(nil), rows)
 
-			actual := rows.(driver.RowsColumnTypeDatabaseTypeName).ColumnTypeDatabaseTypeName(0)
+			actual := rows.(driver.RowsColumnTypeDatabaseTypeName).ColumnTypeDatabaseTypeName(0) //nolint: errcheck
 
 			assert.Equal(t, tc.expected, actual)
 		})
@@ -184,7 +184,7 @@ func TestWrapRows_RowsColumnTypeLength(t *testing.T) {
 
 			require.Implements(t, (*driver.RowsColumnTypeLength)(nil), rows)
 
-			length, ok := rows.(driver.RowsColumnTypeLength).ColumnTypeLength(0)
+			length, ok := rows.(driver.RowsColumnTypeLength).ColumnTypeLength(0) //nolint: errcheck
 
 			assert.Equal(t, tc.expectedLength, length)
 			assert.Equal(t, tc.expectedOK, ok)
@@ -235,7 +235,7 @@ func TestWrapRows_RowsColumnTypeNullable(t *testing.T) {
 
 			require.Implements(t, (*driver.RowsColumnTypeNullable)(nil), rows)
 
-			nullable, ok := rows.(driver.RowsColumnTypeNullable).ColumnTypeNullable(0)
+			nullable, ok := rows.(driver.RowsColumnTypeNullable).ColumnTypeNullable(0) //nolint: errcheck
 
 			assert.Equal(t, tc.expectedNullable, nullable)
 			assert.Equal(t, tc.expectedOK, ok)
@@ -289,7 +289,7 @@ func TestWrapRows_RowsColumnTypePrecisionScale(t *testing.T) {
 
 			require.Implements(t, (*driver.RowsColumnTypePrecisionScale)(nil), rows)
 
-			precision, scale, ok := rows.(driver.RowsColumnTypePrecisionScale).ColumnTypePrecisionScale(0)
+			precision, scale, ok := rows.(driver.RowsColumnTypePrecisionScale).ColumnTypePrecisionScale(0) //nolint: errcheck
 
 			assert.Equal(t, tc.expectedPrecision, precision)
 			assert.Equal(t, tc.expectedScale, scale)
@@ -316,7 +316,7 @@ func TestWrapRows_RowsColumnTypeScanType(t *testing.T) {
 
 	require.Implements(t, (*driver.RowsColumnTypeScanType)(nil), rows)
 
-	actual := rows.(driver.RowsColumnTypeScanType).ColumnTypeScanType(0)
+	actual := rows.(driver.RowsColumnTypeScanType).ColumnTypeScanType(0) //nolint: errcheck
 	expected := reflect.TypeOf(0)
 
 	assert.Equal(t, expected, actual)

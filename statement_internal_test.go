@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestStmt_Exec(t *testing.T) {
@@ -118,29 +119,29 @@ func TestWrapStmt(t *testing.T) {
 	assertExecContextFunc := func(t *testing.T, stmt driver.Stmt) {
 		t.Helper()
 
-		_, err := stmt.(driver.StmtExecContext).ExecContext(context.Background(), nil)
-		assert.Equal(t, expectedExecContextError, err)
+		_, err := stmt.(driver.StmtExecContext).ExecContext(context.Background(), nil) //nolint: errcheck
+		require.ErrorIs(t, err, expectedExecContextError)
 	}
 
 	assertQueryContextFunc := func(t *testing.T, stmt driver.Stmt) {
 		t.Helper()
 
-		_, err := stmt.(driver.StmtQueryContext).QueryContext(context.Background(), nil)
-		assert.Equal(t, expectedQueryContextError, err)
+		_, err := stmt.(driver.StmtQueryContext).QueryContext(context.Background(), nil) //nolint: errcheck
+		require.ErrorIs(t, err, expectedQueryContextError)
 	}
 
 	assertColumnConverterFunc := func(t *testing.T, stmt driver.Stmt) {
 		t.Helper()
 
-		_, err := stmt.(driver.ColumnConverter).ColumnConverter(0).ConvertValue(nil) // nolint: staticcheck
-		assert.Equal(t, expectedConvertValueError, err)
+		_, err := stmt.(driver.ColumnConverter).ColumnConverter(0).ConvertValue(nil) // nolint: errcheck,staticcheck
+		require.ErrorIs(t, err, expectedConvertValueError)
 	}
 
 	assertNamedValueCheckerFunc := func(t *testing.T, stmt driver.Stmt) {
 		t.Helper()
 
-		err := stmt.(driver.NamedValueChecker).CheckNamedValue(nil)
-		assert.Equal(t, expectedCheckValueError, err)
+		err := stmt.(driver.NamedValueChecker).CheckNamedValue(nil) //nolint: errcheck
+		require.ErrorIs(t, err, expectedCheckValueError)
 	}
 
 	testCases := []struct {

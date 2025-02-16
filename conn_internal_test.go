@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestConn_Exec(t *testing.T) {
@@ -105,15 +106,15 @@ func TestWrapConn(t *testing.T) {
 	assertNamedValueCheckerFunc := func(t *testing.T, conn driver.Conn) {
 		t.Helper()
 
-		err := conn.(driver.NamedValueChecker).CheckNamedValue(nil)
-		assert.Equal(t, expectedCheckValueError, err)
+		err := conn.(driver.NamedValueChecker).CheckNamedValue(nil) //nolint: errcheck
+		require.ErrorIs(t, err, expectedCheckValueError)
 	}
 
 	assertSessionResetterFunc := func(t *testing.T, conn driver.Conn) {
 		t.Helper()
 
-		err := conn.(driver.SessionResetter).ResetSession(context.Background())
-		assert.Equal(t, expectedResetSessionError, err)
+		err := conn.(driver.SessionResetter).ResetSession(context.Background()) //nolint: errcheck
+		require.ErrorIs(t, err, expectedResetSessionError, err)
 	}
 
 	testCases := []struct {

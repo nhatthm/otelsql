@@ -12,8 +12,6 @@ linters-settings:
     threshold: 100
   misspell:
     locale: US
-  unused:
-    check-exported: false
   unparam:
     check-exported: true
 
@@ -24,13 +22,11 @@ linters:
     - copyloopvar
     - depguard
     - exhaustruct
-    - execinquery
     - forbidigo
     - forcetypeassert
     - gci
     - gochecknoglobals
     - err113
-    - gomnd
     - gomoddirectives
     - intrange
     - ireturn
@@ -44,6 +40,7 @@ linters:
     - sqlclosecheck # https://github.com/golangci/golangci-lint/issues/2649
     - tagalign
     - tagliatelle
+    - tenv
     - testifylint
     - testpackage
     - varnamelen
@@ -59,8 +56,6 @@ issues:
         - execinquery
         - funlen
         - goconst
-        - goerr113
-        - gomnd
         - maintidx
         - mnd
         - nilnil

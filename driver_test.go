@@ -179,7 +179,7 @@ func TestWrap_DriverContext_ConnectNamedValueChecker(t *testing.T) {
 				driverNamedValueCheckerFunc
 			}{
 				driverConnectFunc: func(context.Context) (driver.Conn, error) {
-					return m.(driver.Conn), nil
+					return m.(driver.Conn), nil //nolint: errcheck
 				},
 			}, nil
 		}),
@@ -253,7 +253,7 @@ func TestWrap_DriverContext_CloseError(t *testing.T) {
 
 	assert.NoError(t, err)
 
-	err = connector.(io.Closer).Close()
+	err = connector.(io.Closer).Close() //nolint: errcheck
 	expectedError := errors.New("close error")
 
 	assert.Equal(t, expectedError, err)

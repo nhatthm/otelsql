@@ -190,7 +190,7 @@ func (d otDriver) Close() error {
 func (d otDriver) OpenConnector(name string) (driver.Connector, error) {
 	var err error
 
-	d.connector, err = d.parent.(driver.DriverContext).OpenConnector(name)
+	d.connector, err = d.parent.(driver.DriverContext).OpenConnector(name) //nolint: errcheck
 	if err != nil {
 		return nil, err
 	}

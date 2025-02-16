@@ -34,7 +34,7 @@ func DriverContext(mocks ...func(Sqlmock)) driver.DriverContext {
 						mock(m)
 					}
 
-					return m.(driver.Conn), nil
+					return m.(driver.Conn), nil //nolint: errcheck
 				},
 				driverFunc: func() driver.Driver {
 					return lazyInit

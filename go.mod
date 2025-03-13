@@ -1,8 +1,7 @@
 module go.nhat.io/otelsql
 
 go 1.22.0
-
-toolchain go1.22.10
+toolchain go1.23.7
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
@@ -32,7 +31,7 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

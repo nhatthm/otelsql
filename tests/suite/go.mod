@@ -10,7 +10,7 @@ require (
 	github.com/cucumber/godog v0.15.0
 	github.com/godogx/clocksteps v0.4.0
 	github.com/jmoiron/sqlx v1.4.0
-	github.com/prometheus/client_golang v1.21.1
+	github.com/prometheus/client_golang v1.22.0
 	github.com/stretchr/testify v1.10.0
 	github.com/swaggest/assertjson v1.9.0
 	go.nhat.io/clock v0.7.0
@@ -83,7 +83,7 @@ require (
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
-	github.com/klauspost/compress v1.17.11 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/lufia/plan9stats v0.0.0-20240909124753-873cd0166683 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect

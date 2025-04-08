@@ -18,7 +18,7 @@ type metricReader struct {
 
 func (r *metricReader) Shutdown(ctx context.Context) error {
 	rm := metricdata.ResourceMetrics{}
-	if err := r.Reader.Collect(ctx, &rm); err != nil {
+	if err := r.Reader.Collect(ctx, &rm); err != nil { //nolint: staticcheck
 		return err
 	}
 

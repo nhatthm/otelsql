@@ -2,10 +2,10 @@ MODULE_NAME=otelsql
 
 VENDOR_DIR = vendor
 
-GOLANGCI_LINT_VERSION ?= v1.64.5
+GOLANGCI_LINT_VERSION ?= v2.0.2
 
 GO ?= go
-GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT ?= $(shell $(GO) env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
 GHERKIN_LINT ?= gherkin-lint
 
 TEST_FLAGS ?= -race

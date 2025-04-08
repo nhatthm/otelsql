@@ -1,64 +1,74 @@
-# See https://github.com/golangci/golangci-lint/blob/master/.golangci.example.yml
+version: "2"
 run:
   tests: true
-
-linters-settings:
-  errcheck:
-    check-type-assertions: true
-    check-blank: true
-  gocyclo:
-    min-complexity: 20
-  dupl:
-    threshold: 100
-  misspell:
-    locale: US
-  unparam:
-    check-exported: true
-
 linters:
-  enable-all: true
+  default: all
   disable:
     - contextcheck
     - copyloopvar
     - depguard
+    - err113
     - exhaustruct
     - forbidigo
     - forcetypeassert
-    - gci
     - gochecknoglobals
-    - err113
     - gomoddirectives
     - intrange
     - ireturn
     - lll
     - mnd
-    - nolintlint # https://github.com/golangci/golangci-lint/issues/3063
+    - nolintlint
     - nonamedreturns
     - paralleltest
     - perfsprint
-    - rowserrcheck # https://github.com/golangci/golangci-lint/issues/2649
-    - sqlclosecheck # https://github.com/golangci/golangci-lint/issues/2649
+    - rowserrcheck
+    - sqlclosecheck
     - tagalign
     - tagliatelle
-    - tenv
     - testifylint
     - testpackage
     - varnamelen
-    - wastedassign # https://github.com/golangci/golangci-lint/issues/2649
+    - wastedassign
     - wrapcheck
-
-issues:
-  exclude-use-default: false
-  exclude-rules:
-    - linters:
-        - containedctx
-        - dupl
-        - execinquery
-        - funlen
-        - goconst
-        - maintidx
-        - mnd
-        - nilnil
-        - noctx
-        - rowserrcheck
-      path: "_test.go"
+  settings:
+    dupl:
+      threshold: 100
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    gocyclo:
+      min-complexity: 20
+    misspell:
+      locale: US
+    unparam:
+      check-exported: true
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - containedctx
+          - dupl
+          - execinquery
+          - funlen
+          - goconst
+          - maintidx
+          - mnd
+          - nilnil
+          - noctx
+          - rowserrcheck
+        path: _test.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

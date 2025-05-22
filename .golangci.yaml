@@ -11,6 +11,7 @@ linters:
     - exhaustruct
     - forbidigo
     - forcetypeassert
+    - funcorder
     - gochecknoglobals
     - gomoddirectives
     - intrange

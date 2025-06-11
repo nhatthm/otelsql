@@ -17,12 +17,12 @@ github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6r
 github.com/bool64/ctxd v1.2.1 h1:hARFteq0zdn4bwfmxLhak3fXFuvtJVKDH2X29VV/2ls=
 github.com/bool64/ctxd v1.2.1/go.mod h1:ZG6QkeGVLTiUl2mxPpyHmFhDzFZCyocr9hluBV3LYuc=
 github.com/bool64/dev v0.2.25/go.mod h1:iJbh1y/HkunEPhgebWRNcs8wfGq7sjvJ6W5iabL8ACg=
-github.com/bool64/dev v0.2.36 h1:yU3bbOTujoxhWnt8ig8t94PVmZXIkCaRj9C57OtqJBY=
-github.com/bool64/dev v0.2.36/go.mod h1:iJbh1y/HkunEPhgebWRNcs8wfGq7sjvJ6W5iabL8ACg=
+github.com/bool64/dev v0.2.40 h1:LUSD+Aq+WB3KwVntqXstevJ0wB12ig1bEgoG8ZafsZU=
+github.com/bool64/dev v0.2.40/go.mod h1:iJbh1y/HkunEPhgebWRNcs8wfGq7sjvJ6W5iabL8ACg=
 github.com/bool64/shared v0.1.5 h1:fp3eUhBsrSjNCQPcSdQqZxxh9bBwrYiZ+zOKFkM0/2E=
 github.com/bool64/shared v0.1.5/go.mod h1:081yz68YC9jeFB3+Bbmno2RFWvGKv1lPKkMP6MHJlPs=
-github.com/bool64/sqluct v0.2.4 h1:4dpa3/k0v+V9mUN2SHzCgmMAH0iqhHczXg9e8YuoWwY=
-github.com/bool64/sqluct v0.2.4/go.mod h1:3HQviUcavzBhDAC2tX5MYvvTMFSLVDPMOHVj6QWiUkM=
+github.com/bool64/sqluct v0.2.5 h1:ThC+YdHPt8aKjS+AXs5nBTwxtClsQL8ukwhNXnsKB0Y=
+github.com/bool64/sqluct v0.2.5/go.mod h1:DY6C6ehBuKrT8vTQeiKwBdC022bUcfpkDKUSdog1DXQ=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=
 github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=

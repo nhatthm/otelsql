@@ -63,6 +63,11 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 	ctx, span := t.tracer.Start(ctx, t.formatSpanName(ctx, method), //nolint: spancheck
 		trace.WithSpanKind(trace.SpanKindClient),
 	)
+	if !span.IsRecording() {
+		return ctx, func(err error, attrs ...attribute.KeyValue) {
+			span.End()
+		}
+	}
 
 	attrs := make([]attribute.KeyValue, 0, len(t.attributes)+len(labels)+1)
 

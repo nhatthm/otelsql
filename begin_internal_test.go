@@ -32,6 +32,9 @@ func BenchmarkBeginStats(b *testing.B) {
 		beginStats(r),
 	}, nopBegin)
 
+	b.ReportAllocs()
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		_, _ = begin(context.Background(), driver.TxOptions{}) // nolint: errcheck
 	}

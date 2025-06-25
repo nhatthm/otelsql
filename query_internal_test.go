@@ -32,6 +32,9 @@ func BenchmarkQueryStats(b *testing.B) {
 		queryStats(r, metricMethodQuery),
 	}, nopQueryContext)
 
+	b.ReportAllocs()
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		_, _ = query(context.Background(), "", nil) // nolint: errcheck
 	}

@@ -32,6 +32,9 @@ func BenchmarkExecStats(b *testing.B) {
 		execStats(r, metricMethodExec),
 	}, nopExecContext)
 
+	b.ReportAllocs()
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		_, _ = exec(context.Background(), "", nil) // nolint: errcheck
 	}

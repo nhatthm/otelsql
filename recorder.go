@@ -47,8 +47,9 @@ func (r methodRecorderImpl) Record(ctx context.Context, method string, labels ..
 			)
 		}
 
-		r.countCalls(ctx, 1, metric.WithAttributes(attrs...))
-		r.recordLatency(ctx, elapsedTime, metric.WithAttributes(attrs...))
+		set := attribute.NewSet(attrs...)
+		r.countCalls(ctx, 1, metric.WithAttributeSet(set))
+		r.recordLatency(ctx, elapsedTime, metric.WithAttributeSet(set))
 	}
 }
 

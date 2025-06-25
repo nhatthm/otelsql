@@ -64,7 +64,7 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 		trace.WithSpanKind(trace.SpanKindClient),
 	)
 	if !span.IsRecording() {
-		return ctx, func(err error, attrs ...attribute.KeyValue) {
+		return ctx, func(_ error, _ ...attribute.KeyValue) {
 			span.End()
 		}
 	}

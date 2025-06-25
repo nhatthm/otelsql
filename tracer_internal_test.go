@@ -7,7 +7,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/sdk/trace/tracetest"
+	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
+	"go.opentelemetry.io/otel/trace"
 )
 
 func TestFormatSpanName(t *testing.T) {
@@ -95,4 +101,87 @@ func TestSpanStatusFromErrorIgnoreErrSkip(t *testing.T) {
 			assert.Equal(t, tc.expectedDescription, description)
 		})
 	}
+}
+
+func TestMustTrace(t *testing.T) {
+	tests := map[string]struct {
+		method string
+		labels []attribute.KeyValue
+
+		endErr    error
+		endLabels []attribute.KeyValue
+
+		expectedStatus tracesdk.Status
+		expectedLabels []attribute.KeyValue
+	}{
+		"records a span": {
+			method: "ping",
+			expectedLabels: []attribute.KeyValue{
+				semconv.DBOperationKey.String("ping"),
+			},
+			expectedStatus: tracesdk.Status{
+				Code:        codes.Ok,
+				Description: "",
+			},
+		},
+		"records a span with error": {
+			method: "pong",
+			endErr: errors.New("error"),
+			expectedLabels: []attribute.KeyValue{
+				semconv.DBOperationKey.String("pong"),
+			},
+			expectedStatus: tracesdk.Status{
+				Code:        codes.Error,
+				Description: "error",
+			},
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			ctx := context.Background()
+			recorder := tracetest.NewSpanRecorder()
+
+			mTracer := newMethodTracer(
+				tracesdk.NewTracerProvider(
+					tracesdk.WithSampler(tracesdk.AlwaysSample()),
+					tracesdk.WithSpanProcessor(recorder),
+				).Tracer(t.Name()),
+			)
+
+			newCtx, end := mTracer.MustTrace(ctx, tc.method, tc.labels...)
+			assert.True(t, trace.SpanFromContext(newCtx).IsRecording())
+			assert.Len(t, recorder.Started(), 1)
+
+			end(tc.endErr, tc.endLabels...)
+			assert.False(t, trace.SpanFromContext(newCtx).IsRecording())
+
+			endedSpans := recorder.Ended()
+			require.Len(t, endedSpans, 1)
+
+			span := endedSpans[0]
+			assert.Equal(t, tc.expectedLabels, span.Attributes())
+			assert.Equal(t, tc.expectedStatus, span.Status())
+		})
+	}
+
+	t.Run("record no span when not sampling", func(t *testing.T) {
+		ctx := context.Background()
+		recorder := tracetest.NewSpanRecorder()
+
+		mTracer := newMethodTracer(
+			tracesdk.NewTracerProvider(
+				tracesdk.WithSampler(tracesdk.NeverSample()),
+				tracesdk.WithSpanProcessor(recorder),
+			).Tracer(t.Name()),
+		)
+
+		newCtx, end := mTracer.MustTrace(ctx, "ping")
+		assert.False(t, trace.SpanFromContext(newCtx).IsRecording())
+		assert.Len(t, recorder.Started(), 0)
+
+		end(nil)
+		assert.False(t, trace.SpanFromContext(newCtx).IsRecording())
+		require.Len(t, recorder.Ended(), 0)
+	})
 }

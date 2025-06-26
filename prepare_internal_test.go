@@ -32,6 +32,9 @@ func BenchmarkPrepareStats(b *testing.B) {
 		prepareStats(r),
 	}, nopPrepareContext)
 
+	b.ReportAllocs()
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		_, _ = prepare(context.Background(), "") // nolint: errcheck
 	}

@@ -31,6 +31,9 @@ func BenchmarkPingStats(b *testing.B) {
 		pingStats(r),
 	}, nopPing)
 
+	b.ReportAllocs()
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		_ = ping(context.Background()) // nolint: errcheck
 	}

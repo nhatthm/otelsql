@@ -54,6 +54,9 @@ func BenchmarkFromNamedValue(b *testing.B) {
 		}
 	}
 
+	b.ReportAllocs()
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		for _, v := range namedValues {
 			xattr.FromNamedValue(v)
@@ -64,6 +67,9 @@ func BenchmarkFromNamedValue(b *testing.B) {
 func BenchmarkKeyValueDuration(b *testing.B) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano())) // nolint: gosec
 	d := time.Duration(r.Int63n(int64(10 * time.Second)))
+
+	b.ReportAllocs()
+	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
 		xattr.KeyValueDuration(key, d)

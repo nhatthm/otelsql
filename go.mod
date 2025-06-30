@@ -28,7 +28,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/nxadm/tail v1.4.11 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/sergi/go-diff v1.3.1 // indirect
+	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect

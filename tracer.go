@@ -5,7 +5,6 @@ import (
 	"database/sql/driver"
 	"errors"
 	"strings"
-	"time"
 
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
@@ -62,9 +61,13 @@ func (t *methodTracerImpl) Trace(ctx context.Context, method string, labels ...a
 
 func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels ...attribute.KeyValue) (context.Context, func(err error, attrs ...attribute.KeyValue)) {
 	ctx, span := t.tracer.Start(ctx, t.formatSpanName(ctx, method), //nolint: spancheck
-		trace.WithTimestamp(time.Now()),
 		trace.WithSpanKind(trace.SpanKindClient),
 	)
+	if !span.IsRecording() {
+		return ctx, func(_ error, _ ...attribute.KeyValue) {
+			span.End()
+		}
+	}
 
 	attrs := make([]attribute.KeyValue, 0, len(t.attributes)+len(labels)+1)
 
@@ -84,9 +87,7 @@ func (t *methodTracerImpl) MustTrace(ctx context.Context, method string, labels 
 			span.RecordError(err)
 		}
 
-		span.End(
-			trace.WithTimestamp(time.Now()),
-		)
+		span.End()
 	}
 }
 

@@ -7,7 +7,7 @@ toolchain go1.23.7
 require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/bool64/sqluct v0.2.7
-	github.com/cucumber/godog v0.15.0
+	github.com/cucumber/godog v0.15.1
 	github.com/godogx/clocksteps v0.4.0
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/prometheus/client_golang v1.22.0
@@ -61,7 +61,7 @@ require (
 	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/spf13/pflag v1.0.6 // indirect
+	github.com/spf13/pflag v1.0.7 // indirect
 	github.com/swaggest/form/v5 v5.1.1 // indirect
 	github.com/testcontainers/testcontainers-go v0.37.0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect

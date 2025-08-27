@@ -92,7 +92,7 @@ require (
 	github.com/shirou/gopsutil/v4 v4.25.5 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.7 // indirect
-	github.com/stretchr/testify v1.11.0 // indirect
+	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/swaggest/assertjson v1.9.0 // indirect
 	github.com/swaggest/form/v5 v5.1.1 // indirect
 	github.com/testcontainers/testcontainers-go v0.37.0 // indirect

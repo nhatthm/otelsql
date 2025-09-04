@@ -43,7 +43,7 @@ require (
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
-	github.com/godogx/clocksteps v0.4.0 // indirect
+	github.com/godogx/clocksteps v0.5.0 // indirect
 	github.com/godogx/dbsteps v0.1.3 // indirect
 	github.com/godogx/resource v0.1.1 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
@@ -91,7 +91,7 @@ require (
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/shirou/gopsutil/v4 v4.25.5 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/spf13/pflag v1.0.7 // indirect
+	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/swaggest/assertjson v1.9.0 // indirect
 	github.com/swaggest/form/v5 v5.1.1 // indirect

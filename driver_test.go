@@ -259,6 +259,22 @@ func TestWrap_DriverContext_CloseError(t *testing.T) {
 	assert.Equal(t, expectedError, err)
 }
 
+func TestWrap_Panic(t *testing.T) {
+	t.Parallel()
+
+	parent := driverOpenFunc(func(string) (driver.Conn, error) {
+		return nil, errors.New("open error")
+	})
+
+	meterProviderOption := otelsql.WithMeterProvider(
+		oteltest.NewMeterProviderWithError(assert.AnError),
+	)
+
+	assert.PanicsWithValue(t, assert.AnError, func() {
+		_ = otelsql.Wrap(parent, meterProviderOption)
+	})
+}
+
 func Test_Open_Error(t *testing.T) {
 	t.Parallel()
 

@@ -227,19 +227,17 @@ func TraceLastInsertID() DriverOption {
 	})
 }
 
-// WithMinimumReadDBStatsInterval sets the minimum interval between calls to db.Stats(). Negative values are ignored.
-func WithMinimumReadDBStatsInterval(interval time.Duration) StatsOption {
-	return statsOptionFunc(func(o *statsOptions) {
-		o.minimumReadDBStatsInterval = interval
-	})
+// WithMinimumReadDBStatsInterval does nothing.
+//
+// Deprecated: does not have any effect since [database/sql.DB.Stats] calls are
+// cheap.
+func WithMinimumReadDBStatsInterval(_ time.Duration) StatsOption {
+	return statsOptionFunc(func(_ *statsOptions) {})
 }
 
 type statsOptions struct {
 	// meterProvider sets the metric.MeterProvider. If nil, the global Provider will be used.
 	meterProvider metric.MeterProvider
-
-	// minimumReadDBStatsInterval sets the minimum interval between calls to db.Stats(). Negative values are ignored.
-	minimumReadDBStatsInterval time.Duration
 
 	// defaultAttributes will be set to each metrics as default.
 	defaultAttributes []attribute.KeyValue

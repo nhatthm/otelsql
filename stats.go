@@ -4,15 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"sync"
-	"time"
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 )
-
-// defaultMinimumReadDBStatsInterval is the default minimum interval between calls to db.Stats().
-const defaultMinimumReadDBStatsInterval = time.Second
 
 const (
 	dbSQLConnectionsOpen           = "db.sql.connections.open"
@@ -28,8 +24,7 @@ const (
 // RecordStats records database statistics for provided sql.DB at the provided interval.
 func RecordStats(db *sql.DB, opts ...StatsOption) error {
 	o := statsOptions{
-		meterProvider:              otel.GetMeterProvider(),
-		minimumReadDBStatsInterval: defaultMinimumReadDBStatsInterval,
+		meterProvider: otel.GetMeterProvider(),
 	}
 
 	for _, opt := range opts {
@@ -38,14 +33,13 @@ func RecordStats(db *sql.DB, opts ...StatsOption) error {
 
 	meter := o.meterProvider.Meter(instrumentationName)
 
-	return recordStats(meter, db, o.minimumReadDBStatsInterval, o.defaultAttributes...)
+	return recordStats(meter, db, o.defaultAttributes...)
 }
 
 // nolint: funlen
 func recordStats(
 	meter metric.Meter,
 	db *sql.DB,
-	minimumReadDBStatsInterval time.Duration,
 	attrs ...attribute.KeyValue,
 ) error {
 	var (
@@ -59,9 +53,6 @@ func recordStats(
 		idleClosed        metric.Int64ObservableCounter
 		idleTimeClosed    metric.Int64ObservableCounter
 		lifetimeClosed    metric.Int64ObservableCounter
-
-		dbStats     sql.DBStats
-		lastDBStats time.Time
 
 		// lock prevents a race between batch observer and instrument registration.
 		lock sync.Mutex
@@ -130,11 +121,7 @@ func recordStats(
 		lock.Lock()
 		defer lock.Unlock()
 
-		now := time.Now()
-		if now.Sub(lastDBStats) >= minimumReadDBStatsInterval {
-			dbStats = db.Stats()
-			lastDBStats = now
-		}
+		dbStats := db.Stats()
 
 		obs.ObserveInt64(openConnections, int64(dbStats.OpenConnections), metric.WithAttributes(attrs...))
 		obs.ObserveInt64(idleConnections, int64(dbStats.Idle), metric.WithAttributes(attrs...))

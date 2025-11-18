@@ -23,7 +23,7 @@ require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bool64/ctxd v1.2.1 // indirect
-	github.com/bool64/shared v0.1.5 // indirect
+	github.com/bool64/shared v0.1.6 // indirect
 	github.com/bool64/sqluct v0.2.8 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -91,12 +91,11 @@ require (
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/stretchr/testify v1.11.1 // indirect
-	github.com/swaggest/assertjson v1.9.0 // indirect
+	github.com/swaggest/assertjson v1.10.0 // indirect
 	github.com/swaggest/form/v5 v5.1.1 // indirect
 	github.com/testcontainers/testcontainers-go v0.37.0 // indirect
 	github.com/tklauser/go-sysconf v0.3.15 // indirect
 	github.com/tklauser/numcpus v0.10.0 // indirect
-	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	go.nhat.io/otelsql v0.1.0 // indirect

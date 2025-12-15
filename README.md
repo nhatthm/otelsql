@@ -33,7 +33,7 @@ Add a OpenTelemetry wrapper to your existing database code to instrument the int
 
 ## Prerequisites
 
-- `Go >= 1.22`
+- `Go >= 1.24`
 
 [<sub><sup>[table of contents]</sup></sub>](#table-of-contents)
 
@@ -599,12 +599,12 @@ The traces are almost identical with some minor changes:
             <th colspan="2">Windows</th>
         </tr>
         <tr>
-            <th>go 1.22</th>
-            <th>go 1.23</th>
-            <th>go 1.22</th>
-            <th>go 1.23</th>
-            <th>go 1.22</th>
-            <th>go 1.23</th>
+            <th>go 1.24</th>
+            <th>go 1.25</th>
+            <th>go 1.24</th>
+            <th>go 1.25</th>
+            <th>go 1.24</th>
+            <th>go 1.25</th>
         </tr>
     </thead>
     <tbody>
@@ -633,7 +633,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">denisenkom/go-mssqldb</code>
             </td>
             <td style="white-space: nowrap">
-                SQL Server 2019
+                SQL Server 2019, 2022, 2025
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mssql.yaml">
@@ -648,7 +648,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">go-sql-driver/mysql</code>
             </td>
             <td style="white-space: nowrap">
-                MySQL 8
+                MySQL 8, 9
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-mysql.yaml">
@@ -663,7 +663,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">jackc/pgx/v4/stdlib</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 13, 14, 15, 16, 17
+                Postgres 14, 15, 16, 17, 18
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
@@ -678,7 +678,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">jackc/pgx/v5/stdlib</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 13, 14, 15, 16, 17
+                Postgres 14, 15, 16, 17, 18
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-pgx.yaml">
@@ -693,7 +693,7 @@ The traces are almost identical with some minor changes:
                 <code style="white-space: nowrap">lib/pq</code>
             </td>
             <td style="white-space: nowrap">
-                Postgres 13, 14, 15, 16, 17
+                Postgres 14, 15, 16, 17, 18
             </td>
             <td colspan="6" align="center">
                 <a href="https://github.com/nhatthm/otelsql/actions/workflows/test-compatibility-libpq.yaml">

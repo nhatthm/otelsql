@@ -75,56 +75,72 @@ func recordStats(
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("Count of open connections in the pool"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	idleConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsIdle,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("Count of idle connections in the pool"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	activeConnections, err = meter.Int64ObservableGauge(
 		dbSQLConnectionsActive,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("Count of active connections in the pool"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	waitCount, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsWaitCount,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections waited for"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	waitDuration, err = meter.Float64ObservableCounter(
 		dbSQLConnectionsWaitDuration,
 		metric.WithUnit(unitMilliseconds),
 		metric.WithDescription("The total time blocked waiting for a new connection"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	idleClosed, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsIdleClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	idleTimeClosed, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsIdleTimeClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetConnMaxIdleTime"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	lifetimeClosed, err = meter.Int64ObservableCounter(
 		dbSQLConnectionsLifetimeClosed,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
 	)
-	handleErr(err)
+	if err != nil {
+		return err
+	}
 
 	_, err = meter.RegisterCallback(func(_ context.Context, obs metric.Observer) error {
 		lock.Lock()

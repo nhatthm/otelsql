@@ -87,7 +87,8 @@ func RegisterWithSource(driverName string, source string, options ...DriverOptio
 	return "", errors.New("unable to register driver, all slots have been taken")
 }
 
-// Wrap takes a SQL driver and wraps it with OpenTelemetry instrumentation.
+// Wrap takes an SQL driver and wraps it with OpenTelemetry instrumentation.
+// It panics if there is an error when creating instruments.
 func Wrap(d driver.Driver, opts ...DriverOption) driver.Driver {
 	o := driverOptions{
 		meterProvider:  otel.GetMeterProvider(),
@@ -102,14 +103,18 @@ func Wrap(d driver.Driver, opts ...DriverOption) driver.Driver {
 		option.applyDriverOptions(&o)
 	}
 
-	return wrapDriver(d, o)
+	cc, err := newConnConfig(o)
+	if err != nil {
+		panic(err)
+	}
+
+	return wrapDriver(d, cc)
 }
 
-func wrapDriver(d driver.Driver, o driverOptions) driver.Driver {
+func wrapDriver(d driver.Driver, cc connConfig) driver.Driver {
 	drv := otDriver{
 		parent:     d,
-		connConfig: newConnConfig(o),
-		close:      func() error { return nil },
+		connConfig: cc,
 	}
 
 	if _, ok := d.(driver.DriverContext); ok {
@@ -122,7 +127,7 @@ func wrapDriver(d driver.Driver, o driverOptions) driver.Driver {
 	return struct{ driver.Driver }{drv}
 }
 
-func newConnConfig(opts driverOptions) connConfig {
+func newConnConfig(opts driverOptions) (connConfig, error) {
 	meter := opts.meterProvider.Meter(instrumentationName)
 	tracer := newMethodTracer(
 		opts.tracerProvider.Tracer(instrumentationName,
@@ -139,13 +144,17 @@ func newConnConfig(opts driverOptions) connConfig {
 		metric.WithUnit(unitMilliseconds),
 		metric.WithDescription(`The distribution of latencies of various calls in milliseconds`),
 	)
-	mustNoError(err)
+	if err != nil {
+		return connConfig{}, err
+	}
 
 	callsCounter, err := meter.Int64Counter(dbSQLClientCalls,
 		metric.WithUnit(unitDimensionless),
 		metric.WithDescription(`The number of various calls of methods`),
 	)
-	mustNoError(err)
+	if err != nil {
+		return connConfig{}, err
+	}
 
 	latencyRecorder := newMethodRecorder(latencyMsHistogram.Record, callsCounter.Add, opts.defaultAttributes...)
 
@@ -161,7 +170,7 @@ func newConnConfig(opts driverOptions) connConfig {
 			queryFuncMiddlewares:        makeQueryerContextMiddlewares(latencyRecorder, tracerOrNil(tracer, opts.trace.AllowRoot), newQueryConfig(opts, metricMethodStmtQuery, traceMethodStmtQuery)),
 			queryContextFuncMiddlewares: makeQueryerContextMiddlewares(latencyRecorder, tracer, newQueryConfig(opts, metricMethodStmtQuery, traceMethodStmtQuery)),
 		}),
-	}
+	}, nil
 }
 
 var _ driver.Driver = (*otDriver)(nil)
@@ -184,7 +193,11 @@ func (d otDriver) Open(name string) (driver.Conn, error) {
 }
 
 func (d otDriver) Close() error {
-	return d.close()
+	if d.close != nil {
+		return d.close()
+	}
+
+	return nil
 }
 
 func (d otDriver) OpenConnector(name string) (driver.Connector, error) {

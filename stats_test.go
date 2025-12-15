@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
 
@@ -11,6 +12,20 @@ import (
 	"go.nhat.io/otelsql/internal/test/oteltest"
 	"go.nhat.io/otelsql/internal/test/sqlmock"
 )
+
+func TestRecordStatsError(t *testing.T) {
+	t.Parallel()
+
+	oteltest.New().Run(t, func(sc oteltest.SuiteContext) {
+		db, err := newDB(sc.DatabaseDSN())
+		require.NoError(t, err)
+
+		err = otelsql.RecordStats(db, otelsql.WithMeterProvider(
+			oteltest.NewMeterProviderWithError(assert.AnError),
+		))
+		require.ErrorIs(t, err, assert.AnError)
+	})
+}
 
 func TestRecordStats(t *testing.T) {
 	t.Parallel()

@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	defaultVersion = "12-alpine"
+	defaultVersion = "14-alpine"
 	defaultDriver  = "pgx/v4"
 
 	databaseName     = "otelsql"

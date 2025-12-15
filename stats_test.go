@@ -2,7 +2,6 @@ package otelsql_test
 
 import (
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
@@ -29,7 +28,6 @@ func TestRecordStats(t *testing.T) {
 
 			err = otelsql.RecordStats(db,
 				otelsql.WithMeterProvider(sc.MeterProvider()),
-				otelsql.WithMinimumReadDBStatsInterval(100*time.Millisecond),
 				otelsql.WithInstanceName("default"),
 				otelsql.WithSystem(semconv.DBSystemPostgreSQL),
 			)

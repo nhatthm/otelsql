@@ -28,6 +28,7 @@ linters:
     - tagliatelle
     - testifylint
     - testpackage
+    - usetesting
     - varnamelen
     - wastedassign
     - wrapcheck
